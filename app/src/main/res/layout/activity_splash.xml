@@ -28,7 +28,7 @@
         android:fontFamily="@font/acme"
         android:text="PCEA \n Ongata Rongai Church"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="#D0CDC9"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

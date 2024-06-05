@@ -46,4 +46,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation ("com.google.android.material:material:1.6.1")
+    implementation("com.tbuonomo:dotsindicator:5.0")
 }

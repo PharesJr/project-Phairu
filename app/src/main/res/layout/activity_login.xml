@@ -85,9 +85,9 @@
                 <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/loginscontainer"
+                    android:background="@drawable/inputbackground"
                     android:backgroundTint="#92A4B1"
                     android:drawableLeft="@drawable/email"
                     android:drawablePadding="20dp"
@@ -96,26 +96,55 @@
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="@color/black"
-                    android:textSize="25sp" />
+                    android:textColorHint="#41494f"
+                    android:textSize="22sp" />
 
-                <EditText
-                    android:id="@+id/password"
+<!--                <EditText-->
+<!--                    android:id="@+id/password"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:background="@drawable/loginscontainer"-->
+<!--                    android:backgroundTint="#92A4B1"-->
+<!--                    android:drawableLeft="@drawable/password"-->
+<!--                    android:drawablePadding="20dp"-->
+<!--                    android:fontFamily="@font/acme"-->
+<!--                    android:hint="Password"-->
+<!--                    android:inputType="textPassword"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textColorHighlight="@color/cardview_dark_background"-->
+<!--                    android:textColorHint="@color/black"-->
+<!--                    android:textSize="22sp" />-->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_text_input"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/loginscontainer"
-                    android:backgroundTint="#92A4B1"
-                    android:drawableLeft="@drawable/password"
-                    android:drawablePadding="20dp"
-                    android:fontFamily="@font/acme"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="@color/black"
-                    android:textSize="25sp" />
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/black"
+                    app:boxBackgroundColor="#92A4B1"
+                    app:boxStrokeColor="#92A4B1"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableStart="@drawable/password"
+                        android:drawablePadding="20dp"
+                        android:fontFamily="@font/acme"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:textColorHint="#41494f"
+                        android:textSize="22sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <Button
                     android:id="@+id/login_button"
@@ -128,6 +157,19 @@
                     android:textColor="@color/white"
                     android:textSize="25sp" />
 
+                <Button
+                    android:id="@+id/forgotpsswd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_gravity="end"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/acme"
+                    android:text="Forgot your Password?"
+                   android:background="?android:attr/selectableItemBackground"
+                    android:textColor="#D0CDC9"
+                    tools:textSize="24sp" />
+
+
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -135,31 +177,37 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/acme"
-        android:text="Forgot your Password?"
-        android:textColor="#D0CDC9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:fontFamily="@font/acme"
-        android:text="Don't have an Account? Sign Up"
-        android:textColor="#D0CDC9"
-        android:textSize="24sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:fontFamily="@font/acme"
+            android:text="Don't have an Account?"
+            android:textColor="#D0CDC9"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        <Button
+            android:id="@+id/sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="Sign Up"
+            android:textColor="#FED7A5"
+            android:textSize="22sp"
+            android:fontFamily="@font/acme"/>
+    </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
