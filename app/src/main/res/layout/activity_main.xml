@@ -71,7 +71,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="15dp">
 
 
@@ -88,7 +88,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewPagerSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="180dp"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +96,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dotIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -173,7 +174,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -181,103 +182,117 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:gravity="bottom"
             android:layout_marginStart="10dp"
-            android:background="@drawable/navigation_bg"
             android:layout_marginEnd="10dp"
+            android:background="@drawable/navigation_bg"
+            android:gravity="bottom"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_weight="1.0">
+            app:layout_constraintTop_toTopOf="parent">
+
             <LinearLayout
                 android:layout_width="70dp"
                 android:layout_height="60dp"
                 android:orientation="vertical">
+
                 <ImageView
-                    android:layout_height="30dp"
                     android:layout_width="30dp"
-                   android:layout_gravity="center"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     app:srcCompat="@drawable/home" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Home"
                     android:textColor="#D0CDC9"
-                    android:layout_gravity="center"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="70dp"
                 android:layout_height="60dp"
                 android:orientation="vertical">
+
                 <ImageView
-                    android:layout_height="30dp"
                     android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     app:srcCompat="@drawable/messenger" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Chat"
                     android:textColor="#D0CDC9"
-                    android:layout_gravity="center"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="70dp"
                 android:layout_height="60dp"
                 android:orientation="vertical">
+
                 <ImageView
-                    android:layout_height="50dp"
                     android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="2dp"
                     app:srcCompat="@drawable/pcea_logo" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="70dp"
                 android:layout_height="60dp"
                 android:orientation="vertical">
+
                 <ImageView
-                    android:layout_height="30dp"
                     android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     app:srcCompat="@drawable/community1" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Community"
                     android:textColor="#D0CDC9"
-                    android:layout_gravity="center"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="70dp"
                 android:layout_height="60dp"
                 android:orientation="vertical">
+
                 <ImageView
-                    android:layout_height="30dp"
                     android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     app:srcCompat="@drawable/profile" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Profile"
                     android:textColor="#D0CDC9"
-                    android:layout_gravity="center"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
             </LinearLayout>
         </LinearLayout>
