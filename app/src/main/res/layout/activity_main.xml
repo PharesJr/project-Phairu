@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="24dp"
                 android:orientation="horizontal">
 
@@ -68,52 +68,6 @@
                     android:layout_height="30dp"
                     app:srcCompat="@drawable/heart" />
             </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="15dp">
-
-
-                <ProgressBar
-                    android:id="@+id/progressBarBanner"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewPagerSlider"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                    android:id="@+id/dotIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:visibility="gone"
-                    app:dotsColor="#D0CDC9"
-                    app:dotsCornerRadius="8dp"
-                    app:dotsSize="6dp"
-                    app:dotsSpacing="2dp"
-                    app:dotsWidthFactor="2.5"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/viewPagerSlider"
-                    app:selectedDotColor="#FED7A5"
-                    tools:visibility="visible" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -199,6 +153,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/home"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -221,6 +176,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/chat"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -258,6 +214,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/community"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -280,6 +237,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/profile"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"

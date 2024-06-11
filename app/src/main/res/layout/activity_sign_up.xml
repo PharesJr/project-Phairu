@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="#29343D"
+                android:background="@drawable/loginscontainer"
                 android:orientation="vertical"
                 android:padding="24dp">
 
@@ -85,7 +85,6 @@
                     android:layout_marginTop="20dp"
                     android:paddingStart="20dp"
                     android:background="@drawable/inputbackground"
-                    android:backgroundTint="#92A4B1"
                     android:fontFamily="@font/acme"
                     android:hint="First Name"
                     android:padding="10dp"
@@ -101,7 +100,6 @@
                     android:layout_marginTop="20dp"
                     android:paddingStart="20dp"
                     android:background="@drawable/inputbackground"
-                    android:backgroundTint="#92A4B1"
                     android:fontFamily="@font/acme"
                     android:hint="Last Name"
                     android:padding="10dp"
@@ -116,7 +114,6 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/inputbackground"
-                    android:backgroundTint="#92A4B1"
                     android:drawableLeft="@drawable/email"
                     android:drawablePadding="20dp"
                     android:fontFamily="@font/acme"
@@ -167,7 +164,7 @@
                     android:layout_marginTop="05dp"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/black"
-                    app:boxBackgroundColor="#92A4B1"
+                    android:background="@drawable/inputbackground"
                     app:boxStrokeColor="#92A4B1"
                     app:hintEnabled="false">
 
@@ -216,7 +213,7 @@
                     android:layout_marginTop="20dp"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/black"
-                    app:boxBackgroundColor="#92A4B1"
+                    android:background="@drawable/inputbackground"
                     app:boxStrokeColor="#92A4B1"
                     app:hintEnabled="false">
 
@@ -237,12 +234,13 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/login_button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="#3C5665"
+                    android:textAllCaps="false"
                     android:fontFamily="@font/acme"
                     android:text="Sign Up"
                     android:textColor="#D0CDC9"

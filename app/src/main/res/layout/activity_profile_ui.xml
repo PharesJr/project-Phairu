@@ -18,12 +18,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
 
             <ImageView
                 android:id="@+id/profilePic"
                 android:layout_width="0dp"
-                android:layout_height="600dp"
+                android:layout_height="500dp"
                 android:background="@drawable/icon_background"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -33,28 +34,184 @@
 
             <ImageView
                 android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
+                android:background="@drawable/icon_background"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_black" />
 
             <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurView"
                 android:layout_width="0dp"
-                android:layout_height="600dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:background="@drawable/blur_bg"
+                app:blurOverlayColor="#90000000"
                 app:layout_constraintBottom_toBottomOf="@+id/profilePic"
                 app:layout_constraintEnd_toEndOf="@+id/profilePic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profilePic"
-                android:layout_margin="24dp"
-                app:blurOverlayColor="#90000000">
+                app:layout_constraintTop_toBottomOf="@+id/profilePic">
+
                 <LinearLayout
+                    android:id="@+id/detailLayer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/detailLayer"/>
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/uname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/acme"
+                            android:text="Phares Irungu"
+                            android:textColor="#D0CDC9"
+                            android:textSize="28sp" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/followbtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="follow"
+                            android:background="@drawable/buttonbackground"
+                            android:fontFamily="@font/acme"
+                            android:textSize="12sp"
+                            android:textAllCaps="false"
+                            android:layout_gravity="center"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/acme"
+                            android:text="phairu"
+                            android:textColor="#D0CDC9"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="25dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/followers"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/acme"
+                                android:text="0"
+                                android:textAlignment="center"
+                                android:textColor="#D0CDC9"
+                                android:textSize="22sp" />
+
+                            <TextView
+                                android:id="@+id/textVi9"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/acme"
+                                android:text="followers"
+                                android:textColor="#D0CDC9"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="25dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/following"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/acme"
+                                android:text="0"
+                                android:textAlignment="center"
+                                android:textColor="#D0CDC9"
+                                android:textSize="22sp" />
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/acme"
+                                android:text="following"
+                                android:textColor="#D0CDC9"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="50dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/messenger"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/gradient" />
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/acme"
+                        android:text="About"
+                        android:textColor="#D0CDC9"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/about"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="About"
+                        android:textColor="#D0CDC9"
+                        android:textSize="13sp" />
+
+
+                </LinearLayout>
+
+
             </eightbitlab.com.blurview.BlurView>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

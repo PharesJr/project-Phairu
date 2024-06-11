@@ -57,5 +57,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.6.1")
     implementation ("com.github.Dimezis:BlurView:version-2.0.3")
     implementation("com.tbuonomo:dotsindicator:5.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
 }

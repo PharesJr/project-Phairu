@@ -3,6 +3,9 @@ package com.example.project_phairu.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import com.example.project_phairu.Model.SliderModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -15,7 +18,11 @@ class MainViewModel():ViewModel() {
 
     private val _banner= MutableLiveData<List<SliderModel>>()
 
+    private val _currentBannerIndex = MutableLiveData<Int>(0)
+    val currentBannerIndex: LiveData<Int> = _currentBannerIndex
+
     val banners: LiveData<List<SliderModel>> = _banner
+
 
     fun loadBanners() {
         val Ref= firebaseDatabase.getReference("Banner")
