@@ -16,10 +16,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         // Find the "Sign Up" TextView
-        val signUpButton = findViewById<Button>(R.id.sign_up)
+        val signUpTextview = findViewById<TextView>(R.id.sign_up)
 
         // Set a click listener on the "Sign Up" TextView
-        signUpButton.setOnClickListener {
+        signUpTextview.setOnClickListener {
             // Start the SignUpActivity
             startActivity(Intent(this, SignUpActivity::class.java))
         }

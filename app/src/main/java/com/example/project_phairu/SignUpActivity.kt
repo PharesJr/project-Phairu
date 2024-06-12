@@ -15,12 +15,12 @@ class SignUpActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_sign_up)
 
-        // Find the "Back" TextView
-        val backTextView = findViewById<TextView>(R.id.txtBack)
+        // Find the "Back" ImageView
+        val backImageView = findViewById<ImageView>(R.id.btnBack)
 
 
         // Set a click listener on the "Back" TextView
-        backTextView.setOnClickListener {
+        backImageView.setOnClickListener {
             // Start the LoginActivity
             startActivity(Intent(this, LoginActivity::class.java))
         }

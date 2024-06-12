@@ -11,16 +11,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:id="@+id/imageView5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,19 +28,17 @@
             app:layout_constraintVertical_bias="0.4"
             app:srcCompat="@drawable/pcea_logo" />
 
-        <Button
-            android:id="@+id/txtBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/click_effect"
-            android:fontFamily="@font/acme"
-            android:text="Back"
-            android:drawableStart="@drawable/left1"
-            android:textColor="#D0CDC9"
-            android:textSize="24sp"
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/icon_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4"
+            app:srcCompat="@drawable/back_black" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -75,7 +73,7 @@
                     android:text="Create Account"
                     android:textAlignment="center"
                     android:textColor="#D0CDC9"
-                    android:textSize="30sp"
+                    android:textSize="35sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -91,7 +89,7 @@
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
                     android:textColorHint="#41494f"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/Lname"
@@ -106,7 +104,21 @@
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
                     android:textColorHint="#41494f"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/Username"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingStart="20dp"
+                    android:background="@drawable/inputbackground"
+                    android:fontFamily="@font/acme"
+                    android:hint="username"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="#41494f"
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/email"
@@ -122,7 +134,7 @@
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
                     android:textColorHint="#41494f"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:paddingStart="30dp"
@@ -133,7 +145,7 @@
                     android:fontFamily="@font/acme"
                     android:text="We will send you a confirmation email to this address"
                     android:textColor="#D0CDC9"
-                    android:textSize="22sp"
+                    android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -181,7 +193,7 @@
                         android:textColor="@color/black"
                         android:textColorHighlight="@color/cardview_dark_background"
                         android:textColorHint="#41494f"
-                        android:textSize="22sp" />
+                        android:textSize="18sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -230,7 +242,7 @@
                         android:textColor="@color/black"
                         android:textColorHighlight="@color/cardview_dark_background"
                         android:textColorHint="#41494f"
-                        android:textSize="22sp" />
+                        android:textSize="18sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -244,7 +256,7 @@
                     android:fontFamily="@font/acme"
                     android:text="Sign Up"
                     android:textColor="#D0CDC9"
-                    android:textSize="25sp" />
+                    android:textSize="18sp" />
 
 
             </LinearLayout>
