@@ -85,6 +85,8 @@
                     android:background="@drawable/inputbackground"
                     android:fontFamily="@font/acme"
                     android:hint="First Name"
+                    android:inputType="textPersonName"
+                    android:maxLength="20"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
@@ -100,6 +102,8 @@
                     android:background="@drawable/inputbackground"
                     android:fontFamily="@font/acme"
                     android:hint="Last Name"
+                    android:inputType="textPersonName"
+                    android:maxLength="20"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
@@ -114,6 +118,8 @@
                     android:background="@drawable/inputbackground"
                     android:fontFamily="@font/acme"
                     android:hint="username"
+                    android:inputType="text"
+                    android:maxLength="20"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
@@ -124,33 +130,19 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:background="@drawable/inputbackground"
                     android:drawableLeft="@drawable/email"
                     android:drawablePadding="20dp"
                     android:fontFamily="@font/acme"
                     android:hint="Email Address"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="35"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
                     android:textColorHint="#41494f"
                     android:textSize="18sp" />
-
-                <TextView
-                    android:paddingStart="30dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/acme"
-                    android:text="We will send you a confirmation email to this address"
-                    android:textColor="#D0CDC9"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-
 <!--                <EditText-->
 <!--                    android:id="@+id/password"-->
 <!--                    android:layout_width="match_parent"-->
@@ -173,7 +165,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="05dp"
+                    android:layout_marginTop="15dp"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/black"
                     android:background="@drawable/inputbackground"
@@ -189,6 +181,7 @@
                         android:fontFamily="@font/acme"
                         android:hint="Password"
                         android:inputType="textPassword"
+                        android:maxLength="35"
                         android:padding="10dp"
                         android:textColor="@color/black"
                         android:textColorHighlight="@color/cardview_dark_background"
@@ -196,6 +189,18 @@
                         android:textSize="18sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:paddingStart="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/acme"
+                    android:text="At least 8 characters long \nAt least one capital letter (A-Z)\nAt least one lowercase letter (a-z)\nAt least one number (0-9)\nAt least one special character (!@#$%^&amp;;*.)"
+                    android:textColor="#D0CDC9"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 <!--                <EditText-->
 <!--                    android:id="@+id/confirm_password"-->
@@ -222,7 +227,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/black"
                     android:background="@drawable/inputbackground"
@@ -238,6 +243,7 @@
                         android:fontFamily="@font/acme"
                         android:hint="Confirm Password"
                         android:inputType="textPassword"
+                        android:maxLength="35"
                         android:padding="10dp"
                         android:textColor="@color/black"
                         android:textColorHighlight="@color/cardview_dark_background"
@@ -250,13 +256,20 @@
                     android:id="@+id/create_account_button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:backgroundTint="#3C5665"
                     android:textAllCaps="false"
                     android:fontFamily="@font/acme"
                     android:text="Sign Up"
                     android:textColor="#D0CDC9"
                     android:textSize="18sp" />
+                <ProgressBar
+                    android:id="@+id/progressBarSignUp"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
 
             </LinearLayout>
