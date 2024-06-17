@@ -1,10 +1,9 @@
 package com.example.project_phairu
 
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -59,7 +58,7 @@ class SignUpActivity : AppCompatActivity() {
             val password =  binding.password.text.toString().trim()
             val confirmPassword =  binding.confirmPassword.text.toString().trim()
 
-
+            if (isNetworkConnected()) {
             if (firstname.isNotEmpty() && lastname.isNotEmpty() && username.isNotEmpty() &&
                 email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
 
@@ -81,6 +80,9 @@ class SignUpActivity : AppCompatActivity() {
 
             } else {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            }
+                } else {
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
 
 
@@ -166,6 +168,15 @@ class SignUpActivity : AppCompatActivity() {
             return false
         }
         return true // Password meets all criteria
+    }
+
+    //Check Internet Connection
+    private fun isNetworkConnected(): Boolean {
+        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
 }

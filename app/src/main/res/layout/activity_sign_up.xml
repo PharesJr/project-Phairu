@@ -9,7 +9,7 @@
     tools:context=".LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -30,255 +30,278 @@
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="24dp"
-            android:background="@drawable/icon_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.4"
-            app:srcCompat="@drawable/back_black" />
+            app:srcCompat="@drawable/windows_back_cream" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        app:layout_constraintTop_toBottomOf="@+id/Header">
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@drawable/loginscontainer"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="20dp">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Header">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
                 android:background="@drawable/loginscontainer"
-                android:orientation="vertical"
-                android:padding="24dp">
+                app:cardCornerRadius="20dp"
+                app:cardElevation="20dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/acme"
-                    android:text="Create Account"
-                    android:textAlignment="center"
-                    android:textColor="#D0CDC9"
-                    android:textSize="35sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/loginscontainer"
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-                <EditText
-                    android:id="@+id/Fname"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:paddingStart="20dp"
-                    android:background="@drawable/inputbackground"
-                    android:fontFamily="@font/acme"
-                    android:hint="First Name"
-                    android:inputType="textPersonName"
-                    android:maxLength="20"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="#41494f"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/Lname"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:paddingStart="20dp"
-                    android:background="@drawable/inputbackground"
-                    android:fontFamily="@font/acme"
-                    android:hint="Last Name"
-                    android:inputType="textPersonName"
-                    android:maxLength="20"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="#41494f"
-                    android:textSize="18sp" />
-                <EditText
-                    android:id="@+id/Username"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:paddingStart="20dp"
-                    android:background="@drawable/inputbackground"
-                    android:fontFamily="@font/acme"
-                    android:hint="username"
-                    android:inputType="text"
-                    android:maxLength="20"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="#41494f"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/inputbackground"
-                    android:drawableLeft="@drawable/email"
-                    android:drawablePadding="20dp"
-                    android:fontFamily="@font/acme"
-                    android:hint="Email Address"
-                    android:inputType="textEmailAddress"
-                    android:maxLength="35"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="#41494f"
-                    android:textSize="18sp" />
-<!--                <EditText-->
-<!--                    android:id="@+id/password"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="60dp"-->
-<!--                    android:layout_marginTop="05dp"-->
-<!--                    android:background="@drawable/loginscontainer"-->
-<!--                    android:backgroundTint="#92A4B1"-->
-<!--                    android:drawableLeft="@drawable/password"-->
-<!--                    android:drawablePadding="20dp"-->
-<!--                    android:fontFamily="@font/acme"-->
-<!--                    android:hint="Password"-->
-<!--                    android:inputType="textPassword"-->
-<!--                    android:padding="10dp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textColorHighlight="@color/cardview_dark_background"-->
-<!--                    android:textColorHint="@color/black"-->
-<!--                    android:textSize="25sp" />-->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/password_text_input"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="15dp"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/black"
-                    android:background="@drawable/inputbackground"
-                    app:boxStrokeColor="#92A4B1"
-                    app:hintEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/password"
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawableStart="@drawable/password"
-                        android:drawablePadding="20dp"
-                        android:fontFamily="@font/acme"
-                        android:hint="Password"
-                        android:inputType="textPassword"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mada"
+                        android:text="Create Account"
+                        android:textAlignment="center"
+                        android:textColor="#D0CDC9"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/Fname"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/inputbackground"
+                        android:fontFamily="@font/mada"
+                        android:hint="First Name"
+                        android:inputType="textPersonName"
+                        android:maxLength="20"
+                        android:padding="10dp"
+                        android:paddingStart="20dp"
+                        android:textColor="@color/black"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:textColorHint="#41494f"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/Lname"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/inputbackground"
+                        android:fontFamily="@font/mada"
+                        android:hint="Last Name"
+                        android:textStyle="bold"
+                        android:inputType="textPersonName"
+                        android:maxLength="20"
+                        android:padding="10dp"
+                        android:paddingStart="20dp"
+                        android:textColor="@color/black"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:textColorHint="#41494f"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/Username"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/inputbackground"
+                        android:fontFamily="@font/mada"
+                        android:hint="Username"
+                        android:textStyle="bold"
+                        android:inputType="text"
+                        android:maxLength="20"
+                        android:padding="10dp"
+                        android:paddingStart="20dp"
+                        android:textColor="@color/black"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:textColorHint="#41494f"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/inputbackground"
+                        android:drawableLeft="@drawable/email"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/mada"
+                        android:textStyle="bold"
+                        android:hint="Email Address"
+                        android:inputType="textEmailAddress"
                         android:maxLength="35"
                         android:padding="10dp"
                         android:textColor="@color/black"
                         android:textColorHighlight="@color/cardview_dark_background"
                         android:textColorHint="#41494f"
-                        android:textSize="18sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <TextView
-                    android:paddingStart="30dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/acme"
-                    android:text="At least 8 characters long \nAt least one capital letter (A-Z)\nAt least one lowercase letter (a-z)\nAt least one number (0-9)\nAt least one special character (!@#$%^&amp;;*.)"
-                    android:textColor="#D0CDC9"
-                    android:textSize="10sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-<!--                <EditText-->
-<!--                    android:id="@+id/confirm_password"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="60dp"-->
-<!--                    android:layout_marginTop="20dp"-->
-<!--                    android:background="@drawable/loginscontainer"-->
-<!--                    android:backgroundTint="#92A4B1"-->
-<!--                    android:drawableLeft="@drawable/password"-->
-<!--                    android:drawablePadding="20dp"-->
-<!--                    android:fontFamily="@font/acme"-->
-<!--                    android:hint="Confirm Password"-->
-<!--                    android:inputType="textPassword"-->
-<!--                    app:passwordToggleEnabled="true"-->
-<!--                    app:passwordToggleDrawable="@drawable/password_toggle"-->
-<!--                    android:padding="10dp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textColorHighlight="@color/cardview_dark_background"-->
-<!--                    android:textColorHint="@color/black"-->
-<!--                    android:textSize="25sp" />-->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/confirm_password_text_input"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/black"
-                    android:background="@drawable/inputbackground"
-                    app:boxStrokeColor="#92A4B1"
-                    app:hintEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/confirm_password"
+                        android:textSize="16sp" />
+                    <!--                <EditText-->
+                    <!--                    android:id="@+id/password"-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="60dp"-->
+                    <!--                    android:layout_marginTop="05dp"-->
+                    <!--                    android:background="@drawable/loginscontainer"-->
+                    <!--                    android:backgroundTint="#92A4B1"-->
+                    <!--                    android:drawableLeft="@drawable/password"-->
+                    <!--                    android:drawablePadding="20dp"-->
+                    <!--                    android:fontFamily="@font/acme"-->
+                    <!--                    android:hint="Password"-->
+                    <!--                    android:inputType="textPassword"-->
+                    <!--                    android:padding="10dp"-->
+                    <!--                    android:textColor="@color/black"-->
+                    <!--                    android:textColorHighlight="@color/cardview_dark_background"-->
+                    <!--                    android:textColorHint="@color/black"-->
+                    <!--                    android:textSize="25sp" />-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/password_text_input"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawableStart="@drawable/password"
-                        android:drawablePadding="20dp"
-                        android:fontFamily="@font/acme"
-                        android:hint="Confirm Password"
-                        android:inputType="textPassword"
-                        android:maxLength="35"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        android:textColorHighlight="@color/cardview_dark_background"
-                        android:textColorHint="#41494f"
-                        android:textSize="18sp" />
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/inputbackground"
+                        app:boxStrokeColor="#92A4B1"
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/black">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/password"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawableStart="@drawable/password"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/mada"
+                            android:textStyle="bold"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            android:maxLength="35"
+                            android:padding="10dp"
+                            android:textColor="@color/black"
+                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:textColorHint="#41494f"
+                            android:textSize="16sp" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/create_account_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="15dp"
-                    android:backgroundTint="#3C5665"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/acme"
-                    android:text="Sign Up"
-                    android:textColor="#D0CDC9"
-                    android:textSize="18sp" />
-                <ProgressBar
-                    android:id="@+id/progressBarSignUp"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/mada"
+                        android:paddingStart="30dp"
+                        android:text="At least 8 characters long \nAt least one capital letter (A-Z)\nAt least one lowercase letter (a-z)\nAt least one number (0-9)\nAt least one special character (!@#$%^&amp;;*.)"
+                        android:textColor="#D0CDC9"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                    <!--                <EditText-->
+                    <!--                    android:id="@+id/confirm_password"-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="60dp"-->
+                    <!--                    android:layout_marginTop="20dp"-->
+                    <!--                    android:background="@drawable/loginscontainer"-->
+                    <!--                    android:backgroundTint="#92A4B1"-->
+                    <!--                    android:drawableLeft="@drawable/password"-->
+                    <!--                    android:drawablePadding="20dp"-->
+                    <!--                    android:fontFamily="@font/acme"-->
+                    <!--                    android:hint="Confirm Password"-->
+                    <!--                    android:inputType="textPassword"-->
+                    <!--                    app:passwordToggleEnabled="true"-->
+                    <!--                    app:passwordToggleDrawable="@drawable/password_toggle"-->
+                    <!--                    android:padding="10dp"-->
+                    <!--                    android:textColor="@color/black"-->
+                    <!--                    android:textColorHighlight="@color/cardview_dark_background"-->
+                    <!--                    android:textColorHint="@color/black"-->
+                    <!--                    android:textSize="25sp" />-->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/confirm_password_text_input"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/inputbackground"
+                        app:boxStrokeColor="#92A4B1"
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/black">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/confirm_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawableStart="@drawable/password"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/mada"
+                            android:textStyle="bold"
+                            android:hint="Confirm Password"
+                            android:inputType="textPassword"
+                            android:maxLength="35"
+                            android:padding="10dp"
+                            android:textColor="@color/black"
+                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:textColorHint="#41494f"
+                            android:textSize="16sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/create_account_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:backgroundTint="#5d6b6b"
+                        android:fontFamily="@font/mada"
+                        android:text="Sign Up"
+                        android:textAllCaps="false"
+                        android:textColor="#D0CDC9"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBarSignUp"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
 
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+
+        </LinearLayout>
 
 
-    </LinearLayout>
 
 
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

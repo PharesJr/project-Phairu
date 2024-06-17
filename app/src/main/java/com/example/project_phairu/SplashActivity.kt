@@ -8,20 +8,35 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.project_phairu.DataStore.UserSessionDataStore
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
+
+    //DataStore
+    private lateinit var userSessionDataStore: UserSessionDataStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            // Start the LoginActivity
-            startActivity(Intent(this, LoginActivity::class.java))
+        //DataStore
+        userSessionDataStore = UserSessionDataStore(this)
 
-            // Finish the SplashActivity
-            finish()
-        }, 5000)
+        lifecycleScope.launch {
+            userSessionDataStore.userIdFlow.collect { userId ->
+                if (userId != null) {
+                    // User is logged in, proceed to MainActivity
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                } else {
+                    // User is not logged in, proceed to LoginActivity
+                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                }
+                finish() // Finish SplashActivity in both cases
+            }
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

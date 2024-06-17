@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".Fragments.HomeFragment"
     android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/top_appbar"
         android:layout_marginTop="35dp">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -36,43 +37,65 @@
 
                 <ImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/wind"
+                    android:src="@drawable/notification_light"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/gradient"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/windows_menu"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/menu_light"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="391dp"
+        android:layout_height="789dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_appbar"
-        app:layout_constraintVertical_bias="0.055">
+        app:layout_constraintTop_toBottomOf="@+id/top_appbar">
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textSize="18sp"
+                android:textColor="@color/textColor"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/posts_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

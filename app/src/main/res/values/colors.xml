@@ -4,5 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_background">#19191b</color>
     <color name="pink">#e45eb0</color>
-    <color name="bluish">#C1E8FF</color>
+    <color name="blue">#02457A</color>
+    <color name="background">#2A2A2A</color>
+    <color name="textColor">#E6F5FA</color>
+
 </resources>

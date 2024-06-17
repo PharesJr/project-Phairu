@@ -3,12 +3,14 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/acme</item>
         <item>@font/akaya_telivigala</item>
+        <item>@font/alatsi</item>
         <item>@font/alfa_slab_one</item>
         <item>@font/archivo_black</item>
         <item>@font/asset</item>
         <item>@font/bevan</item>
         <item>@font/chango</item>
         <item>@font/days_one</item>
+        <item>@font/mada</item>
         <item>@font/poller_one</item>
     </array>
 </resources>

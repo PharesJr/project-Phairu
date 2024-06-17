@@ -5,28 +5,39 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dialogForgot"
-    android:layout_margin="20dp"
-    android:padding="20dp"
-    android:background="@android:color/transparent">
+    android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/dialogBox"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/loginscontainer">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/forgot_password_dialog">
+
+        <ImageView
+            android:id="@+id/btnCancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/windows_back_cream"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:fontFamily="@font/acme"
-            android:text="Reset Password"
             android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/mada"
+            android:padding="10dp"
+            android:text="Reset Password"
             android:textAlignment="center"
             android:textColor="#D0CDC9"
-            android:textSize="28sp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/resetEmail"
@@ -36,7 +47,7 @@
             android:background="@drawable/inputbackground"
             android:drawableLeft="@drawable/email"
             android:drawablePadding="20dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/mada"
             android:hint="Enter Your Email Address"
             android:inputType="textEmailAddress"
             android:maxLines="1"
@@ -44,43 +55,45 @@
             android:textColor="@color/black"
             android:textColorHighlight="@color/cardview_dark_background"
             android:textColorHint="#41494f"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCancel"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="#3C5665"
-            android:fontFamily="@font/acme"
-            android:text="Cancel"
-            android:textAllCaps="false"
-            android:textColor="#D0CDC9"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dialogBox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resetEmail"
-            app:layout_constraintEnd_toStartOf="@+id/btnReset"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnReset"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#3C5665"
-            android:fontFamily="@font/acme"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#5d6b6b"
+            android:fontFamily="@font/mada"
             android:text="Reset"
             android:textAllCaps="false"
             android:textColor="#D0CDC9"
             android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dialogBox"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnCancel" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/mada"
+            android:text="A confirmation message will be sent \nto your Email Address"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resetEmail" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
