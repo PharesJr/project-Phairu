@@ -107,12 +107,12 @@ class LoginActivity : AppCompatActivity() {
 
         //forgot password
         binding.forgotpsswd.setOnClickListener {
-            val buider = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(this)
             val view = layoutInflater.inflate(R.layout.dialog_forgot, null)
 
 
-            buider.setView(view)
-            val dialog = buider.create()
+            builder.setView(view)
+            val dialog = builder.create()
 
             view.findViewById<Button>(R.id.btnReset).setOnClickListener {
                 val userEmail = view.findViewById<EditText>(R.id.resetEmail).text.toString().trim()

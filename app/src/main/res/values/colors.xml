@@ -7,5 +7,9 @@
     <color name="blue">#2979FF</color>
     <color name="background">#2A2A2A</color>
     <color name="textColor">#E6F5FA</color>
+    <color name="grey">#DCD0BE</color>
+    <color name="red">#690D0B</color>
+    <color name="button_bg_color">#232122</color>
+
 
 </resources>

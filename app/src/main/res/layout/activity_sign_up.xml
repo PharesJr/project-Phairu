@@ -101,7 +101,7 @@
                         android:textAlignment="center"
                         android:textColor="#D0CDC9"
                         android:textSize="28sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <EditText
                         android:id="@+id/Fname"
@@ -119,7 +119,9 @@
                         android:textColorHighlight="@color/cardview_dark_background"
                         android:textColorHint="#41494f"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textCursorDrawable="@null"
+                        android:cursorVisible="true"/>
 
                     <EditText
                         android:id="@+id/Lname"
@@ -137,7 +139,9 @@
                         android:textColorHighlight="@color/cardview_dark_background"
                         android:textColorHint="#41494f"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textCursorDrawable="@null"
+                        android:cursorVisible="true"/>
 
                     <EditText
                         android:id="@+id/Username"
@@ -152,10 +156,12 @@
                         android:padding="10dp"
                         android:paddingStart="20dp"
                         android:textColor="@color/black"
-                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:textColorHighlight="@color/black"
                         android:textColorHint="#41494f"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textCursorDrawable="@null"
+                        android:cursorVisible="true"/>
 
                     <EditText
                         android:id="@+id/email"
@@ -174,7 +180,8 @@
                         android:textColorHighlight="@color/cardview_dark_background"
                         android:textColorHint="#41494f"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textCursorDrawable="@null"/>
                     <!--                <EditText-->
                     <!--                    android:id="@+id/password"-->
                     <!--                    android:layout_width="match_parent"-->
@@ -280,7 +287,7 @@
                             android:maxLength="35"
                             android:padding="10dp"
                             android:textColor="@color/black"
-                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:textColorHighlight="@color/black"
                             android:textColorHint="#41494f"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -292,7 +299,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
-                        android:backgroundTint="#5d6b6b"
+                        android:backgroundTint="@color/button_bg_color"
                         android:fontFamily="@font/mada"
                         android:text="Sign Up"
                         android:textAllCaps="false"

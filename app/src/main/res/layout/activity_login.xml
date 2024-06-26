@@ -84,9 +84,10 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/inputbackground"
-                    android:drawableLeft="@drawable/email"
+                    android:drawableStart="@drawable/email"
                     android:drawablePadding="20dp"
-                    android:fontFamily="@font/acme"
+                    android:fontFamily="@font/mada"
+                    android:textStyle="bold"
                     android:hint=" Email"
                     android:inputType="textEmailAddress"
                     android:maxLength="35"
@@ -94,7 +95,8 @@
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
                     android:textColorHint="#41494f"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textCursorDrawable="@null"/>
 
                 <!--                <EditText-->
                 <!--                    android:id="@+id/password"-->
@@ -131,7 +133,8 @@
                         android:layout_height="match_parent"
                         android:drawableStart="@drawable/password"
                         android:drawablePadding="20dp"
-                        android:fontFamily="@font/acme"
+                        android:fontFamily="@font/mada"
+                        android:textStyle="bold"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:maxLength="35"
@@ -149,12 +152,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="24dp"
-                    android:backgroundTint="#5d6b6b"
+                    android:backgroundTint="@color/button_bg_color"
                     android:fontFamily="@font/mada"
                     android:text="Sign In"
                     android:textAllCaps="false"
                     android:textColor="#D0CDC9"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
