@@ -83,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show()
                     }
                 } else if (email.isValidEmail() && password.isValidPassword()) {
+                    //Function LoginUser
                     loginUser(email, password)
                 } else {
                     // Show specific error messages for invalid input (non-empty)
@@ -128,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            view.findViewById<ImageView>(R.id.btnCancel).setOnClickListener {
+            view.findViewById<ImageView>(R.id.backIcon).setOnClickListener {
                 dialog.dismiss()
             }
 

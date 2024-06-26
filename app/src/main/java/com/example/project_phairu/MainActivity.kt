@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.project_phairu.Fragments.ChatFragment
 import com.example.project_phairu.Fragments.CommunityFragment
 import com.example.project_phairu.Fragments.HomeFragment
+import com.example.project_phairu.Fragments.NotificationsFragment
 import com.example.project_phairu.Fragments.ProfileFragment
 import com.example.project_phairu.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -46,6 +47,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_chat -> {
                     selectedFragment = ChatFragment()
 
+                }
+                R.id.action_notifications -> {
+                    selectedFragment = NotificationsFragment()
                 }
                 R.id.action_community -> {
                     selectedFragment = CommunityFragment()

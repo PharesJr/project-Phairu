@@ -13,6 +13,10 @@
         android:title="Community"
         android:icon="@drawable/windows_community" />
 
+    <item android:id="@+id/action_notifications"
+        android:title="Notifications"
+        android:icon="@drawable/windows_notification_white" />
+
     <item android:id="@+id/action_profile"
         android:title="Profile"
         android:icon="@drawable/windows_profile" />

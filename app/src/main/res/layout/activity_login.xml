@@ -163,7 +163,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="10dp"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:fontFamily="@font/mada"
                     android:text="Forgot your Password?"
                     android:textColor="#D0CDC9"
@@ -202,8 +204,11 @@
             android:layout_marginStart="10dp"
             android:fontFamily="@font/mada"
             android:text="Sign Up"
-            android:textColor="#3f5b8b"
-            android:textSize="18sp" />
+            android:textColor="@color/blue"
+            android:textSize="18sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
     </LinearLayout>
 
 
