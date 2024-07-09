@@ -11,9 +11,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
+import com.example.project_phairu.DataStore.UserSessionDataStore
+import com.example.project_phairu.LoginActivity
 import com.example.project_phairu.R
 import com.example.project_phairu.databinding.FragmentHomeBinding
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -23,6 +27,9 @@ class HomeFragment : Fragment() {
     //Drawer
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+
+    //userSession
+    private lateinit var userSessionDataStore: UserSessionDataStore
 
 
     override fun onCreateView(
@@ -40,6 +47,9 @@ class HomeFragment : Fragment() {
         // Initialize drawerLayout and navigationView
         drawerLayout = requireActivity().findViewById(R.id.drawer_layout)
         navigationView = requireActivity().findViewById(R.id.navigation_view)
+
+        // Initialize userSessionDataStore
+        userSessionDataStore = UserSessionDataStore(requireContext())
 
         // Open the drawer when the sidebar icon is clicked
         binding.sideBar.setOnClickListener {
@@ -62,7 +72,13 @@ class HomeFragment : Fragment() {
                     }
 
                     view.findViewById<Button>(R.id.btnLogout).setOnClickListener {
-                        // Logout logic goes here
+                        lifecycleScope.launch {
+                            userSessionDataStore.clearUserSession() // Clear session data
+                            // Navigate to LoginActivity
+                            val intent = Intent(requireContext(), LoginActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish() // Finish the current activity
+                        }
                         dialog.dismiss()
                     }
                     dialog.show()
