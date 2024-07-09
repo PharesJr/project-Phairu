@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Base.Theme.ProjectPhairu" parent="Theme.AppCompat.NoActionBar">
+    <style name="Base.Theme.ProjectPhairu" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="colorPrimary">@color/blue</item>
         <item name="colorSecondary">@color/white</item>

@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 <!--    tools:showIn = "navigation_view">-->
 
+        <item android:id="@+id/action_explore"
+            android:title="Explore"
+            android:icon="@drawable/windows_search_white" />
+
         <item android:id="@+id/action_logout"
             android:title="Logout"
             android:icon="@drawable/windows_logout_red" />

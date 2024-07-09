@@ -92,14 +92,21 @@ class HomeFragment : Fragment() {
                     dialog.show()
                     true
                 }
+                R.id.action_explore -> {
+                    //navigate to explore fragment
+                    val exploreFragment = ExploreFragment()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, exploreFragment)
+                        // Optional: Add to back stack for back navigation
+                        .addToBackStack(null)
+                        .commit()
+                }
                 else -> false
             }
             // Close drawer after item click
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-
-
 
     }
 }
