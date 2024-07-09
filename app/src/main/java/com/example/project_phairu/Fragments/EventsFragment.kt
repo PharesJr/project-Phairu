@@ -8,19 +8,20 @@ import android.view.ViewGroup
 import com.example.project_phairu.MainActivity
 import com.example.project_phairu.R
 import com.example.project_phairu.databinding.FragmentChatBinding
+import com.example.project_phairu.databinding.FragmentEventsBinding
 
-
-class ChatFragment : Fragment() {
+class EventsFragment : Fragment() {
 
     //binding
-    private lateinit var binding: FragmentChatBinding
+    private lateinit var binding: FragmentEventsBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentChatBinding.inflate(inflater, container, false)
+        binding = FragmentEventsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,4 +30,4 @@ class ChatFragment : Fragment() {
         //make the bottom navigation visible
         (activity as? MainActivity)?.showBottomNavigation()
     }
-}
+    }

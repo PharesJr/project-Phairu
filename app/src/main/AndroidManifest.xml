@@ -13,15 +13,6 @@
         android:theme="@style/Theme.ProjectPhairu"
         tools:targetApi="31">
         <activity
-            android:name=".EditProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NotificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileUI"
-            android:exported="false" />
-        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity

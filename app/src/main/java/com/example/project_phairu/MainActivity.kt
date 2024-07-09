@@ -1,6 +1,7 @@
 package com.example.project_phairu
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
@@ -8,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_phairu.Fragments.ChatFragment
 import com.example.project_phairu.Fragments.CommunityFragment
+import com.example.project_phairu.Fragments.EventsFragment
 import com.example.project_phairu.Fragments.HomeFragment
 import com.example.project_phairu.Fragments.NotificationsFragment
 import com.example.project_phairu.Fragments.ProfileFragment
@@ -28,12 +30,6 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-
         // Find the BottomNavigation
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
 
@@ -46,13 +42,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.action_chat -> {
                     selectedFragment = ChatFragment()
+                }
+                R.id.action_events -> {
+                    selectedFragment = EventsFragment()
 
                 }
                 R.id.action_notifications -> {
                     selectedFragment = NotificationsFragment()
-                }
-                R.id.action_community -> {
-                    selectedFragment = CommunityFragment()
                 }
                 R.id.action_profile -> {
                     selectedFragment = ProfileFragment()
@@ -77,6 +73,14 @@ class MainActivity : AppCompatActivity() {
             R.id.fragment_container, HomeFragment()
         ).commit()
 
+    }
+
+    fun showBottomNavigation() {
+        binding.navView.visibility = View.VISIBLE
+    }
+
+    fun hideBottomNavigation() {
+        binding.navView.visibility = View.GONE
     }
 
 }

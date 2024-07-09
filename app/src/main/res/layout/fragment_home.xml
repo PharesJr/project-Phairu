@@ -9,38 +9,33 @@
     android:background="@color/background"
     android:id="@+id/drawer_layout">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@color/background">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/logo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="5dp"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="35dp"
                 android:contentDescription="Logo"
-                android:src="@drawable/pcea_logo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:src="@drawable/pcea_logo" />
 
 
             <ImageView
                 android:id="@+id/sideBar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="22.5dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/windows_menu"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:src="@drawable/windows_menu"/>
 
 
             <View
@@ -48,17 +43,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/gradient"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                android:layout_below="@id/logo"/>
 
             <ScrollView
                 android:id="@+id/scrollView3"
                 android:layout_width="match_parent"
-                android:layout_height="767dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -74,30 +65,28 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="24dp"
                             android:layout_marginEnd="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <ProgressBar
+                            android:id="@+id/progressBar6"
+                            style="?android:attr/progressBarStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+                            app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+                            app:layout_constraintStart_toStartOf="@+id/recyclerView"
+                            app:layout_constraintTop_toTopOf="@+id/recyclerView" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
             </ScrollView>
-
-            <ProgressBar
-                android:id="@+id/progressBar6"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
 
     <com.google.android.material.navigation.NavigationView

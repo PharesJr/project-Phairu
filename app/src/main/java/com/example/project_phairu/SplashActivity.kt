@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.project_phairu.DataStore.UserSessionDataStore
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
@@ -26,6 +27,10 @@ class SplashActivity : AppCompatActivity() {
         userSessionDataStore = UserSessionDataStore(this)
 
         lifecycleScope.launch {
+
+            // Delay for 3 seconds
+            delay(3000)
+
             userSessionDataStore.userIdFlow.collect { userId ->
                 if (userId != null) {
                     // User is logged in, proceed to MainActivity

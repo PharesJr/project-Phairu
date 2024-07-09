@@ -9,9 +9,9 @@
         android:title="Chat"
         android:icon="@drawable/windows_chat" />
 
-    <item android:id="@+id/action_community"
-        android:title="Community"
-        android:icon="@drawable/windows_community" />
+    <item android:id="@+id/action_events"
+        android:title="Events"
+        android:icon="@drawable/windows_events" />
 
     <item android:id="@+id/action_notifications"
         android:title="Notifications"

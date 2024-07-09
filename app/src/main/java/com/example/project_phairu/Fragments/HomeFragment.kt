@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
@@ -14,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import com.example.project_phairu.DataStore.UserSessionDataStore
 import com.example.project_phairu.LoginActivity
+import com.example.project_phairu.MainActivity
 import com.example.project_phairu.R
 import com.example.project_phairu.databinding.FragmentHomeBinding
 import com.google.android.material.navigation.NavigationView
@@ -43,6 +45,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //make the bottom navigation visible
+        (activity as? MainActivity)?.showBottomNavigation()
 
         // Initialize drawerLayout and navigationView
         drawerLayout = requireActivity().findViewById(R.id.drawer_layout)
@@ -74,6 +78,10 @@ class HomeFragment : Fragment() {
                     view.findViewById<Button>(R.id.btnLogout).setOnClickListener {
                         lifecycleScope.launch {
                             userSessionDataStore.clearUserSession() // Clear session data
+
+                            // Show Toast message
+                            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+
                             // Navigate to LoginActivity
                             val intent = Intent(requireContext(), LoginActivity::class.java)
                             startActivity(intent)
@@ -90,6 +98,8 @@ class HomeFragment : Fragment() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+
+
 
     }
 }

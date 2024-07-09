@@ -1,15 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.ProjectPhairu" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:windowIsTranslucent">true</item>
-        <!-- Customize your theme here. -->
+    <style name="Base.Theme.ProjectPhairu" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="colorPrimary">@color/blue</item>
         <item name="colorSecondary">@color/white</item>
         <item name="android:statusBarColor" tools:targetApi="1">@color/background</item>
-
         <item name="android:windowDrawsSystemBarBackgrounds">false</item>
-
-        <!-- Add other theme attributes as needed -->
     </style>
 
     <style name="Theme.ProjectPhairu" parent="Base.Theme.ProjectPhairu" />
