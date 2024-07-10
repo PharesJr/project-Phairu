@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/background">
+            android:background="@color/topAppBarColor">
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -99,7 +99,7 @@
                         android:fontFamily="@font/mada"
                         android:text="Create Account"
                         android:textAlignment="center"
-                        android:textColor="#D0CDC9"
+                        android:textColor="@color/textColorPurple"
                         android:textSize="28sp"
                         android:textStyle="bold"/>
 
@@ -115,11 +115,10 @@
                         android:maxLength="20"
                         android:padding="10dp"
                         android:paddingStart="20dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColorPurple"
                         android:textColorHighlight="@color/cardview_dark_background"
-                        android:textColorHint="#41494f"
+                        android:textColorHint="@color/textColorPurple"
                         android:textSize="16sp"
-                        android:textStyle="bold"
                         android:textCursorDrawable="@null"
                         android:cursorVisible="true"/>
 
@@ -135,11 +134,10 @@
                         android:maxLength="20"
                         android:padding="10dp"
                         android:paddingStart="20dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColorPurple"
                         android:textColorHighlight="@color/cardview_dark_background"
-                        android:textColorHint="#41494f"
+                        android:textColorHint="@color/textColorPurple"
                         android:textSize="16sp"
-                        android:textStyle="bold"
                         android:textCursorDrawable="@null"
                         android:cursorVisible="true"/>
 
@@ -156,10 +154,9 @@
                         android:padding="10dp"
                         android:paddingStart="20dp"
                         android:textColor="@color/black"
-                        android:textColorHighlight="@color/black"
-                        android:textColorHint="#41494f"
+                        android:textColorHighlight="@color/textColorPurple"
+                        android:textColorHint="@color/textColorPurple"
                         android:textSize="16sp"
-                        android:textStyle="bold"
                         android:textCursorDrawable="@null"
                         android:cursorVisible="true"/>
 
@@ -169,18 +166,15 @@
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/inputbackground"
-                        android:drawableLeft="@drawable/email"
-                        android:drawablePadding="10dp"
                         android:fontFamily="@font/mada"
                         android:hint="Email Address"
                         android:inputType="textEmailAddress"
                         android:maxLength="35"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
+                        android:paddingStart="20dp"
+                        android:textColor="@color/textColorPurple"
                         android:textColorHighlight="@color/cardview_dark_background"
-                        android:textColorHint="#41494f"
+                        android:textColorHint="@color/textColorPurple"
                         android:textSize="16sp"
-                        android:textStyle="bold"
                         android:textCursorDrawable="@null"/>
                     <!--                <EditText-->
                     <!--                    android:id="@+id/password"-->
@@ -206,27 +200,24 @@
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/inputbackground"
-                        app:boxStrokeColor="#92A4B1"
+                        app:boxStrokeColor="@color/bottomNavBackground"
                         app:hintEnabled="false"
                         app:passwordToggleEnabled="true"
-                        app:passwordToggleTint="@color/black">
+                        app:passwordToggleTint="@color/iconNavigationBackground">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/password"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:drawableStart="@drawable/password"
-                            android:drawablePadding="10dp"
                             android:fontFamily="@font/mada"
                             android:hint="Password"
                             android:inputType="textPassword"
                             android:maxLength="35"
-                            android:padding="10dp"
-                            android:textColor="@color/black"
+                            android:paddingStart="20dp"
+                            android:textColor="@color/textColorPurple"
                             android:textColorHighlight="@color/cardview_dark_background"
-                            android:textColorHint="#41494f"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textColorHint="@color/textColorPurple"
+                            android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -237,31 +228,12 @@
                         android:fontFamily="@font/mada"
                         android:paddingStart="30dp"
                         android:text="At least 8 characters long \nAt least one capital letter (A-Z)\nAt least one lowercase letter (a-z)\nAt least one number (0-9)\nAt least one special character (!@#$%^&amp;;*.)"
-                        android:textColor="#D0CDC9"
+                        android:textColor="@color/textColorPurple"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-                    <!--                <EditText-->
-                    <!--                    android:id="@+id/confirm_password"-->
-                    <!--                    android:layout_width="match_parent"-->
-                    <!--                    android:layout_height="60dp"-->
-                    <!--                    android:layout_marginTop="20dp"-->
-                    <!--                    android:background="@drawable/loginscontainer"-->
-                    <!--                    android:backgroundTint="#92A4B1"-->
-                    <!--                    android:drawableLeft="@drawable/password"-->
-                    <!--                    android:drawablePadding="20dp"-->
-                    <!--                    android:fontFamily="@font/acme"-->
-                    <!--                    android:hint="Confirm Password"-->
-                    <!--                    android:inputType="textPassword"-->
-                    <!--                    app:passwordToggleEnabled="true"-->
-                    <!--                    app:passwordToggleDrawable="@drawable/password_toggle"-->
-                    <!--                    android:padding="10dp"-->
-                    <!--                    android:textColor="@color/black"-->
-                    <!--                    android:textColorHighlight="@color/cardview_dark_background"-->
-                    <!--                    android:textColorHint="@color/black"-->
-                    <!--                    android:textSize="25sp" />-->
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/confirm_password_text_input"
@@ -273,24 +245,21 @@
                         app:boxStrokeColor="#92A4B1"
                         app:hintEnabled="false"
                         app:passwordToggleEnabled="true"
-                        app:passwordToggleTint="@color/black">
+                        app:passwordToggleTint="@color/textColorPurple">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/confirm_password"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:drawableStart="@drawable/password"
-                            android:drawablePadding="10dp"
                             android:fontFamily="@font/mada"
                             android:hint="Confirm Password"
                             android:inputType="textPassword"
                             android:maxLength="35"
-                            android:padding="10dp"
-                            android:textColor="@color/black"
-                            android:textColorHighlight="@color/black"
-                            android:textColorHint="#41494f"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:paddingStart="20dp"
+                            android:textColor="@color/textColorPurple"
+                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:textColorHint="@color/textColorPurple"
+                            android:textSize="16sp"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -299,13 +268,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
-                        android:backgroundTint="@color/button_bg_color"
+                        android:background="@drawable/buttonbackground"
                         android:fontFamily="@font/mada"
                         android:text="Sign Up"
                         android:textAllCaps="false"
-                        android:textColor="#D0CDC9"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/textColorPurple"
+                        android:textSize="18sp" />
 
 
                 </LinearLayout>

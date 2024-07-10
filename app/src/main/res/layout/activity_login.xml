@@ -34,7 +34,7 @@
             android:fontFamily="@font/mada"
             android:text="PCEA\nOngata Rongai\nChurch"
             android:textAlignment="viewStart"
-            android:textColor="#E6E4E1"
+            android:textColor="@color/textColorPurple"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -74,7 +74,7 @@
                     android:fontFamily="@font/mada"
                     android:text="Login"
                     android:textAlignment="center"
-                    android:textColor="#D0CDC9"
+                    android:textColor="@color/textColorPurple"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
@@ -84,7 +84,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/inputbackground"
-                    android:drawableStart="@drawable/email"
+                    android:paddingStart="20dp"
                     android:drawablePadding="20dp"
                     android:fontFamily="@font/mada"
                     android:textStyle="bold"
@@ -92,29 +92,12 @@
                     android:inputType="textEmailAddress"
                     android:maxLength="35"
                     android:padding="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColorPurple"
                     android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="#41494f"
+                    android:textColorHint="@color/textColorPurple"
                     android:textSize="18sp"
                     android:textCursorDrawable="@null"/>
 
-                <!--                <EditText-->
-                <!--                    android:id="@+id/password"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="60dp"-->
-                <!--                    android:layout_marginTop="20dp"-->
-                <!--                    android:background="@drawable/loginscontainer"-->
-                <!--                    android:backgroundTint="#92A4B1"-->
-                <!--                    android:drawableLeft="@drawable/password"-->
-                <!--                    android:drawablePadding="20dp"-->
-                <!--                    android:fontFamily="@font/acme"-->
-                <!--                    android:hint="Password"-->
-                <!--                    android:inputType="textPassword"-->
-                <!--                    android:padding="10dp"-->
-                <!--                    android:textColor="@color/black"-->
-                <!--                    android:textColorHighlight="@color/cardview_dark_background"-->
-                <!--                    android:textColorHint="@color/black"-->
-                <!--                    android:textSize="22sp" />-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/password_text_input"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -122,26 +105,25 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/inputbackground"
-                    app:boxStrokeColor="#92A4B1"
+                    app:boxStrokeColor="@color/bottomNavBackground"
                     app:hintEnabled="false"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/black">
+                    app:passwordToggleTint="@color/iconNavigationBackground">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:drawableStart="@drawable/password"
-                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
                         android:fontFamily="@font/mada"
                         android:textStyle="bold"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:maxLength="35"
                         android:padding="10dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColorPurple"
                         android:textColorHighlight="@color/cardview_dark_background"
-                        android:textColorHint="#41494f"
+                        android:textColorHint="@color/textColorPurple"
                         android:textSize="18sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -150,9 +132,9 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/login_button"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_marginTop="24dp"
-                    android:backgroundTint="@color/button_bg_color"
+                    android:background="@drawable/buttonbackground"
                     android:fontFamily="@font/mada"
                     android:text="Sign In"
                     android:textAllCaps="false"
@@ -171,7 +153,7 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:fontFamily="@font/mada"
                     android:text="Forgot your Password?"
-                    android:textColor="#D0CDC9"
+                    android:textColor="@color/textColorPurple"
                     tools:textSize="18sp" />
 
 
@@ -197,7 +179,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/mada"
             android:text="Don't have an Account?"
-            android:textColor="#D0CDC9"
+            android:textColor="@color/textColorPurple"
             android:textSize="18sp" />
 
         <TextView

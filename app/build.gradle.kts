@@ -62,4 +62,6 @@ dependencies {
     implementation (libs.glide)
     implementation (libs.chip.navigation.bar)
     implementation(libs.androidx.datastore.preferences)
+    implementation (libs.circleimageview)
+    implementation (libs.picasso)
 }

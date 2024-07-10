@@ -51,12 +51,14 @@ class SignUpActivity : AppCompatActivity() {
         // SignUp Button and the call function for user sign up
 
         binding.createAccountButton.setOnClickListener{
-            val firstname = binding.Fname.text.toString().uppercase().trim()
-            val lastname =  binding.Lname.text.toString().uppercase().trim()
+            val firstname = binding.Fname.text.toString().lowercase().trim()
+            val lastname =  binding.Lname.text.toString().lowercase().trim()
             val username =  binding.Username.text.toString().trim()
             val email =  binding.email.text.toString().trim()
             val password =  binding.password.text.toString().trim()
             val confirmPassword =  binding.confirmPassword.text.toString().trim()
+
+            val searchIndex =
 
             if (isNetworkConnected()) {
             if (firstname.isNotEmpty() && lastname.isNotEmpty() && username.isNotEmpty() &&
@@ -116,7 +118,14 @@ class SignUpActivity : AppCompatActivity() {
                                     val user = firebaseAuth.currentUser
                                     val userId = user?.uid ?: return@addOnCompleteListener
 
+
+
                                     val userData = UserModel(userId, firstname, lastname, username, email)
+                                    // Add searchIndex to userData
+                                    userData.searchIndex = (firstname + " " + lastname + " " + username).lowercase().trim()
+
+
+
                                     databaseReference.child(userId).setValue(userData)
                                         .addOnSuccessListener {
                                             Toast.makeText(this@SignUpActivity, "Sign Up Success", Toast.LENGTH_SHORT).show()
