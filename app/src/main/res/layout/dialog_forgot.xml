@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/background">
+            android:background="@color/topAppBarColor">
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -60,7 +60,7 @@
         android:id="@+id/dialogBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/forgot_password_dialog"
+        android:background="@color/drawerBackground"
         app:layout_constraintTop_toBottomOf="@+id/top_appbar"
         tools:layout_editor_absoluteX="26dp">
 
@@ -70,17 +70,15 @@
             android:layout_height="50dp"
             android:layout_margin="20dp"
             android:background="@drawable/inputbackground"
-            android:drawableLeft="@drawable/email"
-            android:drawablePadding="20dp"
             android:fontFamily="@font/mada"
             android:hint="Enter Your Email Address"
             android:cursorVisible="true"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:padding="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/textColorPurple"
             android:textColorHighlight="@color/cardview_dark_background"
-            android:textColorHint="#41494f"
+            android:textColorHint="@color/hintText"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,13 +94,12 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/button_bg_color"
-            android:fontFamily="@font/mada"
+            android:fontFamily="@font/poppins_bold"
             android:text="Reset"
-            android:textStyle="bold"
+            android:background="@drawable/logins_button_background"
             android:textAllCaps="false"
-            android:textColor="#D0CDC9"
-            android:textSize="18sp"
+            android:textColor="@color/textColorPurple"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -113,11 +110,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/mada"
             android:text="A confirmation message will be sent \nto your Email Address"
             android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/resetEmail" />

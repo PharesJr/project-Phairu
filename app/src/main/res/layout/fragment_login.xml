@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".LoginActivity">
+    tools:context=".Fragments.LoginFragment"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Header"
@@ -31,11 +32,11 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/mada"
+            android:fontFamily="@font/poppins_bold"
             android:text="PCEA\nOngata Rongai\nChurch"
             android:textAlignment="viewStart"
             android:textColor="@color/textColorPurple"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
@@ -71,7 +72,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/mada"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Login"
                     android:textAlignment="center"
                     android:textColor="@color/textColorPurple"
@@ -94,7 +95,7 @@
                     android:padding="10dp"
                     android:textColor="@color/textColorPurple"
                     android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="@color/textColorPurple"
+                    android:textColorHint="@color/hintText"
                     android:textSize="18sp"
                     android:textCursorDrawable="@null"/>
 
@@ -123,7 +124,7 @@
                         android:padding="10dp"
                         android:textColor="@color/textColorPurple"
                         android:textColorHighlight="@color/cardview_dark_background"
-                        android:textColorHint="@color/textColorPurple"
+                        android:textColorHint="@color/hintText"
                         android:textSize="18sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -132,22 +133,21 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/login_button"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="24dp"
-                    android:background="@drawable/buttonbackground"
-                    android:fontFamily="@font/mada"
-                    android:text="Sign In"
+                    android:background="@drawable/logins_button_background"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Login"
                     android:textAllCaps="false"
                     android:textColor="#D0CDC9"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/forgotpsswd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:background="?android:attr/selectableItemBackgroundBorderless"

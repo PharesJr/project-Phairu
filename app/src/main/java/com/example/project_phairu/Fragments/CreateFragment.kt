@@ -7,22 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.example.project_phairu.databinding.FragmentEditProfileBinding
+import androidx.navigation.ui.setupWithNavController
+import com.example.project_phairu.R
+import com.example.project_phairu.databinding.FragmentCreateBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class EditProfileFragment : Fragment() {
-
-    //binding
-    private lateinit var binding: FragmentEditProfileBinding
+class CreateFragment : Fragment() {
 
     //navController
     private lateinit var navController: NavController
+
+    //binding
+    private lateinit var binding: FragmentCreateBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentEditProfileBinding.inflate(inflater, container, false)
+        binding = FragmentCreateBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -33,11 +36,11 @@ class EditProfileFragment : Fragment() {
         navController = findNavController()
 
 
-        //find the back button
-        binding.backIcon.setOnClickListener {
-            //navigate back to profile fragment
-            findNavController().popBackStack()
-        }
-    }
+        // Find the BottomNavigation
+        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.nav_view)
 
+        // Set up the BottomNavigationView with the NavController
+        bottomNavigationView.setupWithNavController(navController)
+
+    }
 }

@@ -1,8 +1,6 @@
 package com.example.project_phairu.Fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.Adapter.UserAdapter
-import com.example.project_phairu.MainActivity
 import com.example.project_phairu.Model.UserModel
-import com.example.project_phairu.R
 import com.example.project_phairu.databinding.FragmentExploreBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -32,6 +30,9 @@ class ExploreFragment : Fragment() {
     private var recyclerView: RecyclerView? = null
     private var userAdapter: UserAdapter? = null
     private var users: MutableList<UserModel>? = null
+
+    //navController
+    private lateinit var navController: NavController
 
 
     override fun onCreateView(
@@ -81,8 +82,16 @@ class ExploreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //remove the navigation bar
-        (activity as? MainActivity)?.hideBottomNavigation()
+
+        // Initialize navController
+        navController = findNavController()
+
+
+        //find the backIcon
+        binding.backBtn.setOnClickListener {
+            //navigate back
+            findNavController().popBackStack()
+        }
 
         // Load initial list of users
         retrieveUsers()
@@ -90,47 +99,99 @@ class ExploreFragment : Fragment() {
     }
 
     private fun searchUser(input: String) {
+
+        // Counter for completed queries
+        var queriesCompleted = 0
+
+        // Split input into words
+        val searchTerms = input.toLowerCase().split(" ")
+        val filteredUsers = mutableListOf<UserModel>()
+
         val query = FirebaseDatabase.getInstance().getReference()
             .child("Users")
-            .orderByChild("username")
-            .startAt(input)
-            .endAt(input + "\uf8ff")
 
+        for (term in searchTerms) {
+            query.orderByChild("firstname")
+                .startAt(term)
+                .endAt(term + "\uf8ff")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        Log.d("ExploreFragment - Firstname", "Search results count: ${snapshot.childrenCount}")
+                        for (userSnapshot in snapshot.children) {
+                            val user = userSnapshot.getValue(UserModel::class.java)
 
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+                            // Avoid duplicates
+                            if (user != null && !filteredUsers.contains(user)) {
+                                filteredUsers.add(user)
+                            }}
 
-                    users?.clear()
-
-                    for (userSnapshot in snapshot.children) {
-                        val user = userSnapshot.getValue(UserModel::class.java)
-                        if (user != null) {
-                            users?.add(user)
-                        }
+                        queriesCompleted++
+                        updateAdapterIfAllQueriesCompleted(queriesCompleted, filteredUsers)
                     }
 
-                    userAdapter?.notifyDataSetChanged()
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e("ExploreFragment", "Error retrieving users: ${error.message}")
+                        Toast.makeText(requireContext(), "Error retrieving users", Toast.LENGTH_SHORT).show()
+                        binding.progressBar2.visibility = View.GONE
+                    }
+                })
 
-                // Hide progress bar after results
-                binding.progressBar2.visibility = View.GONE
+            query.orderByChild("lastname")
+                .startAt(term)
+                .endAt(term + "\uf8ff")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        Log.d("ExploreFragment - Lastname", "Search results count: ${snapshot.childrenCount}")
+                        for (userSnapshot in snapshot.children) {
+                            val user = userSnapshot.getValue(UserModel::class.java)
 
+                            // Avoid duplicates
+                            if (user != null && !filteredUsers.contains(user)) {
+                                filteredUsers.add(user)
+                            }}
+                        queriesCompleted++
+                        updateAdapterIfAllQueriesCompleted(queriesCompleted, filteredUsers)
+                    }
 
-            }
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e("ExploreFragment", "Error retrieving users: ${error.message}")
+                        Toast.makeText(requireContext(), "Error retrieving users", Toast.LENGTH_SHORT).show()
+                        binding.progressBar2.visibility = View.GONE
+                    }
+                })
 
+            query.orderByChild("username")
+                .startAt(term)
+                .endAt(term + "\uf8ff")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        Log.d("ExploreFragment - Username", "Search results count: ${snapshot.childrenCount}")
+                        for (userSnapshot in snapshot.children) {
+                            val user = userSnapshot.getValue(UserModel::class.java)
 
-            override fun onCancelled(error: DatabaseError) {
-                // Handle the error appropriately, e.g., log it or show a message
-                Log.e("ExploreFragment", "Error retrieving users: ${error.message}")
+                            // Avoid duplicates
+                            if (user != null && !filteredUsers.contains(user)) {
+                                filteredUsers.add(user)
+                            }}
+                        queriesCompleted++
+                        updateAdapterIfAllQueriesCompleted(queriesCompleted, filteredUsers)
+                    }
 
-                //Toast to the user
-                Toast.makeText(requireContext(), "Error retrieving users", Toast.LENGTH_SHORT).show()
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e("ExploreFragment", "Error retrieving users: ${error.message}")
+                        Toast.makeText(requireContext(), "Error retrieving users", Toast.LENGTH_SHORT).show()
+                        binding.progressBar2.visibility = View.GONE
+                    }
+                })
+        }
 
-                // Hide progress bar on error
-                binding.progressBar2.visibility = View.GONE
-            }
+    }
 
-        })
-
+    private fun updateAdapterIfAllQueriesCompleted(queriesCompleted: Int, filteredUsers: MutableList<UserModel>) {
+        if (queriesCompleted == 3) { // 3 queries in total
+            userAdapter?.updateUsers(filteredUsers)
+            binding.progressBar2.visibility = View.GONE
+        }
     }
 
     private fun retrieveUsers() {

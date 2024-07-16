@@ -1,6 +1,5 @@
 package com.example.project_phairu.Fragments
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,16 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.project_phairu.DataStore.UserSessionDataStore
-import com.example.project_phairu.LoginActivity
-import com.example.project_phairu.MainActivity
 import com.example.project_phairu.R
 import com.example.project_phairu.databinding.FragmentHomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.launch
 
@@ -33,6 +34,13 @@ class HomeFragment : Fragment() {
     //userSession
     private lateinit var userSessionDataStore: UserSessionDataStore
 
+    //backPress timer
+    private var backPressedTime: Long = 0
+
+    //navController
+    private lateinit var navController: NavController
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +53,31 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //make the bottom navigation visible
-        (activity as? MainActivity)?.showBottomNavigation()
+
+
+        // Initialize navController
+        navController = findNavController()
+
+
+        // Find the BottomNavigation
+        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.nav_view)
+
+        // Set up the BottomNavigationView with the NavController
+        bottomNavigationView.setupWithNavController(navController)
+
+
+        //backPressedTime
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+
+            // Check if back button is pressed twice within 2 seconds
+            if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                // Exit the app
+                requireActivity().finish()
+            } else {
+                Toast.makeText(requireContext(), "Click again to exit the app", Toast.LENGTH_SHORT).show()
+                backPressedTime = System.currentTimeMillis()
+            }
+        }
 
         // Initialize drawerLayout and navigationView
         drawerLayout = requireActivity().findViewById(R.id.drawer_layout)
@@ -77,29 +108,30 @@ class HomeFragment : Fragment() {
 
                     view.findViewById<Button>(R.id.btnLogout).setOnClickListener {
                         lifecycleScope.launch {
-                            userSessionDataStore.clearUserSession() // Clear session data
+
+                            // Clear session data
+                            userSessionDataStore.clearUserSession()
 
                             // Show Toast message
                             Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
 
-                            // Navigate to LoginActivity
-                            val intent = Intent(requireContext(), LoginActivity::class.java)
-                            startActivity(intent)
-                            requireActivity().finish() // Finish the current activity
+                            // Navigate back to Login page
+                            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
                         }
                         dialog.dismiss()
                     }
                     dialog.show()
                     true
                 }
-                R.id.action_explore -> {
-                    //navigate to explore fragment
-                    val exploreFragment = ExploreFragment()
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, exploreFragment)
-                        // Optional: Add to back stack for back navigation
-                        .addToBackStack(null)
-                        .commit()
+                R.id.exploreFragment -> {
+                    // Navigate to Explore page
+                    findNavController().navigate(R.id.action_homeFragment_to_exploreFragment)
+                    true
+                }
+                R.id.eventsFragment -> {
+                    // Navigate to Events page
+                    findNavController().navigate(R.id.action_homeFragment_to_eventsFragment)
+                    true
                 }
                 else -> false
             }
@@ -109,4 +141,5 @@ class HomeFragment : Fragment() {
         }
 
     }
+
 }

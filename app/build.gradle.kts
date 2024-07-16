@@ -64,4 +64,9 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation (libs.circleimageview)
     implementation (libs.picasso)
+    implementation(libs.navigation.compose)
+    //navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
 }

@@ -5,17 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.project_phairu.MainActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.project_phairu.R
-import com.example.project_phairu.databinding.FragmentEventsBinding
 import com.example.project_phairu.databinding.FragmentNotificationsBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class NotificationsFragment : Fragment() {
 
     //binding
     private lateinit var binding: FragmentNotificationsBinding
 
-            override fun onCreateView(
+    //nav controller
+    private lateinit var navController: NavController
+
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -26,7 +31,16 @@ class NotificationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //make the bottom navigation visible
-        (activity as? MainActivity)?.showBottomNavigation()
+
+        // Initialize navController
+        navController = findNavController()
+
+
+        // Find the BottomNavigation
+        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.nav_view)
+
+        // Set up the BottomNavigationView with the NavController
+        bottomNavigationView.setupWithNavController(navController)
+
     }
 }

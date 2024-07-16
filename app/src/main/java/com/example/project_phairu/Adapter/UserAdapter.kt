@@ -9,13 +9,12 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
-import com.example.project_phairu.databinding.FragmentExploreBinding
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Locale
 
 class UserAdapter (private var context: Context,
-                   private var users: List<UserModel>,
+                   private var users: MutableList<UserModel>,
     private var fragment: Boolean = false) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
 
@@ -48,6 +47,12 @@ class UserAdapter (private var context: Context,
 
     override fun getItemCount(): Int {
         return users.size
+    }
+
+    fun updateUsers(newUsers: List<UserModel>) {
+        users.clear()
+        users.addAll(newUsers)
+        notifyDataSetChanged()
     }
 
 }

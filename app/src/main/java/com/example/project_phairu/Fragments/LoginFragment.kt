@@ -1,39 +1,36 @@
-package com.example.project_phairu
+package com.example.project_phairu.Fragments
 
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Patterns
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.project_phairu.DataStore.UserSessionDataStore
-import com.example.project_phairu.Model.UserModel
-import com.example.project_phairu.databinding.ActivityLoginBinding
+import com.example.project_phairu.R
+import com.example.project_phairu.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.launch
 
-class LoginActivity : AppCompatActivity() {
 
+class LoginFragment : Fragment() {
 
     //binding
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: FragmentLoginBinding
 
     //Firebase Declaration and Reference
     private lateinit var firebaseDatabase: FirebaseDatabase
@@ -43,12 +40,25 @@ class LoginActivity : AppCompatActivity() {
     //Datastore
     private lateinit var userSessionDataStore: UserSessionDataStore
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+    //navController
+    private lateinit var navController: NavController
 
-        //binding
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize navController
+        navController = findNavController()
+
 
         //firebase
         firebaseAuth = FirebaseAuth.getInstance()
@@ -56,15 +66,7 @@ class LoginActivity : AppCompatActivity() {
         databaseReference = firebaseDatabase.getReference("Users")
 
         //DataStore
-        userSessionDataStore = UserSessionDataStore(this)
-
-        setContentView(binding.root)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        userSessionDataStore = UserSessionDataStore(requireContext())
 
         // Find the "Login" button
         binding.loginButton.setOnClickListener {
@@ -77,10 +79,10 @@ class LoginActivity : AppCompatActivity() {
                 if (email.isEmpty() || password.isEmpty()) {
                     // Handle empty fields
                     if (email.isEmpty()) {
-                        Toast.makeText(this, "Email cannot be empty", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Email cannot be empty", Toast.LENGTH_SHORT).show()
                     }
                     if (password.isEmpty()) {
-                        Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Password cannot be empty", Toast.LENGTH_SHORT).show()
                     }
                 } else if (email.isValidEmail() && password.isValidPassword()) {
                     //Function LoginUser
@@ -88,26 +90,25 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // Show specific error messages for invalid input (non-empty)
                     if (!email.isValidEmail()) {
-                        Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Invalid email format", Toast.LENGTH_SHORT).show()
                     }
                     if (!password.isValidPassword()) { // Check for invalid password
-                        Toast.makeText(this, "Invalid password format", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Invalid password format", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
         }
 
         //signup Redirect
         binding.signUp.setOnClickListener {
-            startActivity(Intent(this, SignUpActivity::class.java))
-            finish() // Close the current activity
+            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
 
         //forgot password
         binding.forgotpsswd.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(requireContext())
             val view = layoutInflater.inflate(R.layout.dialog_forgot, null)
 
 
@@ -118,10 +119,10 @@ class LoginActivity : AppCompatActivity() {
                 val userEmail = view.findViewById<EditText>(R.id.resetEmail).text.toString().trim()
 
                 if (userEmail.isEmpty()) {
-                    Toast.makeText(this, "Email cannot be empty", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Email cannot be empty", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 } else if (!userEmail.isValidEmail()) {
-                    Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Invalid email format", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 } else {
                     resetEmail(userEmail)
@@ -141,13 +142,10 @@ class LoginActivity : AppCompatActivity() {
     //signup user function
 
     private fun loginUser(email: String, password: String) {
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
-            if (task.isSuccessful){
-
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity()) { task ->
+            if (task.isSuccessful) {
                 // Get the current user
-                val user = firebaseAuth.currentUser
-
-                // Extract the user ID
+                val user = firebaseAuth.currentUser// Extract the user ID
                 val userId = user?.uid
 
                 if (userId != null) {
@@ -156,17 +154,17 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
 
-                Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                finish() // Close the current activity
+                Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment) // Assuming you have this action defined
+
             } else {
                 val exception = task.exception
                 if (exception is FirebaseAuthInvalidUserException) {
-                    Toast.makeText(this@LoginActivity, "Invalid Email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Invalid Email", Toast.LENGTH_SHORT).show()
                 } else if (exception is FirebaseAuthInvalidCredentialsException) {
-                    Toast.makeText(this@LoginActivity, "Invalid Password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Invalid Password", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this@LoginActivity, "Login Failed: ${exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Login Failed: ${exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -175,13 +173,13 @@ class LoginActivity : AppCompatActivity() {
     //Email Reset Function
 
     private fun resetEmail(email: String) {
-            firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
-                if (task.isSuccessful){
-                    Toast.makeText(this@LoginActivity, "Reset Email Sent, Check your email", Toast.LENGTH_SHORT).show()
-                }
-
-             }
-
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(requireActivity()) { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(requireContext(), "Reset Email Sent, Check your email", Toast.LENGTH_SHORT).show()} else {
+                // Handle the case where the email could not be sent (optional)
+                Toast.makeText(requireContext(), "Failed to send reset email", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // Helper function for email validation
@@ -196,10 +194,9 @@ class LoginActivity : AppCompatActivity() {
 
     //Check Internet Connection
     private fun isNetworkConnected(): Boolean {
-        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager= requireContext().getSystemService(ConnectivityManager::class.java)
         val network = connectivityManager.activeNetwork ?: return false
         val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
 
-        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-    }
+        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)}
 }

@@ -3,9 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 <!--    tools:showIn = "navigation_view">-->
 
-        <item android:id="@+id/action_explore"
+        <item android:id="@+id/exploreFragment"
             android:title="Explore"
             android:icon="@drawable/windows_search_white" />
+
+        <item android:id="@+id/eventsFragment"
+            android:title="Events"
+            android:icon="@drawable/windows_events"/>
 
         <item android:id="@+id/action_logout"
             android:title="Logout"

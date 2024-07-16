@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/background">
+            android:background="@color/topAppBarColor">
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -50,7 +50,7 @@
         android:id="@+id/dialogBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/forgot_password_dialog"
+        android:background="@color/drawerBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_appbar">
@@ -64,8 +64,7 @@
             android:fontFamily="@font/mada"
             android:gravity="center"
             android:text="Are you sure you want to logout?"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -74,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:orientation="horizontal"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,16 +87,15 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnCancel"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="bottom"
                     android:layout_marginStart="50dp"
-                    android:backgroundTint="#232122"
-                    android:fontFamily="@font/mada"
+                    android:fontFamily="@font/poppins"
                     android:text="Cancel"
                     android:textAllCaps="false"
-                    android:textColor="#D0CDC9"
+                    android:textColor="@color/textColorPurple"
                     android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:background="@drawable/logins_button_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -104,17 +103,16 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnLogout"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="bottom"
                     android:layout_marginStart="60dp"
                     android:layout_marginEnd="60dp"
-                    android:backgroundTint="@color/red"
-                    android:fontFamily="@font/mada"
+                    android:fontFamily="@font/poppins"
                     android:text="Logout"
+                    android:background="@drawable/danger_button_background"
                     android:textAllCaps="false"
-                    android:textColor="#D0CDC9"
+                    android:textColor="@color/textColorPurple"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnCancel"

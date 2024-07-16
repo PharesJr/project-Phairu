@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/action_home"
+    <item android:id="@+id/homeFragment"
         android:title="Home"
         android:icon="@drawable/windows_home" />
 
-    <item android:id="@+id/action_chat"
+    <item android:id="@+id/chatFragment"
         android:title="Chat"
         android:icon="@drawable/windows_chat" />
 
-    <item android:id="@+id/action_events"
-        android:title="Events"
-        android:icon="@drawable/windows_events" />
+    <item android:id="@+id/createFragment"
+        android:title="Create"
+        android:icon="@drawable/create_icon" />
 
-    <item android:id="@+id/action_notifications"
+    <item android:id="@+id/notificationsFragment"
         android:title="Notifications"
         android:icon="@drawable/windows_notification_white" />
 
-    <item android:id="@+id/action_profile"
+    <item android:id="@+id/profileFragment"
         android:title="Profile"
         android:icon="@drawable/windows_profile" />
 </menu>
