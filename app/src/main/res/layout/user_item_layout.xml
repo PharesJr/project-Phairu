@@ -3,15 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="65dp"
     android:background="@drawable/user_item_container"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
-    android:layout_marginBottom="5dp">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true">
+    android:layout_marginBottom="5dp"
+    android:clickable="true"
+    android:focusable="true">
+
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ProfilePic"
@@ -75,6 +73,6 @@
 <!--        android:layout_height="1dp"-->
 <!--        android:background="@drawable/gradient"-->
 <!--        android:layout_alignParentBottom="true"/>-->
-    </RelativeLayout>
+
 
 </RelativeLayout>
