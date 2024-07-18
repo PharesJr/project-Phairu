@@ -31,16 +31,21 @@
             android:src="@drawable/pcea_logo" />
 
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/sideBar"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="22.5dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:layout_width="60dp"
+            android:layout_height="55dp"
             android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/windows_menu"/>
+            android:focusable="true">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="22.5dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/windows_menu"/>
+
+        </LinearLayout>
 
 
         <View

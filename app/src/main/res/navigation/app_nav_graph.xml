@@ -111,7 +111,13 @@
         android:id="@+id/exploreFragment"
         android:name="com.example.project_phairu.Fragments.ExploreFragment"
         android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_profileFragment"
+            app:destination="@id/profileFragment">
+            <argument app:argType="string" android:name="profileId"/>
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/createFragment"
         android:name="com.example.project_phairu.Fragments.CreateFragment"

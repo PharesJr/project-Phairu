@@ -28,16 +28,17 @@
                 android:layout_centerInParent="true"
                 android:src="@drawable/windows_back"
                 android:layout_alignParentStart="true"/>
-
-            <SearchView
-                android:id="@+id/searchUsers"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:iconifiedByDefault="true"
-                android:maxWidth="320dp"
-                android:padding="10dp"
-                android:queryHint="Search"/>
+                android:text="Explore"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="18sp"
+                android:textColor="@color/textColorPurple"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"/>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
@@ -63,21 +64,55 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/explore_recyclerview"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                android:layout_marginTop="5dp"/>
+                android:layout_height="wrap_content">
+                <SearchView
+                    android:id="@+id/searchUsers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/loginscontainer"
+                    android:iconifiedByDefault="false"
+                    android:padding="10dp"
+                    android:queryHint="Search"/>
 
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/posts_recyclerview"
-                android:layout_gravity="center"
-                android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/resultsTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Results"
+                    android:layout_below="@+id/searchUsers"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorPurple"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:visibility="gone"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/explore_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/resultsTxt"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/explore_recyclerview"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

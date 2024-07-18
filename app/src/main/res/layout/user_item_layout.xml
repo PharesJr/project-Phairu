@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="65dp"
     android:background="@drawable/user_item_container"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
     android:layout_marginBottom="5dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ProfilePic"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/profilepic_placeholder"
             android:layout_gravity="center"
             android:layout_alignParentStart="true"
@@ -24,7 +30,8 @@
             android:orientation="vertical"
             android:layout_toEndOf="@+id/ProfilePic"
             android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp">
             <TextView
                 android:id="@+id/ProfileName"
                 android:layout_width="wrap_content"
@@ -43,7 +50,7 @@
                 android:text=" @Phairu"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:fontFamily="@font/mada"
+                android:fontFamily="@font/poppins"
                 android:textColor="@color/textColorPurple"
                 android:layout_marginStart="10dp"/>
 
@@ -56,18 +63,18 @@
             android:text="Follow"
             android:textColor="@color/textColorPurple"
             android:textSize="14sp"
-            android:background="@drawable/buttonbackground"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="5dp"
+            android:background="@drawable/secondary_button_background"
+            android:layout_marginTop="10dp"
             android:textAllCaps="false"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="30dp"/>
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/gradient"
-        android:layout_alignParentBottom="true"/>
+<!--    <View-->
+<!--        android:id="@+id/view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:background="@drawable/gradient"-->
+<!--        android:layout_alignParentBottom="true"/>-->
+    </RelativeLayout>
 
 </RelativeLayout>

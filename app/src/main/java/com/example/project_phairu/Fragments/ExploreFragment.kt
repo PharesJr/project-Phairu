@@ -61,9 +61,13 @@ class ExploreFragment : Fragment() {
                     // Hide progress bar
                     binding.progressBar2.visibility = View.GONE
 
-                    // Show all users when search is empty
-                    retrieveUsers()
+//                    // Show all users when search is empty
+//                    retrieveUsers()
                 } else {
+
+                    //show results textview
+                    binding.resultsTxt.visibility = View.VISIBLE
+
                     // Show progress bar
                     binding.progressBar2.visibility = View.VISIBLE
 

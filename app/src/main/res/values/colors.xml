@@ -23,7 +23,9 @@
     <color name="iconNavigationBackground">#9E9E9E</color>
     <color name="error">#72FF1744</color>
     <color name="buttonBackground">#212121</color>
-    <color name="secondaryButtonBackground">#03DAC5</color>
+    <color name="buttonBackground2">#424242</color>
+    <color name="buttonBackground3">#303030</color>
+    <color name="buttonBackground4">#424242</color>
 
 
 

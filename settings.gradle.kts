@@ -1,3 +1,4 @@
+
 pluginManagement {
     repositories {
         google {
@@ -19,6 +20,7 @@ dependencyResolutionManagement {
         mavenCentral()
         maven("https://jitpack.io")
     }
+
 }
 
 rootProject.name = "project-Phairu"
