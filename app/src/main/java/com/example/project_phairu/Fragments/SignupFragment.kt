@@ -123,7 +123,6 @@ class SignupFragment : Fragment() {
                                     val userId = user?.uid ?: return@addOnCompleteListener
 
                                     val userData = UserModel(userId, firstname, lastname, username, email)
-                                    userData.searchIndex = ("$firstname $lastname $username").lowercase().trim()
 
                                     databaseReference.child(userId).setValue(userData)
                                         .addOnSuccessListener {
@@ -147,6 +146,7 @@ class SignupFragment : Fragment() {
                 }
             })
     }
+
     // Helper function for email validation
     private fun String.isValidEmail(): Boolean {
         return contains("@") && contains(".")

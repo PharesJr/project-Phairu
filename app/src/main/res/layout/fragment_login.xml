@@ -136,6 +136,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/logins_button_background"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
                     android:fontFamily="@font/poppins_bold"
                     android:text="Login"
                     android:textAllCaps="false"

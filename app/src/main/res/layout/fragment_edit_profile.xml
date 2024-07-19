@@ -25,18 +25,39 @@
                 android:background="@drawable/gradient"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-            <ImageView
+            <LinearLayout
                 android:id="@+id/backIcon"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="24dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:layout_width="60dp"
+                android:layout_height="55dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/windows_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="24dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/windows_back"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+<!--            <ImageView-->
+<!--                android:id="@+id/backIcon"-->
+<!--                android:layout_width="28dp"-->
+<!--                android:layout_height="28dp"-->
+<!--                android:layout_marginStart="24dp"-->
+<!--                android:background="?android:attr/selectableItemBackgroundBorderless"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:src="@drawable/windows_back"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <TextView
                 android:id="@+id/textView8"
@@ -53,12 +74,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/saveBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:fontFamily="@font/mada"
                 android:text="save"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
                 android:textColor="@color/blue"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -73,7 +97,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/top_appbar">
+        android:layout_below="@id/top_appbar"
+        android:scrollbars="none">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +109,7 @@
                 android:layout_height="400dp"
                 android:alpha="0.4"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profile2"/>
+                android:src="@drawable/profile_placeholder"/>
 
             <ImageView
                 android:id="@+id/changeProfilePic"
@@ -117,9 +142,15 @@
                 android:background="@drawable/loginscontainer"
                 android:layout_below="@+id/profilePic">
 
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="First Name"
+                    android:fontFamily="@font/mada"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
                 <EditText
-                    android:id="@+id/editName"
+                    android:id="@+id/firstName"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
@@ -127,17 +158,48 @@
                     android:background="@drawable/inputbackground"
                     android:drawablePadding="20dp"
                     android:fontFamily="@font/mada"
-                    android:hint="Full Name"
+                    android:hint="FirstName"
                     android:inputType="text"
                     android:maxLength="35"
                     android:padding="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColorPurple"
                     android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="#41494f"
+                    android:textColorHint="@color/hintText"
+                    android:textSize="18sp"
+                    android:textCursorDrawable="@null"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last Name"
+                    android:fontFamily="@font/mada"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
+                <EditText
+                    android:id="@+id/lastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/inputbackground"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="@font/mada"
+                    android:hint="LastName"
+                    android:inputType="text"
+                    android:maxLength="35"
+                    android:padding="10dp"
+                    android:textColor="@color/textColorPurple"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/hintText"
                     android:textSize="18sp"
                     android:textCursorDrawable="@null"/>
 
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:fontFamily="@font/mada"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
                 <EditText
                     android:id="@+id/uName"
                     android:layout_width="match_parent"
@@ -151,12 +213,48 @@
                     android:inputType="text"
                     android:maxLength="35"
                     android:padding="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColorPurple"
                     android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="#41494f"
+                    android:textColorHint="@color/hintText"
                     android:textSize="18sp"
                     android:textCursorDrawable="@null"/>
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:fontFamily="@font/mada"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/inputbackground"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="@font/mada"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="35"
+                    android:padding="10dp"
+                    android:enabled="false"
+                    android:textColor="@color/hintText"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/hintText"
+                    android:textSize="18sp"
+                    android:textCursorDrawable="@null"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bio"
+                    android:fontFamily="@font/mada"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
                 <EditText
                     android:id="@+id/editBio"
                     android:layout_width="match_parent"
@@ -171,14 +269,18 @@
                     android:maxLength="100"
                     android:maxLines="2"
                     android:padding="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColorPurple"
                     android:textColorHighlight="@color/cardview_dark_background"
-                    android:textColorHint="#41494f"
+                    android:textColorHint="@color/hintText"
                     android:textSize="18sp"
                     android:textCursorDrawable="@null"/>
 
             </LinearLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/detailLayer"/>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

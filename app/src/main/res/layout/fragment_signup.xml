@@ -63,6 +63,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -272,6 +273,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
                         android:background="@drawable/logins_button_background"
                         android:fontFamily="@font/poppins_bold"
                         android:text="Sign Up"

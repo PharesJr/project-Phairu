@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -50,9 +51,15 @@ class ProfileFragment : Fragment() {
         //firebase User
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
+        //profileId from the exploreFragment
         profileId = arguments?.getString("profileId")
 
-        if (profileId == firebaseUser.uid) {
+        //Determine if it's the current user's profile
+        val isCurrentUser = profileId == null || profileId == firebaseUser.uid
+
+        if (isCurrentUser) {
+            //profileId is set for current user
+            profileId = firebaseUser.uid
             binding.editProfileBtn.text = "Edit Profile"
         } else if (profileId != firebaseUser.uid) {
             checkFollowAndFollowingButtonStatus()
@@ -79,20 +86,52 @@ class ProfileFragment : Fragment() {
 
         //find the EditProfile button
         binding.editProfileBtn.setOnClickListener {
-            //navigate to edit profile activity
-            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+
+            val getButtonText = binding.editProfileBtn.text.toString()
+
+            when{
+                // if the button text is "Edit Profile" ----> navigate to EditProfileFragment
+                getButtonText == "Edit Profile" -> navController.navigate(R.id.action_profileFragment_to_editProfileFragment)
+
+                //if the button text is "Follow" ----> add a new follower
+                getButtonText == "Follow" -> {
+
+                    //Database/Follow/currentUserId/Following/profileId(other User)
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(firebaseUser.uid)
+                            .child("Following").child(profileId.toString()).setValue(true)
+
+                    //Database/Follow/profileId(other User)/Followers/currentUserId
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(profileId.toString())
+                            .child("Followers").child(firebaseUser.uid).setValue(true)
+                }
+
+                //if the button text is "Following" ----> remove the user from your following
+                getButtonText == "Following" -> {
+
+                    //Database/Follow/currentUserId/Following/profileId(other User)
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(firebaseUser.uid)
+                            .child("Following").child(profileId.toString()).removeValue()
+
+
+                    //Database/Follow/profileId(other User)/Followers/currentUserId
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(profileId.toString())
+                            .child("Followers").child(firebaseUser.uid).removeValue()
+                }
+            }
         }
 
     }
 
     private fun checkFollowAndFollowingButtonStatus () {
-        val followingRef = firebaseUser?.uid.let { it1 ->
-            FirebaseDatabase.getInstance().reference
-                .child("Follow").child(it1.toString())
+        val followingRef = FirebaseDatabase.getInstance().reference
+                .child("Follow").child(firebaseUser.uid)
                 .child("Following")
-        }
 
-        if (followingRef != null) {
+
             followingRef.addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.child(profileId.toString()).exists()) {
@@ -103,10 +142,11 @@ class ProfileFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
+                    Log.e("ProfileFragment", "Error fetching data: ${error.message}")
+                    Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
                 }
             })
-        }
+
     }
 
     private fun getFollowers() {
@@ -125,7 +165,7 @@ class ProfileFragment : Fragment() {
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("ProfileFragment", "Error fetching data: ${error.message}")
-                    // Toast message
+                    Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
                 }
             })
         } else {
@@ -150,7 +190,7 @@ class ProfileFragment : Fragment() {
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("ProfileFragment", "Error fetching data: ${error.message}")
-                    // Toast message
+                    Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
                 }
             })
         } else {
@@ -177,14 +217,14 @@ class ProfileFragment : Fragment() {
                         Picasso.get().load(user?.profilePicture)
                             .placeholder(R.drawable.profile_placeholder).into(binding.profilePic)
                         binding.FnameLname.text = "$capitalizedFirstName $capitalizedLastName"
-                        binding.username.text = user?.username
+                        binding.username.text = "@" +user?.username
                         binding.textviewBio.text = user?.bio
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("ProfileFragment", "Error fetching data: ${error.message}")
-                    // Toast message
+                    Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
 
                 }
             })
