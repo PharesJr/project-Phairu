@@ -8,10 +8,24 @@
     tools:context=".Fragments.ProfileFragment"
     android:background="@color/background">
 
+    <ProgressBar
+        android:id="@+id/profilePageLoader"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:visibility="visible"
+        android:indeterminateTint="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ScrollView
+        android:id="@+id/profileScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -42,8 +56,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="-35dp"
+                    android:layout_marginEnd="24dp"
                     android:background="@drawable/loginscontainer"
                     app:blurOverlayColor="#90000000"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -73,9 +87,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
                                     android:fontFamily="@font/mada"
-                                    tools:text="Phares Irungu"
                                     android:textColor="#D0CDC9"
-                                    android:textSize="22sp"/>
+                                    android:textSize="22sp"
+                                    tools:text="Phares Irungu" />
 
                                 <TextView
                                     android:id="@+id/username"
@@ -83,9 +97,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
                                     android:fontFamily="@font/mada"
-                                    tools:text="  @phairu"
                                     android:textColor="#D0CDC9"
-                                    android:textSize="18sp" />
+                                    android:textSize="18sp"
+                                    tools:text="  @phairu" />
 
                             </LinearLayout>
 
@@ -95,12 +109,12 @@
                                 android:layout_height="48dp"
                                 android:layout_marginStart="30dp"
                                 android:background="@drawable/buttonbackground1"
-                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
                                 android:fontFamily="@font/mada"
-                                tools:text="Edit Profile"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
                                 android:textAllCaps="false"
                                 android:textColor="@color/textColorPurple"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="Edit Profile" />
 
                         </LinearLayout>
 
@@ -188,9 +202,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mada"
-                            tools:text="About me"
                             android:textColor="#D0CDC9"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            tools:text="About me" />
 
 
                     </LinearLayout>
@@ -208,9 +222,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
                     android:background="@drawable/container_drawer">
 
                     <View
@@ -227,10 +241,10 @@
                         android:id="@+id/posts"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:focusable="true"
+                        android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/view3"
                         app:layout_constraintStart_toStartOf="parent"
@@ -252,11 +266,11 @@
                         android:id="@+id/linearLayout2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/view3"
@@ -301,11 +315,11 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/user_posts_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/user_posts_recyclerview"
                 android:layout_margin="24dp"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <ProgressBar
                 android:id="@+id/progressBar2"
@@ -313,11 +327,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp" />
 
         </LinearLayout>
     </ScrollView>
@@ -333,16 +347,15 @@
 
         <Toolbar
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="55dp"
             android:background="@color/background">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/nav_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/navigation_bg"
                 app:labelVisibilityMode="unlabeled"
                 app:menu="@menu/dashboard_menu" />

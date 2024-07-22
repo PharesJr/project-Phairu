@@ -65,14 +65,34 @@ class ProfileFragment : Fragment() {
             checkFollowAndFollowingButtonStatus()
         }
 
-        //get followers
-        getFollowers()
+        var dataFetchCounter = 0
 
-        //get following
-        getFollowing()
+        // Number of data fetches (userInfo, followers, following)
+        val totalDataFetches = 3
+
+        val onDataFetchComplete = {
+            dataFetchCounter++
+            if (dataFetchCounter == totalDataFetches) {
+
+                // Hide progress bar
+                binding.profilePageLoader.visibility = View.GONE
+
+                //Show user profile
+                binding.profileScrollView.visibility = View.VISIBLE
+            }
+        }
 
         //get user info
-        userInfo()
+        userInfo(onDataFetchComplete)
+
+        // Fetch followers
+        getFollowers(onDataFetchComplete)
+
+        // Fetch following
+        getFollowing(onDataFetchComplete)
+
+
+
 
         // Initialize navController
         navController = findNavController()
@@ -149,7 +169,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    private fun getFollowers() {
+    private fun getFollowers(onDataFetchComplete: () -> Unit)  {
         if (profileId != null) {
             val followersCountRef = FirebaseDatabase.getInstance().reference
                 .child("Follow").child(profileId.toString())
@@ -172,9 +192,12 @@ class ProfileFragment : Fragment() {
             //hide followers count
             binding.followers.text = "-"
         }
+
+        // Notify when followers count is fetched
+        onDataFetchComplete()
     }
 
-    private fun getFollowing() {
+    private fun getFollowing(onDataFetchComplete: () -> Unit)  {
         if (profileId != null) {
             val followingCountRef = FirebaseDatabase.getInstance().reference
                 .child("Follow").child(profileId.toString())
@@ -197,9 +220,16 @@ class ProfileFragment : Fragment() {
             //hide following count
             binding.following.text = "-"
         }
+
+        // Notify when following count is fetched
+        onDataFetchComplete()
     }
 
-    private fun userInfo () {
+    private fun userInfo (onUserInfoFetched: () -> Unit)  {
+
+        // Flag to track image loading
+        var isImageLoaded = false
+
         if (profileId != null) {
             val userRef =
                 FirebaseDatabase.getInstance().getReference().child("Users").child(profileId.toString())
@@ -214,11 +244,27 @@ class ProfileFragment : Fragment() {
                         val capitalizedFirstName = user?.firstname?.capitalize() ?: ""
                         val capitalizedLastName = user?.lastname?.capitalize() ?: ""
 
-                        Picasso.get().load(user?.profilePicture)
-                            .placeholder(R.drawable.profile_placeholder).into(binding.profilePic)
                         binding.FnameLname.text = "$capitalizedFirstName $capitalizedLastName"
                         binding.username.text = "@" +user?.username
                         binding.textviewBio.text = user?.bio
+
+                        Picasso.get().load(user?.profilePicture)
+                            .placeholder(R.drawable.profile_placeholder)
+                            .into(binding.profilePic, object : com.squareup.picasso.Callback {
+                                override fun onSuccess() {
+                                    isImageLoaded = true
+                                    if (isImageLoaded) { // Check if image is loaded
+                                        onUserInfoFetched()
+                                    }
+                                }
+                                override fun onError(e: Exception?) {
+                                    Log.e("ProfileFragment", "Error loading profile picture: ${e?.message}")
+
+
+                                    // Even if error, notify to avoid blocking UI
+                                    onUserInfoFetched()
+                                }
+                            })
                     }
                 }
 
@@ -231,6 +277,9 @@ class ProfileFragment : Fragment() {
         } else {
             // Handle the case where profileId is null
             Log.w("ProfileFragment", "Profile ID is null, cannot fetch user info")
+
+            // Notify even if profileId is null
+            onUserInfoFetched()
         }
     }
 
