@@ -66,10 +66,13 @@ dependencies {
     implementation (libs.glide)
     implementation (libs.chip.navigation.bar)
     implementation(libs.androidx.datastore.preferences)
+    //images
     implementation (libs.circleimageview)
+    implementation(libs.androidx.activity.ktx)
     implementation (libs.ucrop)
     implementation (libs.picasso)
     implementation(libs.compressor.v301)
+    //navigation
     implementation(libs.navigation.compose)
     //navigation
     implementation(libs.androidx.navigation.fragment.ktx)

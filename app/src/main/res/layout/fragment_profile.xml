@@ -40,16 +40,30 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/profilePic"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:contentDescription="profilePic"
-                    android:scaleType="centerCrop"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:layout_margin="10dp"
                     android:src="@drawable/profile_placeholder"
+                    app:shapeAppearanceOverlay="@style/roundedProfilePic"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/profilePic"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="400dp"-->
+<!--                    android:contentDescription="profilePic"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:src="@drawable/profile_placeholder"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <eightbitlab.com.blurview.BlurView
                     android:id="@+id/blurView"

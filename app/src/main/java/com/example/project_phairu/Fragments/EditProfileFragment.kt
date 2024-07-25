@@ -44,9 +44,10 @@ class EditProfileFragment : Fragment() {
     //navController
     private lateinit var navController: NavController
 
-    //firebase
+    //firebase User
     private lateinit var firebaseUser: FirebaseUser
 
+    //firebaseStorage
     private lateinit var storageRef: StorageReference
 
     // To store the selected image URI
@@ -85,7 +86,7 @@ class EditProfileFragment : Fragment() {
         // Initialize navController
         navController = findNavController()
 
-        //firebase User
+        //firebase User (get the current user ID)
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
         // Initialize Firebase Storage reference

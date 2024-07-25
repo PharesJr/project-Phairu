@@ -45,43 +45,108 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="391dp"
-        android:layout_height="789dp"
-        android:layout_below="@id/top_appbar"
-        android:layout_marginTop="5dp">
 
-        <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_appbar"
+        android:layout_above="@id/nav_bar">
+
+            <ProgressBar
+            android:id="@+id/createPageLoader"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:visibility="visible"
+            android:indeterminateTint="@color/blue"
+            android:layout_centerInParent="true"/>
+
+        <ScrollView
+            android:id="@+id/createContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_margin="20dp"
+            android:scrollbars="none"
+            android:visibility="gone"
+            android:background="@drawable/loginscontainer">
 
-            <TextView
-                android:id="@+id/textView3"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Create"
-                android:textSize="18sp"
-                android:textColor="@color/textColor"
-                android:layout_marginStart="10dp"
-                android:textStyle="bold"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/posts_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/postImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:layout_margin="20dp"
+                    android:maxHeight="500dp"
+                    android:src="@drawable/websites"
+                    app:shapeAppearanceOverlay="@style/roundedimageview"
+                    android:visibility="gone"/>
 
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/posts_recyclerview"
-                android:layout_gravity="center"/>
-        </LinearLayout>
-    </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imagePicker"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/gallery_icon_92"
+                        android:layout_gravity="top"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <EditText
+                        android:id="@+id/postText"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/inputbackground"
+                        android:fontFamily="@font/mada"
+                        android:hint="What would you like to share?"
+                        android:inputType="textMultiLine"
+                        android:padding="10dp"
+                        android:textColor="@color/textColorPurple"
+                        android:textColorHighlight="@color/cardview_dark_background"
+                        android:textColorHint="@color/hintText"
+                        android:textSize="18sp"
+                        android:textCursorDrawable="@null"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/sendPostBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="45dp"
+                    android:text="Send"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textColorPurple"
+                    android:textSize="16sp"
+                    android:paddingEnd="10dp"
+                    android:padding="5dp"
+                    android:drawableEnd="@drawable/send_icon_18"
+                    android:background="@drawable/buttonbackground2"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </RelativeLayout>
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"

@@ -1,4 +1,5 @@
 [versions]
+activityKtx = "1.9.1"
 agp = "8.5.0"
 androidImageCropper = "2.8.6"
 androidImageCropperVersion = "4.3.0"
@@ -29,9 +30,11 @@ navigationComposeVersion = "2.7.7"
 picasso = "2.8"
 firebaseStorageKtx = "21.0.0"
 ucrop = "2.2.8-native"
+vannitechAndroidImageCropper = "4.5.0"
 
 [libraries]
 android-image-cropper = { module = "com.theartofdev.edmodo:android-image-cropper", version.ref = "androidImageCropper" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -61,6 +64,7 @@ navigation-compose = { module = "androidx.navigation:navigation-compose", versio
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
 ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
+vannitech-android-image-cropper = { module = "com.vannitech:android-image-cropper", version.ref = "vannitechAndroidImageCropper" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

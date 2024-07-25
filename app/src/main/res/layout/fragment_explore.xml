@@ -67,7 +67,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <SearchView
+                <EditText
                     android:id="@+id/searchUsers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,9 +75,13 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/loginscontainer"
-                    android:iconifiedByDefault="false"
+                    android:drawableStart="@drawable/search_icon_18"
+                    android:drawablePadding="10dp"
                     android:padding="10dp"
-                    android:queryHint="Search"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorPurple"
+                    android:textColorHint="@color/hintText"
+                    android:hint="Search"/>
 
                 <TextView
                     android:id="@+id/resultsTxt"

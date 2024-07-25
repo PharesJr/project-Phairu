@@ -1,6 +1,8 @@
 package com.example.project_phairu.Fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -51,12 +53,13 @@ class ExploreFragment : Fragment() {
         userAdapter = requireContext().let { UserAdapter(it, users!! as ArrayList<UserModel>, true) }
         recyclerView?.adapter = userAdapter
 
-        binding.searchUsers.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+        binding.searchUsers.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int){
+                // Not used in this case
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val newText = s?.toString()
                 if (newText.isNullOrEmpty()) {
                     // Hide progress bar
                     binding.progressBar2.visibility = View.GONE
@@ -77,7 +80,10 @@ class ExploreFragment : Fragment() {
                     //search
                     searchUser(newText.lowercase().trim())
                 }
-                return true
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not used in this case
             }
         })
 

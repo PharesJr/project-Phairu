@@ -117,29 +117,29 @@ class ProfileFragment : Fragment() {
                 getButtonText == "Follow" -> {
 
                     //Database/Follow/currentUserId/Following/profileId(other User)
-                        FirebaseDatabase.getInstance().reference
-                            .child("Follow").child(firebaseUser.uid)
-                            .child("Following").child(profileId.toString()).setValue(true)
+                    FirebaseDatabase.getInstance().reference
+                        .child("Follow").child(firebaseUser.uid)
+                        .child("Following").child(profileId.toString()).setValue(true)
 
                     //Database/Follow/profileId(other User)/Followers/currentUserId
-                        FirebaseDatabase.getInstance().reference
-                            .child("Follow").child(profileId.toString())
-                            .child("Followers").child(firebaseUser.uid).setValue(true)
+                    FirebaseDatabase.getInstance().reference
+                        .child("Follow").child(profileId.toString())
+                        .child("Followers").child(firebaseUser.uid).setValue(true)
                 }
 
                 //if the button text is "Following" ----> remove the user from your following
                 getButtonText == "Following" -> {
 
                     //Database/Follow/currentUserId/Following/profileId(other User)
-                        FirebaseDatabase.getInstance().reference
-                            .child("Follow").child(firebaseUser.uid)
-                            .child("Following").child(profileId.toString()).removeValue()
+                    FirebaseDatabase.getInstance().reference
+                        .child("Follow").child(firebaseUser.uid)
+                        .child("Following").child(profileId.toString()).removeValue()
 
 
                     //Database/Follow/profileId(other User)/Followers/currentUserId
-                        FirebaseDatabase.getInstance().reference
-                            .child("Follow").child(profileId.toString())
-                            .child("Followers").child(firebaseUser.uid).removeValue()
+                    FirebaseDatabase.getInstance().reference
+                        .child("Follow").child(profileId.toString())
+                        .child("Followers").child(firebaseUser.uid).removeValue()
                 }
             }
         }
@@ -148,24 +148,24 @@ class ProfileFragment : Fragment() {
 
     private fun checkFollowAndFollowingButtonStatus () {
         val followingRef = FirebaseDatabase.getInstance().reference
-                .child("Follow").child(firebaseUser.uid)
-                .child("Following")
+            .child("Follow").child(firebaseUser.uid)
+            .child("Following")
 
 
-            followingRef.addValueEventListener(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.child(profileId.toString()).exists()) {
-                        binding.editProfileBtn.text = "Following"
-                    } else {
-                        binding.editProfileBtn.text = "Follow"
-                    }
+        followingRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child(profileId.toString()).exists()) {
+                    binding.editProfileBtn.text = "Following"
+                } else {
+                    binding.editProfileBtn.text = "Follow"
                 }
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("ProfileFragment", "Error fetching data: ${error.message}")
-                    Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
-                }
-            })
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("ProfileFragment", "Error fetching data: ${error.message}")
+                Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
+            }
+        })
 
     }
 
