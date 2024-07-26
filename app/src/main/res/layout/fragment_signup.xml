@@ -60,10 +60,24 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <ProgressBar
+        android:id="@+id/signUpPageProgressBar"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:visibility="visible"
+        android:indeterminateTint="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ScrollView
+        android:id="@+id/signUpScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="none"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

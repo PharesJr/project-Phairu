@@ -38,6 +38,11 @@ class SignupFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSignupBinding.inflate(inflater, container, false)
+
+        //show content
+        binding.signUpPageProgressBar.visibility = View.GONE
+        binding.signUpScrollView.visibility = View.VISIBLE
+
         return binding.root
     }
 
@@ -107,13 +112,20 @@ class SignupFragment : Fragment() {
     //Fn to sign up a user to Firebase Realtime DB and Firebase Authentication
 
     private fun signUpUser(firstname: String, lastname: String, username: String, email: String, password: String) {
+        //hide content
+        binding.signUpPageProgressBar.visibility = View.VISIBLE
+        binding.signUpScrollView.visibility = View.GONE
+
         databaseReference.orderByChild("username").equalTo(username)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
                         // Username already exists
                         Toast.makeText(requireContext(),"Username already taken", Toast.LENGTH_SHORT).show()
-                    } else {
+
+                        //show content
+                        binding.signUpPageProgressBar.visibility = View.GONE
+                        binding.signUpScrollView.visibility = View.VISIBLE} else {
                         // Username is available, proceed with Firebase Authentication
                         firebaseAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(requireActivity()) { task ->
@@ -126,15 +138,32 @@ class SignupFragment : Fragment() {
 
                                     databaseReference.child(userId).setValue(userData)
                                         .addOnSuccessListener {
-                                            Toast.makeText(requireContext(), "Sign Up Success", Toast.LENGTH_SHORT).show()
-                                            // Navigate back to LoginFragment using Navigation Component
-                                            findNavController().popBackStack()
+                                            //set user to follow themselves (to be able to see own posts)
+                                            FirebaseDatabase.getInstance().reference.child("Follow").child(userId).child("Following").child(userId).setValue(true)
+                                                .addOnSuccessListener {
+                                                    Toast.makeText(requireContext(), "Sign Up Success", Toast.LENGTH_SHORT).show()
+
+                                                    // Navigate back to LoginFragment using Navigation Component
+                                                    findNavController().popBackStack()
+                                                }
+                                                .addOnFailureListener { e ->
+                                                    //show content
+                                                    binding.signUpPageProgressBar.visibility = View.GONE
+                                                    binding.signUpScrollView.visibility = View.VISIBLE
+                                                    Toast.makeText(requireContext(), "Error saving user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                                                }
                                         }
                                         .addOnFailureListener { e ->
+                                            //show content
+                                            binding.signUpPageProgressBar.visibility = View.GONE
+                                            binding.signUpScrollView.visibility = View.VISIBLE
                                             Toast.makeText(requireContext(), "Error saving user data: ${e.message}", Toast.LENGTH_SHORT).show()
                                         }
                                 } else {
                                     // Authentication failed
+                                    //show content
+                                    binding.signUpPageProgressBar.visibility = View.GONE
+                                    binding.signUpScrollView.visibility = View.VISIBLE
                                     Toast.makeText(requireContext(), "Sign Up Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                                 }
                             }
@@ -142,10 +171,75 @@ class SignupFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    //show content
+                    binding.signUpPageProgressBar.visibility = View.GONE
+                    binding.signUpScrollView.visibility = View.VISIBLE
                     Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
             })
     }
+
+//    private fun signUpUser(firstname: String, lastname: String, username: String, email: String, password: String) {
+//        databaseReference.orderByChild("username").equalTo(username)
+//            .addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                    if (dataSnapshot.exists()) {
+//                        // Username already exists
+//                        Toast.makeText(requireContext(),"Username already taken", Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        // Username is available, proceed with Firebase Authentication
+//                        firebaseAuth.createUserWithEmailAndPassword(email, password)
+//                            .addOnCompleteListener(requireActivity()) { task ->
+//                                if (task.isSuccessful) {
+//                                    // Authentication successful, now save to Realtime Database
+//                                    val user = firebaseAuth.currentUser
+//                                    val userId = user?.uid ?: return@addOnCompleteListener
+//
+//                                    val userData = UserModel(userId, firstname, lastname, username, email)
+//
+//                                    databaseReference.child(userId).setValue(userData)
+//                                        .addOnSuccessListener {
+//                                            Toast.makeText(requireContext(), "Sign Up Success", Toast.LENGTH_SHORT).show()
+//
+//                                            //set user yo follow themselves (to be able to see own posts)
+//                                            FirebaseDatabase.getInstance().reference.child("Follow").child(userId).child("Following").child(userId).setValue(true)
+//
+//                                            //hide content
+//                                            binding.signUpPageProgressBar.visibility = View.VISIBLE
+//                                            binding.signUpScrollView.visibility = View.GONE
+//
+//                                            // Navigate back to LoginFragment using Navigation Component
+//                                            findNavController().popBackStack()
+//                                        }
+//                                        .addOnFailureListener { e ->
+//
+//                                            //show content
+//                                            binding.signUpPageProgressBar.visibility = View.GONE
+//                                            binding.signUpScrollView.visibility = View.VISIBLE
+//
+//                                            Toast.makeText(requireContext(), "Error saving user data: ${e.message}", Toast.LENGTH_SHORT).show()
+//                                        }
+//                                } else {
+//                                    // Authentication failed
+//
+//                                    //show content
+//                                    binding.signUpPageProgressBar.visibility = View.GONE
+//                                    binding.signUpScrollView.visibility = View.VISIBLE
+//                                    Toast.makeText(requireContext(), "Sign Up Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+//                                }
+//                            }
+//                    }
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//
+//                    //show content
+//                    binding.signUpPageProgressBar.visibility = View.GONE
+//                    binding.signUpScrollView.visibility = View.VISIBLE
+//                    Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+//                }
+//            })
+//    }
 
     // Helper function for email validation
     private fun String.isValidEmail(): Boolean {

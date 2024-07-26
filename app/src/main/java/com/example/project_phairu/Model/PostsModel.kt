@@ -6,5 +6,6 @@ data class PostsModel(
     val postDescription: String? = null,
     val postPicture: String? = null,
     val postTimestamp: String? = null,
-    val postDate: String? = null
+    val postDate: String? = null,
+    val hasImage: Boolean = false
 )

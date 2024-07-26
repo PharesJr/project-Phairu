@@ -49,8 +49,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_appbar"
-        android:layout_above="@id/nav_bar">
+        android:layout_below="@id/top_appbar">
 
             <ProgressBar
             android:id="@+id/createPageLoader"

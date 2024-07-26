@@ -29,11 +29,6 @@ class UserAdapter (private var context: Context,
     // Initialize FirebaseUser (get specific user ID)
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-       val view = LayoutInflater.from(context).inflate(R.layout.user_item_layout, parent, false)
-        return ViewHolder(view)
-    }
-
     class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Initialize views
         var profileName: TextView = itemView.findViewById(R.id.ProfileName)
@@ -41,6 +36,11 @@ class UserAdapter (private var context: Context,
         var profilePic: CircleImageView = itemView.findViewById(R.id.ProfilePic)
         var followBtn: AppCompatButton = itemView.findViewById(R.id.followBtn)
 
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.user_item_layout, parent, false)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
