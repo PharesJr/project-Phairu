@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Phares Irungu"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/mada"
                     android:textColor="@color/textColorPurple"
                     android:layout_marginStart="10dp"/>
@@ -98,7 +98,7 @@
             android:layout_below="@id/bottomLayer"
             android:fontFamily="@font/mada"
             android:text="This is a sample post caption."
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/textColorPurple"/>
@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/textColorPurple"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/post_image_like_btn"/>
@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/textColorPurple"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/post_image_comment_btn"/>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.Model.PostsModel
@@ -34,6 +35,7 @@ class PostAdapter (private var context: Context,
         var profileUsername: TextView = itemView.findViewById(R.id.postProfileUsername)
         var profilePic: CircleImageView = itemView.findViewById(R.id.postProfilePic)
         var postImage: ShapeableImageView = itemView.findViewById(R.id.postImage)
+        var imageHolder: LinearLayout = itemView.findViewById(R.id.bottomLayer)
         var postCaption: TextView = itemView.findViewById(R.id.postCaption)
         var likesCount: TextView = itemView.findViewById(R.id.likesCount)
         var commentsCount: TextView = itemView.findViewById(R.id.commentsCount)
@@ -62,12 +64,23 @@ class PostAdapter (private var context: Context,
         //bind data to views
         val post = posts[position]
 
+        // Check if the post has an image
+        if (post.postPicture != null) {
+            holder.imageHolder.visibility = View.VISIBLE
+            Picasso.get().load(post.postPicture).into(holder.postImage)
+        } else {
+            holder.postImage.visibility = View.GONE
+        }
+
         //bind the data
 
         // get the user data
         userInfo(holder.profilePic, holder.profileName, holder.profileUsername, post.senderId)
 
         Picasso.get().load(post.postPicture).into(holder.itemView.findViewById<ShapeableImageView>(R.id.postImage))
+
+        holder.postCaption.text = post.postDescription
+
 
     }
 
