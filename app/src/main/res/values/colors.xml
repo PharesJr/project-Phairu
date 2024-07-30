@@ -14,6 +14,7 @@
 
 <!--    Material UI Colors-->
     <color name="background">#121212</color>
+    <color name="background2">#1A1917</color>
     <color name="topAppBarColor">#1F1F1F</color>
     <color name="drawerBackground">#242424</color>
     <color name="bottomNavBackground">#2E2E2E</color>

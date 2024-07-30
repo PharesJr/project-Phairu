@@ -9,12 +9,16 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_phairu.Adapter.PostAdapter
+import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
 import com.example.project_phairu.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -34,6 +38,10 @@ class ProfileFragment : Fragment() {
 
     //profileID
     private var profileId: String? = null
+
+    //users Posts and postAdapter
+    var postsList: List<PostsModel> = emptyList()
+    private lateinit var postAdapter: PostAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +72,20 @@ class ProfileFragment : Fragment() {
         } else if (profileId != firebaseUser.uid) {
             checkFollowAndFollowingButtonStatus()
         }
+
+        //Instantiate the Recyclerview
+        val recyclerView = binding.userPostsRecyclerview
+        val linearLayoutManager = LinearLayoutManager(requireContext())
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.setHasFixedSize(true)
+
+        // Initialize the postList and postAdapter
+        postsList = mutableListOf()
+        postAdapter = requireContext().let { PostAdapter(it, postsList as MutableList<PostsModel>) }!!
+        recyclerView?.adapter = postAdapter
+
 
         var dataFetchCounter = 0
 
@@ -144,6 +166,10 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        //show users posts
+        myPosts()
+
+
     }
 
     private fun checkFollowAndFollowingButtonStatus () {
@@ -223,6 +249,26 @@ class ProfileFragment : Fragment() {
 
         // Notify when following count is fetched
         onDataFetchComplete()
+    }
+
+    private fun myPosts() {
+        val postRef = FirebaseDatabase.getInstance().reference.child("Posts")
+            .orderByChild("senderId").equalTo(profileId)
+
+        postRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                (postsList as MutableList<PostsModel>).clear()
+                for (postSnapshot in snapshot.children) {
+                    val post = postSnapshot.getValue(PostsModel::class.java)
+                    if (post != null) {
+                        (postsList as MutableList<PostsModel>).add(post)
+                    }
+                }
+                postAdapter.notifyDataSetChanged()
+            }override fun onCancelled(error: DatabaseError) {
+                // Handle errors
+            }
+        })
     }
 
     private fun userInfo (onUserInfoFetched: () -> Unit)  {

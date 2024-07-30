@@ -103,6 +103,12 @@ class EditProfileFragment : Fragment() {
             findNavController().popBackStack()
         }
 
+        //find the back button
+        binding.backIconImage.setOnClickListener {
+            //navigate back to profile fragment
+            findNavController().popBackStack()
+        }
+
         //save button functionality
         binding.saveBtn.setOnClickListener {
 

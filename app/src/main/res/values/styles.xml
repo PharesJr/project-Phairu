@@ -6,7 +6,10 @@
     </style>
 
     <style name="roundedProfilePic">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">5%</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="selectableItem">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 </resources>

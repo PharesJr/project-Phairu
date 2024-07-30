@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/topLayer"
             android:layout_margin="10dp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/postImage"
