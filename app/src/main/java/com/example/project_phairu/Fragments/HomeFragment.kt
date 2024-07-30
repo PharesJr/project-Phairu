@@ -24,6 +24,7 @@ import com.example.project_phairu.R
 import com.example.project_phairu.databinding.FragmentHomeBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -179,7 +180,6 @@ class HomeFragment : Fragment() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-
 
 
     }

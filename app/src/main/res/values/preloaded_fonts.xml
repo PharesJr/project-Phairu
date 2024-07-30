@@ -11,9 +11,11 @@
         <item>@font/chango</item>
         <item>@font/days_one</item>
         <item>@font/mada</item>
+        <item>@font/open_sans_light</item>
         <item>@font/poller_one</item>
         <item>@font/poppins</item>
         <item>@font/poppins_black</item>
         <item>@font/poppins_bold</item>
+        <item>@font/yeseva_one</item>
     </array>
 </resources>

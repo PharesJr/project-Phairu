@@ -1,13 +1,18 @@
 package com.example.project_phairu.Adapter
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.project_phairu.CommentsActivity
+import com.example.project_phairu.Fragments.HomeFragment
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
@@ -43,6 +48,7 @@ class PostAdapter (private var context: Context,
         var commentBtn: ImageView = itemView.findViewById(R.id.post_image_comment_btn)
         var shareBtn: ImageView = itemView.findViewById(R.id.post_share_comment_btn)
         var saveBtn: ImageView = itemView.findViewById(R.id.post_save_comment_btn)
+        var isLiked: Boolean = false
 
 
 
@@ -58,31 +64,138 @@ class PostAdapter (private var context: Context,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-     //instantiate the Firebase User
+        // get current userId
         val firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        //bind data to views
+        // Bind data to views
         val post = posts[position]
 
-        // Check if the post has an image
+        //get the postId
+        val postId = post.postId.toString()
+
+        // Image visibility
         if (post.postPicture != null) {
             holder.imageHolder.visibility = View.VISIBLE
             Picasso.get().load(post.postPicture).into(holder.postImage)
         } else {
-            holder.postImage.visibility = View.GONE
+            holder.imageHolder.visibility = View.GONE
         }
 
-        //bind the data
+        // Caption visibility
+        if (post.postDescription == "") {
+            holder.postCaption.visibility = View.GONE
+        } else {
+            holder.postCaption.visibility = View.VISIBLE
+            holder.postCaption.text = post.postDescription
+        }
 
-        // get the user data
+        // get the user data for the current post(profilePic, name, username)
         userInfo(holder.profilePic, holder.profileName, holder.profileUsername, post.senderId)
 
-        Picasso.get().load(post.postPicture).into(holder.itemView.findViewById<ShapeableImageView>(R.id.postImage))
+        // Like button functionality
+        holder.likeBtn.setOnClickListener {
+            val likesRef = FirebaseDatabase.getInstance().reference.child("Likes").child(postId)
+            if (holder.isLiked) {
+                likesRef.child(firebaseUser?.uid.toString()).removeValue()
+                    .addOnSuccessListener {
+                        holder.isLiked = false
+                        updateLikeButton(holder.likeBtn, false)
+                        updateLikesCount(postId, holder.likesCount)
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error unliking post: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {if (firebaseUser != null) {
+                likesRef.child(firebaseUser.uid).setValue(true)
+                    .addOnSuccessListener {
+                        holder.isLiked = true
+                        updateLikeButton(holder.likeBtn, true)
+                        updateLikesCount(postId, holder.likesCount)
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error liking post: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            }
+        }
 
-        holder.postCaption.text = post.postDescription
+        // Check if liked.... and set likes count
+        isLiked(postId, holder.likeBtn)
+        likesCount(postId, holder.likesCount)
 
+        //get Comments count
+        commentsCount(postId, holder.commentsCount)
 
+        // Comments button functionality
+        holder.commentBtn.setOnClickListener {
+            val intent = Intent(context, CommentsActivity::class.java)
+            Log.d("PostAdapter", "postId before putExtra: $postId")
+            intent.putExtra("postId", postId)
+            intent.putExtra("senderId", post.senderId)
+            context.startActivity(intent)
+        }
     }
+
+    private fun isLiked(postId: String, likeButton: ImageView) {
+        //get current user
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val likesRef = FirebaseDatabase.getInstance().reference.child("Likes").child(postId)
+
+        likesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child(firebaseUser?.uid.toString()).exists()) {
+                    likeButton.setImageResource(R.drawable.heart_red)
+                    likeButton.tag = "Liked"
+                } else {
+                    likeButton.setImageResource(R.drawable.heart)
+                    likeButton.tag = "Like"
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("PostAdapter", "Error checking if post is liked: ${error.message}")
+            }
+        })
+    }
+
+    private fun likesCount(postId: String, likesCount: TextView) {
+        val likesRef = FirebaseDatabase.getInstance().reference.child("Likes").child(postId)
+
+        likesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                   likesCount.text = snapshot.childrenCount.toString()
+                } else{
+                    likesCount.text = "0"
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("PostAdapter", "Error getting likes count: ${error.message}")
+            }
+        })
+    }
+
+    private fun commentsCount(postId: String, commentsCount: TextView) {
+        val commentsRef = FirebaseDatabase.getInstance().reference.child("Comments").child(postId!!)
+
+        commentsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    commentsCount.text = snapshot.childrenCount.toString()
+                } else{
+                    commentsCount.text = "0"
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("PostAdapter", "Error getting comments count: ${error.message}")
+            }
+        })
+    }
+
+
 
     private fun userInfo(profilePic: CircleImageView, profileName: TextView, profileUsername: TextView, senderId: String?) {
     //get users node
@@ -105,8 +218,33 @@ class PostAdapter (private var context: Context,
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("PostAdapter", "Error getting user info: ${error.message}")
             }
         })
     }
+
+    private fun updateLikeButton(likeButton: ImageView, isLiked: Boolean) {
+        if (isLiked) {
+            likeButton.setImageResource(R.drawable.heart_red)
+            likeButton.tag = "Liked"
+        } else {
+            likeButton.setImageResource(R.drawable.heart)
+            likeButton.tag = "Like"
+        }
+    }
+
+    private fun updateLikesCount(postId: String, likesCountTextView: TextView) {
+        val likesRef = FirebaseDatabase.getInstance().reference.child("Likes").child(postId)
+        likesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                likesCountTextView.text = snapshot.childrenCount.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("PostAdapter", "Error updating likes count: ${error.message}")
+            }
+        })
+    }
+
+
 }

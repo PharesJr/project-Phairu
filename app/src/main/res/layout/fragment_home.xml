@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.HomeFragment"
     android:background="@color/background"
-    android:id="@+id/drawer_layout">
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:id="@+id/mainLayout"
@@ -67,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/appbar"
-                android:layout_above="@id/nav_bar">
+                android:layout_above="@id/nav_bar"
+                android:scrollbars="none">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

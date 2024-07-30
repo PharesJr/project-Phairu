@@ -19,6 +19,7 @@
     <color name="bottomNavBackground">#2E2E2E</color>
     <color name="textColorPurple">#DEDEDE</color>
     <color name="hintText">#999999</color>
+    <color name="hintText2">#C3C1C1</color>
     <color name="userItemBackground">#1E1E1E</color>
     <color name="iconNavigationBackground">#9E9E9E</color>
     <color name="error">#72FF1744</color>
