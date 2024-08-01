@@ -42,12 +42,12 @@ class PostAdapter (private var context: Context,
         var postImage: ShapeableImageView = itemView.findViewById(R.id.postImage)
         var imageHolder: LinearLayout = itemView.findViewById(R.id.bottomLayer)
         var postCaption: TextView = itemView.findViewById(R.id.postCaption)
+        var postTime: TextView = itemView.findViewById(R.id.postTime)
         var likesCount: TextView = itemView.findViewById(R.id.likesCount)
         var commentsCount: TextView = itemView.findViewById(R.id.commentsCount)
         var likeBtn: ImageView = itemView.findViewById(R.id.post_image_like_btn)
         var commentBtn: ImageView = itemView.findViewById(R.id.post_image_comment_btn)
         var shareBtn: ImageView = itemView.findViewById(R.id.post_share_comment_btn)
-        var saveBtn: ImageView = itemView.findViewById(R.id.post_save_comment_btn)
         var isLiked: Boolean = false
 
 
@@ -119,6 +119,10 @@ class PostAdapter (private var context: Context,
             }
         }
 
+        //get the Post time and date and state the passed time
+        val relativeTime = getRelativeTime(post.postId)
+        holder.postTime.text = relativeTime
+
         // Check if liked.... and set likes count
         isLiked(postId, holder.likeBtn)
         likesCount(postId, holder.likesCount)
@@ -130,6 +134,14 @@ class PostAdapter (private var context: Context,
         holder.commentBtn.setOnClickListener {
             val intent = Intent(context, CommentsActivity::class.java)
             Log.d("PostAdapter", "postId before putExtra: $postId")
+            intent.putExtra("postId", postId)
+            intent.putExtra("senderId", post.senderId)
+            context.startActivity(intent)
+        }
+
+        //OnClick Listener when a user Clicks on a post
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, CommentsActivity::class.java)
             intent.putExtra("postId", postId)
             intent.putExtra("senderId", post.senderId)
             context.startActivity(intent)
@@ -244,6 +256,22 @@ class PostAdapter (private var context: Context,
                 Log.e("PostAdapter", "Error updating likes count: ${error.message}")
             }
         })
+    }
+
+    // Helper function to calculate and format relative time
+    fun getRelativeTime(postTimestamp: String?): String {
+        if (postTimestamp == null) return ""
+
+        val currentTime = System.currentTimeMillis()
+        val postTime = postTimestamp.toLongOrNull() ?: return ""
+        val timeDiff = currentTime - postTime
+
+        return when {
+            timeDiff < 60000 -> "${timeDiff / 1000} sec ago"
+            timeDiff < 3600000 -> "${timeDiff / 60000} min ago"
+            timeDiff < 86400000 -> "${timeDiff / 3600000} hr ago"
+            else -> "${timeDiff / 86400000} days ago"
+        }
     }
 
 

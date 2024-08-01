@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:backgroundTint="@color/background">
+    android:backgroundTint="@color/background"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true">
 
     <RelativeLayout
         android:id="@+id/cardview_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/loginscontainer">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/topLayer"
@@ -31,140 +33,182 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"/>
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginStart="5dp">
-                <TextView
-                    android:id="@+id/postProfileName"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phares Irungu"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif-black"
-                    android:textColor="@color/textColorPurple"
-                    android:layout_marginStart="10dp"/>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/postProfileName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phares Irungu"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-black"
+                        android:textColor="@color/hintText2"
+                        android:layout_marginStart="5dp"/>
+
+                    <TextView
+                        android:id="@+id/postProfileUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phairu"
+                        android:textSize="14sp"
+                        android:layout_gravity="center"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/hintText"
+                        android:layout_marginStart="3dp"/>
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/postProfileUsername"
+                    android:id="@+id/postTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phairu"
-                    android:textSize="12sp"
+                    android:text=".10min ago"
                     android:fontFamily="sans-serif"
+                    android:textSize="10sp"
+                    android:layout_marginStart="5dp"
                     android:textColor="@color/hintText"
-                    android:layout_marginStart="10dp"/>
+                    android:textAllCaps="false"/>
 
             </LinearLayout>
-            <!--        <TextView-->
-            <!--            android:layout_width="wrap_content"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:text="9.30pm 24.7.2024"-->
-            <!--            android:layout_marginTop="15dp"-->
-            <!--            android:fontFamily="@font/poppins"-->
-            <!--            android:textSize="16sp"-->
-            <!--            android:layout_marginEnd="10dp"-->
-            <!--            android:textColor="@color/hintText"-->
-            <!--            android:textAllCaps="false"-->
-            <!--            android:gravity="end"-->
-            <!--            android:layout_weight="1"/>-->
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/menu_vertical"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"/>
+            </RelativeLayout>
+
+
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/bottomLayer"
+        <RelativeLayout
+            android:id="@+id/contentHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/topLayer"
-            android:layout_margin="10dp"
-            android:visibility="gone">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/postImage"
+            android:layout_below="@id/topLayer">
+            <LinearLayout
+                android:id="@+id/bottomLayer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/profilepic_placeholder"
-                android:maxHeight="350dp"
-                app:shapeAppearanceOverlay="@style/roundedimageview"/>
-        </LinearLayout>
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:visibility="gone">
 
-        <TextView
-            android:id="@+id/postCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/bottomLayer"
-            android:fontFamily="sans-serif"
-            android:text="This is a sample post caption."
-            android:textSize="16sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/textColorPurple"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/postImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/profilepic_placeholder"
+                    android:maxHeight="300dp"
+                    app:shapeAppearanceOverlay="@style/roundedimageview"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/postCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bottomLayer"
+                android:fontFamily="sans-serif-medium"
+                android:text="This is a sample post caption."
+                android:textSize="14sp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/hintText2"/>
+
+        </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="25dp"
             android:layout_marginBottom="10dp"
-            android:layout_below="@id/postCaption">
+            android:layout_below="@id/contentHolder">
 
-            <ImageView
-                android:id="@+id/post_image_like_btn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/heart"
-                android:layout_marginStart="10dp"/>
-
-            <TextView
-                android:id="@+id/likesCount"
+            <LinearLayout
+                android:id="@+id/likesLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="16sp"
-                android:textColor="@color/textColorPurple"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/post_image_like_btn"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/post_image_like_btn"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/heart"/>
 
-            <ImageView
-                android:id="@+id/post_image_comment_btn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/message_icon"
-                android:layout_toEndOf="@+id/likesCount"
-                android:layout_marginStart="10dp"
-                />
+                <TextView
+                    android:id="@+id/likesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/hintText2"/>
 
-            <TextView
-                android:id="@+id/commentsCount"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/commentsLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="16sp"
-                android:textColor="@color/textColorPurple"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/post_image_comment_btn"/>
+                android:orientation="horizontal"
+                android:layout_toRightOf="@id/likesLayout"
+                android:layout_marginStart="10dp">
+                <ImageView
+                    android:id="@+id/post_image_comment_btn"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/comments_icon"
+                    android:layout_marginStart="10dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
-            <ImageView
-                android:id="@+id/post_share_comment_btn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/send_icon"
-                android:layout_toStartOf="@+id/post_save_comment_btn"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="10dp"
-                />
+                <TextView
+                    android:id="@+id/commentsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/hintText2"/>
 
-            <ImageView
-                android:id="@+id/post_save_comment_btn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/windows_bookmark_white"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/shareLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/commentsLayout"
+                android:layout_marginStart="10dp">
+                <ImageView
+                    android:id="@+id/post_share_comment_btn"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:src="@drawable/send_icon"
+                    android:layout_marginStart="10dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+            </LinearLayout>
         </RelativeLayout>
 
 
