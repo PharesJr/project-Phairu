@@ -135,35 +135,6 @@ class HomeFragment : Fragment() {
         //when an Item in the drawer is clicked
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.action_logout -> {
-                    //initialize a dialog builder
-                    val builder = AlertDialog.Builder(requireContext())
-                    val view = layoutInflater.inflate(R.layout.dialog_logout, null)
-
-                    builder.setView(view)
-                    val dialog = builder.create()
-
-                    view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
-                        dialog.dismiss()
-                    }
-
-                    view.findViewById<Button>(R.id.btnLogout).setOnClickListener {
-                        lifecycleScope.launch {
-
-                            // Clear session data
-                            userSessionDataStore.clearUserSession()
-
-                            // Show Toast message
-                            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
-
-                            // Navigate back to Login page
-                            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
-                        }
-                        dialog.dismiss()
-                    }
-                    dialog.show()
-                    true
-                }
                 R.id.exploreFragment -> {
                     // Navigate to Explore page
                     findNavController().navigate(R.id.action_homeFragment_to_exploreFragment)

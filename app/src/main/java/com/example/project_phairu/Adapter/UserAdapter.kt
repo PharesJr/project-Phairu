@@ -79,7 +79,7 @@ class UserAdapter (private var context: Context,
 
                 firebaseUser?.uid.let { it1 ->
                     // Check if user.id is not null
-                    user.id?.let { userId ->
+                    user.id?.let {
                         FirebaseDatabase.getInstance().reference
                             .child("Follow").child(it1.toString())
                             .child("Following").child(user.id)
@@ -88,12 +88,7 @@ class UserAdapter (private var context: Context,
                                     FirebaseDatabase.getInstance().reference
                                         .child("Follow").child(user.id)
                                         .child("Followers").child(it1.toString())
-                                        .setValue(true).addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-
-                                            }
-
-                                        }
+                                        .setValue(true)
                                 }
 
                             }
@@ -102,7 +97,7 @@ class UserAdapter (private var context: Context,
             } else {
                 firebaseUser?.uid.let { it1 ->
                     // Check if user.id is not null
-                    user.id?.let { userId ->
+                    user.id?.let {
                         FirebaseDatabase.getInstance().reference
                             .child("Follow").child(it1.toString())
                             .child("Following").child(user.id)
@@ -111,14 +106,8 @@ class UserAdapter (private var context: Context,
                                     FirebaseDatabase.getInstance().reference
                                         .child("Follow").child(user.id)
                                         .child("Followers").child(it1.toString())
-                                        .removeValue().addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-
-                                            }
-
-                                        }
+                                        .removeValue()
                                 }
-
                             }
                     }
                 }

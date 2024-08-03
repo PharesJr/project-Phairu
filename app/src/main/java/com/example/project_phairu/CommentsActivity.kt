@@ -38,9 +38,6 @@ class CommentsActivity : AppCompatActivity() {
     //firebaseUser
     private lateinit var firebaseUser: FirebaseUser
 
-    //Initialize the comment Adapter
-    private var commentAdapter: CommentsAdapter? = null
-
     //users Comments and commentsAdapter
     var commentsList: MutableList<CommentsModel>? = null
     private lateinit var commentsAdapter: CommentsAdapter
@@ -266,8 +263,9 @@ class CommentsActivity : AppCompatActivity() {
                 senderId = firebaseUser?.uid,
                 comment = commentText,
                 commentDate = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(
-                    Date()
-                )
+                    Date(),
+                ),
+                commentTimestamp = System.currentTimeMillis().toString()
             )
 
             if (commentId != null) {

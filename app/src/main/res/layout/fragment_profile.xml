@@ -22,11 +22,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        android:visibility="gone">
+        android:visibility="visible"
+        android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
                     <LinearLayout
@@ -63,10 +65,14 @@
                                 android:layout_marginTop="20dp">
 
                                 <LinearLayout
+                                    android:id="@+id/followersLayout"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:layout_marginStart="10dp">
+                                    android:layout_marginStart="10dp"
+                                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                                    android:clickable="true"
+                                    android:focusable="true">
 
                                     <TextView
                                         android:id="@+id/followers"
@@ -90,10 +96,14 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/followingLayout"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:orientation="vertical"
-                                    android:layout_marginStart="20dp">
+                                    android:layout_marginStart="20dp"
+                                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                                    android:clickable="true"
+                                    android:focusable="true">
 
                                     <TextView
                                         android:id="@+id/following"
@@ -115,6 +125,22 @@
                                         android:textColor="@color/textColorPurple"
                                         android:textSize="16sp" />
                                 </LinearLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:clickable="true"
+                                    android:focusable="true">
+                                    <ImageView
+                                        android:id="@+id/profile_menu"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:src="@drawable/menu_vertical"
+                                        android:layout_alignParentEnd="true"
+                                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                                        android:layout_marginEnd="15dp"/>
+                                </RelativeLayout>
 
 
                         </LinearLayout>
@@ -198,103 +224,34 @@
                             android:layout_marginBottom="10dp"
                             tools:text="About me" />
                     </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/navigationIcons"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/detailLayer">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/container_drawer"
-                    android:visibility="visible">
-
-                    <View
-                        android:id="@+id/view3"
-                        android:layout_width="3dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/gradient"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <RelativeLayout
-                        android:id="@+id/posts"
-                        android:layout_width="160dp"
-                        android:layout_height="match_parent"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/view3"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/userPostsFeed"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/windows_feeds_white2" />
-
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/linearLayout2"
-                        android:layout_width="160dp"
-                        android:layout_height="match_parent"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/view3"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/windows_bookmark_white" />
-
-                    </RelativeLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
+                android:layout_below="@id/detailLayer">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userPostsRecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/navigationIcons"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:visibility="visible"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/userSavedPostsRecyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/navigationIcons"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:visibility="gone"/>
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/userSavedPostsRecyclerview"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:visibility="gone"/>-->
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_below="@+id/userPostsRecyclerview"/>
+            </RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>

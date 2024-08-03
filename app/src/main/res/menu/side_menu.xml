@@ -10,10 +10,4 @@
         <item android:id="@+id/eventsFragment"
             android:title="Events"
             android:icon="@drawable/windows_events"/>
-
-        <item android:id="@+id/action_logout"
-            android:title="Logout"
-            android:icon="@drawable/windows_logout_red" />
-
-
 </menu>

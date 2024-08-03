@@ -2,17 +2,23 @@ package com.example.project_phairu.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.PopupMenu
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.CommentsActivity
+import com.example.project_phairu.Fragments.ExploreFragmentDirections
 import com.example.project_phairu.Fragments.HomeFragment
+import com.example.project_phairu.Model.BookmarkModel
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
@@ -48,6 +54,9 @@ class PostAdapter (private var context: Context,
         var likeBtn: ImageView = itemView.findViewById(R.id.post_image_like_btn)
         var commentBtn: ImageView = itemView.findViewById(R.id.post_image_comment_btn)
         var shareBtn: ImageView = itemView.findViewById(R.id.post_share_comment_btn)
+        var postmenu: RelativeLayout = itemView.findViewById(R.id.post_menu)
+        var bookmarkLayout: LinearLayout = itemView.findViewById(R.id.bookmarkLayout)
+        var bookmarkIcon: ImageView = itemView.findViewById(R.id.bookmarkIcon)
         var isLiked: Boolean = false
 
 
@@ -73,6 +82,13 @@ class PostAdapter (private var context: Context,
         //get the postId
         val postId = post.postId.toString()
 
+        // get the user data for the current post(profilePic, name, username)
+        userInfo(holder.profilePic, holder.profileName, holder.profileUsername, post.senderId)
+
+        // Check bookmark status
+        checkBookmarkStatus(postId, holder.bookmarkIcon)
+
+
         // Image visibility
         if (post.postPicture != null) {
             holder.imageHolder.visibility = View.VISIBLE
@@ -89,8 +105,33 @@ class PostAdapter (private var context: Context,
             holder.postCaption.text = post.postDescription
         }
 
-        // get the user data for the current post(profilePic, name, username)
-        userInfo(holder.profilePic, holder.profileName, holder.profileUsername, post.senderId)
+        // userProfile pic navigation
+        holder.profilePic.setOnClickListener {
+            val profileId = post.senderId
+
+            if (profileId != null) {
+                val navController = Navigation.findNavController(holder.itemView)
+
+                val bundle = Bundle().apply {
+                    putString("profileId", profileId)
+                }
+                navController.navigate(R.id.action_homeFragment_to_profileFragment, bundle)
+            }
+        }
+
+        // ProfileName navigation
+        holder.profileName.setOnClickListener{
+            val profileId = post.senderId
+
+            if (profileId != null) {
+                val navController = Navigation.findNavController(holder.itemView)
+
+                val bundle = Bundle().apply {
+                    putString("profileId", profileId)
+                }
+                navController.navigate(R.id.action_homeFragment_to_profileFragment, bundle)
+            }
+        }
 
         // Like button functionality
         holder.likeBtn.setOnClickListener {
@@ -117,6 +158,26 @@ class PostAdapter (private var context: Context,
                     }
             }
             }
+        }
+
+        // post menu button functionality
+        holder.postmenu.setOnClickListener {
+            val popupMenu = PopupMenu(context, holder.postmenu)
+            popupMenu.inflate(R.menu.post_options_menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.flag -> {
+                        // Handle flag action
+                        true
+                    }
+                    R.id.deletePost -> {
+                        // Handle delete action
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popupMenu.show()
         }
 
         //get the Post time and date and state the passed time
@@ -146,6 +207,22 @@ class PostAdapter (private var context: Context,
             intent.putExtra("senderId", post.senderId)
             context.startActivity(intent)
         }
+
+        // Bookmark button functionality
+        holder.bookmarkLayout.setOnClickListener {
+           if (holder.bookmarkIcon.tag == "Save") {
+
+               val bookmark = BookmarkModel(System.currentTimeMillis().toString(), true)
+
+               FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser?.uid.toString()).child(postId).setValue(bookmark)
+               Toast.makeText(context, "Post saved.", Toast.LENGTH_SHORT).show()
+           } else{
+               FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser?.uid.toString()).child(postId).removeValue()
+               Toast.makeText(context, "Post removed from bookmarks.", Toast.LENGTH_SHORT).show()
+           }
+
+        }
+
     }
 
     private fun isLiked(postId: String, likeButton: ImageView) {
@@ -190,7 +267,7 @@ class PostAdapter (private var context: Context,
     }
 
     private fun commentsCount(postId: String, commentsCount: TextView) {
-        val commentsRef = FirebaseDatabase.getInstance().reference.child("Comments").child(postId!!)
+        val commentsRef = FirebaseDatabase.getInstance().reference.child("Comments").child(postId)
 
         commentsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -274,5 +351,27 @@ class PostAdapter (private var context: Context,
         }
     }
 
+    //get bookmarks status
+    private fun checkBookmarkStatus(postId: String, bookmarkButton: ImageView) {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        val bookmarksRef = FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser?.uid.toString())
+
+        bookmarksRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+               if (snapshot.child(postId).exists()) {
+                   bookmarkButton.setImageResource(R.drawable.bookmark_blue)
+                   bookmarkButton.tag = "Saved"
+               } else {
+                   bookmarkButton.setImageResource(R.drawable.bookmark_light)
+                   bookmarkButton.tag = "Save"
+               }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("PostAdapter", "Error checking bookmark status: ${error.message}")
+            }
+        })
+
+    }
 
 }

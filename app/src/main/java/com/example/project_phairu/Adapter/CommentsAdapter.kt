@@ -34,7 +34,7 @@ class CommentsAdapter(private var context: Context, private var comments: Mutabl
         var profileUsername: TextView = itemView.findViewById(R.id.commentProfileUsername)
         var profilePic: CircleImageView = itemView.findViewById(R.id.commentUserProfilePic)
         var postImage: ShapeableImageView = itemView.findViewById(R.id.commentsPostImage)
-        var postTime: TextView = itemView.findViewById(R.id.postTime)
+        var commentTime: TextView = itemView.findViewById(R.id.commentTime)
         var imageHolder: LinearLayout = itemView.findViewById(R.id.bottomLayer)
         var postCaption: TextView = itemView.findViewById(R.id.commentsText)
     }
@@ -60,6 +60,10 @@ class CommentsAdapter(private var context: Context, private var comments: Mutabl
 
         // get the user data for the current post(profilePic, name, username)
         userInfo(holder.profilePic, holder.profileName, holder.profileUsername, senderId)
+
+        //get the Post time and date and state the passed time
+        val relativeTime = getRelativeTime(comment.commentTimestamp)
+        holder.commentTime.text = relativeTime
 
         // Caption visibility
         if (comment.comment == "") {
@@ -95,6 +99,22 @@ class CommentsAdapter(private var context: Context, private var comments: Mutabl
                 Log.e("CommentsAdapter", "Error getting user info: ${error.message}")
             }
         })
+    }
+
+    // Helper function to calculate and format relative time
+    fun getRelativeTime(commentTimestamp: String?): String {
+        if (commentTimestamp == null) return ""
+
+        val currentTime = System.currentTimeMillis()
+        val commentTime = commentTimestamp.toLongOrNull() ?: return ""
+        val timeDiff = currentTime - commentTime
+
+        return when {
+            timeDiff < 60000 -> "${timeDiff / 1000} sec ago"
+            timeDiff < 3600000 -> "${timeDiff / 60000} min ago"
+            timeDiff < 86400000 -> "${timeDiff / 3600000} hr ago"
+            else -> "${timeDiff / 86400000} days ago"
+        }
     }
 
 }

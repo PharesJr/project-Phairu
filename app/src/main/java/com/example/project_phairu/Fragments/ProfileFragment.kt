@@ -1,19 +1,27 @@
 package com.example.project_phairu.Fragments
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.PostAdapter
+import com.example.project_phairu.BookmarksActivity
+import com.example.project_phairu.DataStore.UserSessionDataStore
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
+import com.example.project_phairu.ShowUsersActivity
 import com.example.project_phairu.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +32,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
 
@@ -39,14 +48,14 @@ class ProfileFragment : Fragment() {
     //profileID
     private var profileId: String? = null
 
-    //users Posts and postAdapter
+    //users Posts, Bookmarks and postAdapter
     var postsList: List<PostsModel> = emptyList()
     private lateinit var postAdapter: PostAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
@@ -73,7 +82,7 @@ class ProfileFragment : Fragment() {
             checkFollowAndFollowingButtonStatus()
         }
 
-        //Instantiate the Recyclerview
+        //Instantiate the user own Posts Recyclerview
         val recyclerView = binding.userPostsRecyclerview
         val linearLayoutManager = LinearLayoutManager(requireContext())
         linearLayoutManager.reverseLayout = true
@@ -83,8 +92,8 @@ class ProfileFragment : Fragment() {
 
         // Initialize the postList and postAdapter
         postsList = mutableListOf()
-        postAdapter = requireContext().let { PostAdapter(it, postsList as MutableList<PostsModel>) }!!
-        recyclerView?.adapter = postAdapter
+        postAdapter = PostAdapter(requireContext(), postsList as MutableList<PostsModel>)
+        recyclerView.adapter = postAdapter
 
 
         var dataFetchCounter = 0
@@ -114,6 +123,10 @@ class ProfileFragment : Fragment() {
         getFollowing(onDataFetchComplete)
 
 
+        //show users posts
+        myPosts()
+
+
 
 
         // Initialize navController
@@ -125,6 +138,23 @@ class ProfileFragment : Fragment() {
 
         // Set up the BottomNavigationView with the NavController
         bottomNavigationView.setupWithNavController(navController)
+
+        //find the following Layout
+        binding.followingLayout.setOnClickListener{
+            val intent = Intent(requireContext(), ShowUsersActivity::class.java)
+            intent.putExtra("id", profileId)
+            intent.putExtra("title", "following")
+            Log.d("ProfileFragment", "Starting ShowUsersActivity with title: following and id: $profileId")
+            startActivity(intent)
+        }
+
+        //find the followers Layout
+        binding.followersLayout.setOnClickListener{
+            val intent = Intent(requireContext(), ShowUsersActivity::class.java)
+            intent.putExtra("id", profileId)
+            intent.putExtra("title", "followers")
+            startActivity(intent)
+        }
 
         //find the EditProfile button
         binding.editProfileBtn.setOnClickListener {
@@ -164,11 +194,59 @@ class ProfileFragment : Fragment() {
                         .child("Followers").child(firebaseUser.uid).removeValue()
                 }
             }
+
+
         }
 
-        //show users posts
-        myPosts()
+        // Post Menu button
+        binding.profileMenu.setOnClickListener {
+            val popupMenu = PopupMenu(context, binding.profileMenu)
+            popupMenu.inflate(R.menu.profile_menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.bookmarks -> {
+                        val intent = Intent(context, BookmarksActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                    R.id.logout -> {
 
+                        //initialize a dialog builder
+                        val builder = AlertDialog.Builder(requireContext())
+                        val view = layoutInflater.inflate(R.layout.dialog_logout, null)
+
+                        builder.setView(view)
+                        val dialog = builder.create()
+
+                        view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+                            dialog.dismiss()
+                        }
+
+                        view.findViewById<Button>(R.id.btnLogout).setOnClickListener {
+                            lifecycleScope.launch {
+                                // Sign out from Firebase
+                                FirebaseAuth.getInstance().signOut()
+
+                                // Clear user session data
+                                val userSessionDataStore = UserSessionDataStore(requireContext())
+                                userSessionDataStore.clearUserSession()
+
+                                // Show Toast message
+                                Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+
+
+                                //navigate back to login page
+                                navController.navigate(R.id.action_profileFragment_to_loginFragment)
+                            }
+                        }
+                        dialog.show()
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popupMenu.show()
+        }
 
     }
 
@@ -266,10 +344,13 @@ class ProfileFragment : Fragment() {
                 }
                 postAdapter.notifyDataSetChanged()
             }override fun onCancelled(error: DatabaseError) {
-                // Handle errors
+                Log.e("ProfileFragment", "Error fetching data: ${error.message}")
+                Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
             }
         })
     }
+
+
 
     private fun userInfo (onUserInfoFetched: () -> Unit)  {
 

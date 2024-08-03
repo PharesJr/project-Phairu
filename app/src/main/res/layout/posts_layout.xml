@@ -14,14 +14,8 @@
     <RelativeLayout
         android:id="@+id/cardview_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/topLayer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/postProfilePic"
@@ -29,14 +23,20 @@
                 android:layout_height="35dp"
                 android:src="@drawable/profilepic_placeholder"
                 android:layout_gravity="center"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"/>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginStart="5dp">
+                android:layout_marginStart="5dp"
+                android:layout_toRightOf="@id/postProfilePic">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -49,18 +49,36 @@
                         android:textSize="14sp"
                         android:fontFamily="sans-serif-black"
                         android:textColor="@color/hintText2"
-                        android:layout_marginStart="5dp"/>
+                        android:layout_marginStart="5dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"/>
 
                     <TextView
                         android:id="@+id/postProfileUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phairu"
+                        android:text="phairu"
                         android:textSize="14sp"
                         android:layout_gravity="center"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/hintText"
                         android:layout_marginStart="3dp"/>
+
+                    <RelativeLayout
+                        android:id="@+id/post_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/menu_vertical"
+                            android:background="?android:attr/selectableItemBackgroundBorderless"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="15dp"/>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <TextView
@@ -76,26 +94,14 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/menu_vertical"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"/>
-            </RelativeLayout>
-
-
-
-        </LinearLayout>
-
         <RelativeLayout
             android:id="@+id/contentHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/topLayer">
+            android:layout_below="@id/postProfilePic"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp">
             <LinearLayout
                 android:id="@+id/bottomLayer"
                 android:layout_width="match_parent"
@@ -125,92 +131,108 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="This is a sample post caption."
                 android:textSize="14sp"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/hintText2"/>
 
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@id/contentHolder">
-
-            <LinearLayout
-                android:id="@+id/likesLayout"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:id="@+id/post_image_like_btn"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/heart"/>
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/postCaption">
 
-                <TextView
-                    android:id="@+id/likesCount"
+                <LinearLayout
+                    android:id="@+id/likesLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:layout_marginStart="5dp"
-                    android:layout_gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/hintText2"/>
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/post_image_like_btn"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/heart"/>
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/likesCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center"
+                        android:textSize="14sp"
+                        android:textColor="@color/hintText2"/>
 
-            <LinearLayout
-                android:id="@+id/commentsLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_toRightOf="@id/likesLayout"
-                android:layout_marginStart="10dp">
-                <ImageView
-                    android:id="@+id/post_image_comment_btn"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/comments_icon"
-                    android:layout_marginStart="10dp"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"/>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/commentsCount"
+                <LinearLayout
+                    android:id="@+id/commentsLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:layout_marginStart="5dp"
-                    android:layout_gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/hintText2"/>
+                    android:orientation="horizontal"
+                    android:layout_toRightOf="@id/likesLayout"
+                    android:layout_marginStart="10dp">
+                    <ImageView
+                        android:id="@+id/post_image_comment_btn"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/comments_icon"
+                        android:layout_marginStart="10dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"/>
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/commentsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center"
+                        android:textSize="14sp"
+                        android:textColor="@color/hintText2"/>
 
-            <LinearLayout
-                android:id="@+id/shareLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/commentsLayout"
-                android:layout_marginStart="10dp">
-                <ImageView
-                    android:id="@+id/post_share_comment_btn"
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:src="@drawable/send_icon"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/shareLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/commentsLayout"
+                    android:layout_marginStart="10dp">
+                    <ImageView
+                        android:id="@+id/post_share_comment_btn"
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:src="@drawable/send_icon"
+                        android:layout_marginStart="10dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bookmarkLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/shareLayout"
                     android:layout_marginStart="10dp"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true">
+                    <ImageView
+                        android:id="@+id/bookmarkIcon"
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/bookmark_light"
+                        android:background="?android:attr/selectableItemBackgroundBorderless" />
 
-            </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
         </RelativeLayout>
-
 
     </RelativeLayout>
 

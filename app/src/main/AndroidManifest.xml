@@ -21,6 +21,12 @@
         android:theme="@style/Theme.ProjectPhairu"
         tools:targetApi="31">
         <activity
+            android:name=".ShowUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BookmarksActivity"
+            android:exported="false" />
+        <activity
             android:name=".CommentsActivity"
             android:exported="false" />
         <activity
@@ -36,7 +42,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-a
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="fullSensor"
