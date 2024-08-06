@@ -1,6 +1,7 @@
 package com.example.project_phairu.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -76,9 +78,12 @@ class HomeFragment : Fragment() {
             recyclerView.layoutManager = linearLayoutManager
         }
 
+        // Initialize navController
+        navController = findNavController()
+
         // Initialize the postList and postAdapter
         postList = mutableListOf()
-        postAdapter = requireContext().let { PostAdapter(it, postList as MutableList<PostsModel>) }!!
+        postAdapter = PostAdapter(requireContext(), postList, "home")
         recyclerView?.adapter = postAdapter
 
 
@@ -173,7 +178,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("HomeFragment", "Error checking followings: ${error.message}")
             }
         })
 
@@ -182,9 +187,14 @@ class HomeFragment : Fragment() {
     private fun retrievePosts () {
         val postsRef = FirebaseDatabase.getInstance().reference.child("Posts")
 
+        // Show ProgressBar initially
+        binding.timelineProgressBar.visibility =View.VISIBLE
+        binding.homePageScrollview.visibility = View.GONE
+
         postsRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 postList.clear()
+                var postsLoaded= 0
 
                 for (snapshot in dataSnapshot.children) {
                     val post = snapshot.getValue(PostsModel::class.java)
@@ -192,15 +202,22 @@ class HomeFragment : Fragment() {
                     for (id in followingUsersList as ArrayList<String>) {
                         if (post?.senderId?.equals(id) == true) {
                             postList.add(post)
-                        }
 
-                        postAdapter.notifyDataSetChanged()
+                            postsLoaded++
+
+                            if (postsLoaded == postList.size) {
+                                postAdapter.notifyDataSetChanged()
+                                // Hide ProgressBar and show ScrollView
+                                binding.timelineProgressBar.visibility = View.GONE
+                                binding.homePageScrollview.visibility = View.VISIBLE
+                            }
+                        }
                     }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+            Log.e("HomeFragment", "Error retrieving posts: ${error.message}")
             }
         })
 

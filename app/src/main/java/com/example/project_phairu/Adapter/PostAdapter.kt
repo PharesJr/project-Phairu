@@ -19,6 +19,7 @@ import com.example.project_phairu.CommentsActivity
 import com.example.project_phairu.Fragments.ExploreFragmentDirections
 import com.example.project_phairu.Fragments.HomeFragment
 import com.example.project_phairu.Model.BookmarkModel
+import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
@@ -34,11 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Locale
 
 class PostAdapter (private var context: Context,
-                   private var posts: MutableList<PostsModel>) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
-
-    // Initialize FirebaseUser (get specific user ID)
-    private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-
+                   private var posts: MutableList<PostsModel>, private val source: String) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Initialize views
@@ -108,28 +105,32 @@ class PostAdapter (private var context: Context,
         // userProfile pic navigation
         holder.profilePic.setOnClickListener {
             val profileId = post.senderId
+            // Get current user ID
+            val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
             if (profileId != null) {
                 val navController = Navigation.findNavController(holder.itemView)
+                val bundle = Bundle().apply { putString("profileId", profileId) }
 
-                val bundle = Bundle().apply {
-                    putString("profileId", profileId)
+                if (source == "home") {
+                    if (profileId != currentUserId) {
+                        navController.navigate(R.id.action_homeFragment_to_profileFragment, bundle)
+                    }else {
+                        Toast.makeText(context, "This is your own profile", Toast.LENGTH_SHORT).show()
+                    }
+                } else if (source == "profile") {
+                    if (profileId != currentUserId) {
+                        navController.navigate(R.id.action_profileFragment_to_self, bundle)
+                    }else {
+                        Toast.makeText(context, "This is your own profile", Toast.LENGTH_SHORT).show()
+                    }
+                } else if (source == "bookmarks") {
+                    if (profileId != currentUserId) {
+                        navController.navigate(R.id.action_global_profileFragment, bundle)
+                    }else {
+                        Toast.makeText(context, "This is your own profile", Toast.LENGTH_SHORT).show()
+                    }
                 }
-                navController.navigate(R.id.action_homeFragment_to_profileFragment, bundle)
-            }
-        }
-
-        // ProfileName navigation
-        holder.profileName.setOnClickListener{
-            val profileId = post.senderId
-
-            if (profileId != null) {
-                val navController = Navigation.findNavController(holder.itemView)
-
-                val bundle = Bundle().apply {
-                    putString("profileId", profileId)
-                }
-                navController.navigate(R.id.action_homeFragment_to_profileFragment, bundle)
             }
         }
 
@@ -152,6 +153,7 @@ class PostAdapter (private var context: Context,
                         holder.isLiked = true
                         updateLikeButton(holder.likeBtn, true)
                         updateLikesCount(postId, holder.likesCount)
+                        addNotification(post.senderId, postId)
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(context, "Error liking post: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -300,7 +302,7 @@ class PostAdapter (private var context: Context,
                     val capitalizedLastName = user?.lastname?.capitalize() ?: ""
 
                     Picasso.get().load(user?.profilePicture)
-                        .placeholder(R.drawable.profile_placeholder).into(profilePic)
+                        .placeholder(R.drawable.profilepic_placeholder).into(profilePic)
                    profileName.text = ("$capitalizedFirstName $capitalizedLastName")
                    profileUsername.text = ("@" + user?.username)
                 }
@@ -372,6 +374,23 @@ class PostAdapter (private var context: Context,
             }
         })
 
+    }
+
+    //Add Notifications
+    private fun addNotification(userId: String?, postId: String?) {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val notificationsRef = FirebaseDatabase.getInstance().reference.child("Notifications").child(userId.toString())
+
+        val notification = NotificationsModel(
+            userId = firebaseUser!!.uid,
+            postId = postId,
+            notificationType = "like",
+            notificationMessage = "liked your post",
+            notificationTimestamp = System.currentTimeMillis().toString()
+        )
+
+        notificationsRef.push().setValue(notification)
     }
 
 }

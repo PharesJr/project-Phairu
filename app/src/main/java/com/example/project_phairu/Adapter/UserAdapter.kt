@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.Fragments.ExploreFragmentDirections
+import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
 import com.google.firebase.auth.FirebaseAuth
@@ -53,7 +54,7 @@ class UserAdapter (private var context: Context,
         val capitalizedLastName = user.lastname?.capitalize(Locale.ROOT)
         holder.profileName.text = "$capitalizedFirstName $capitalizedLastName"
         holder.profileUsername.text = "@" + user.username
-        Picasso.get().load(user.profilePicture).placeholder(R.drawable.profile_placeholder).into(holder.profilePic)
+        Picasso.get().load(user.profilePicture).placeholder(R.drawable.profilepic_placeholder).into(holder.profilePic)
 
         //check if the current user is already following the searched user
         checkFollowingStatus(user.id, holder.followBtn)
@@ -89,6 +90,8 @@ class UserAdapter (private var context: Context,
                                         .child("Follow").child(user.id)
                                         .child("Followers").child(it1.toString())
                                         .setValue(true)
+
+                                    addNotification(user.id)
                                 }
 
                             }
@@ -149,6 +152,23 @@ class UserAdapter (private var context: Context,
             }
         })
 
+    }
+
+    //Add Notifications
+    private fun addNotification(userId: String?) {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val notificationsRef = FirebaseDatabase.getInstance().reference.child("Notifications").child(userId.toString())
+
+        val notification = NotificationsModel(
+            userId = firebaseUser!!.uid,
+            postId = null,
+            notificationType = "follow",
+            notificationMessage = "started following you",
+            notificationTimestamp = System.currentTimeMillis().toString()
+        )
+
+        notificationsRef.push().setValue(notification)
     }
 
 }

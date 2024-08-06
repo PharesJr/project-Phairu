@@ -49,17 +49,24 @@
                 android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
-
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
+
+    <ProgressBar
+        android:id="@+id/bookmarksPageLoader"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/blue"
+        android:layout_centerInParent="true"/>
+
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/bookmarksScrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_appbar"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,6 +106,14 @@
                     android:fontFamily="@font/poppins"
                     android:visibility="gone"/>
 
+                <!--                <fragment-->
+                <!--                    android:id="@+id/nav_host_fragment"-->
+                <!--                    android:name="androidx.navigation.fragment.NavHostFragment"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    app:defaultNavHost="true"-->
+                <!--                    app:navGraph="@navigation/app_nav_graph" />-->
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/userSavedPostsRecyclerview"
                     android:layout_width="match_parent"
@@ -106,15 +121,6 @@
                     android:visibility="visible"
                     android:layout_margin="10dp"
                     android:layout_below="@+id/resultsTxt"/>
-
-                <ProgressBar
-                    android:id="@+id/bookmarksPageLoader"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:visibility="visible"
-                    android:indeterminateTint="@color/blue"
-                    android:layout_centerInParent="true"/>
-
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

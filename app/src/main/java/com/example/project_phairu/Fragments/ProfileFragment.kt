@@ -1,6 +1,7 @@
 package com.example.project_phairu.Fragments
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.PostAdapter
 import com.example.project_phairu.BookmarksActivity
 import com.example.project_phairu.DataStore.UserSessionDataStore
+import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
@@ -65,6 +67,11 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Show progress bar initially
+        binding.profilePageLoader.visibility = View.VISIBLE
+        binding.profileScrollView.visibility = View.GONE
+
+
         //firebase User
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
@@ -73,6 +80,9 @@ class ProfileFragment : Fragment() {
 
         //Determine if it's the current user's profile
         val isCurrentUser = profileId == null || profileId == firebaseUser.uid
+
+        // Set visibility of Post Menu button
+        binding.profileMenu.visibility = if (isCurrentUser) View.VISIBLE else View.GONE
 
         if (isCurrentUser) {
             //profileId is set for current user
@@ -90,9 +100,11 @@ class ProfileFragment : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.setHasFixedSize(true)
 
+        navController = findNavController()
+
         // Initialize the postList and postAdapter
         postsList = mutableListOf()
-        postAdapter = PostAdapter(requireContext(), postsList as MutableList<PostsModel>)
+        postAdapter = PostAdapter(requireContext(), postsList as MutableList<PostsModel>, "profile")
         recyclerView.adapter = postAdapter
 
 
@@ -104,11 +116,8 @@ class ProfileFragment : Fragment() {
         val onDataFetchComplete = {
             dataFetchCounter++
             if (dataFetchCounter == totalDataFetches) {
-
-                // Hide progress bar
+                // Hide progress bar and show ScrollView
                 binding.profilePageLoader.visibility = View.GONE
-
-                //Show user profile
                 binding.profileScrollView.visibility = View.VISIBLE
             }
         }
@@ -125,12 +134,6 @@ class ProfileFragment : Fragment() {
 
         //show users posts
         myPosts()
-
-
-
-
-        // Initialize navController
-        navController = findNavController()
 
 
         // Find the BottomNavigation
@@ -177,6 +180,8 @@ class ProfileFragment : Fragment() {
                     FirebaseDatabase.getInstance().reference
                         .child("Follow").child(profileId.toString())
                         .child("Followers").child(firebaseUser.uid).setValue(true)
+
+                    addNotification()
                 }
 
                 //if the button text is "Following" ----> remove the user from your following
@@ -205,7 +210,7 @@ class ProfileFragment : Fragment() {
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.bookmarks -> {
-                        val intent = Intent(context, BookmarksActivity::class.java)
+                        val intent = Intent(requireContext(), BookmarksActivity::class.java)
                         startActivity(intent)
                         true
                     }
@@ -237,6 +242,8 @@ class ProfileFragment : Fragment() {
 
                                 //navigate back to login page
                                 navController.navigate(R.id.action_profileFragment_to_loginFragment)
+
+                                dialog.dismiss()
                             }
                         }
                         dialog.show()
@@ -376,7 +383,7 @@ class ProfileFragment : Fragment() {
                         binding.textviewBio.text = user?.bio
 
                         Picasso.get().load(user?.profilePicture)
-                            .placeholder(R.drawable.profile_placeholder)
+                            .placeholder(R.drawable.profilepic_placeholder)
                             .into(binding.profilePic, object : com.squareup.picasso.Callback {
                                 override fun onSuccess() {
                                     isImageLoaded = true
@@ -408,6 +415,22 @@ class ProfileFragment : Fragment() {
             // Notify even if profileId is null
             onUserInfoFetched()
         }
+    }
+
+    //Add Notifications
+    private fun addNotification() {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val notificationsRef = FirebaseDatabase.getInstance().reference.child("Notifications").child(profileId.toString())
+
+        val notification = NotificationsModel(
+            userId = firebaseUser!!.uid,
+            postId = null,
+            notificationType = "follow",
+            notificationMessage = "started following you"
+        )
+
+        notificationsRef.push().setValue(notification)
     }
 
 }

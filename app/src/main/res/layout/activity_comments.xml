@@ -43,25 +43,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+            <ImageView
                 android:id="@+id/cancelComment"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_width="45dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/cancel_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="15dp"
-                    android:src="@drawable/cancel_icon"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_gravity="center"/>
-
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
 
@@ -221,8 +212,8 @@
                         android:orientation="horizontal">
                         <ImageView
                             android:id="@+id/post_image_like_btn"
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
+                            android:layout_width="25dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/heart"/>
 
                         <TextView
@@ -246,8 +237,8 @@
                         android:layout_marginStart="10dp">
                         <ImageView
                             android:id="@+id/post_image_comment_btn"
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
+                            android:layout_width="25dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/comments_icon"
                             android:layout_marginStart="10dp"/>
 
@@ -264,34 +255,36 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/shareLayout"
+                        android:id="@+id/bookmarksLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/commentsLayout"
+                        android:layout_toEndOf="@id/commentsLayout"
                         android:layout_marginStart="10dp">
                         <ImageView
-                            android:id="@+id/post_share_comment_btn"
-                            android:layout_width="21dp"
-                            android:layout_height="21dp"
-                            android:src="@drawable/send_icon"
+                            android:id="@+id/post_save_comment_btn"
+                            android:layout_width="25dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/windows_bookmark_white"
                             android:layout_marginStart="10dp"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/bookmarksLayout"
+                        android:id="@+id/shareLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/shareLayout"
+                        android:layout_toRightOf="@id/bookmarksLayout"
                         android:layout_marginStart="10dp">
                         <ImageView
-                            android:id="@+id/post_save_comment_btn"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/windows_bookmark_white"
+                            android:id="@+id/post_share_comment_btn"
+                            android:layout_width="25dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/send_icon"
                             android:layout_marginStart="10dp"/>
 
                     </LinearLayout>
+
+
                 </RelativeLayout>
 
             </RelativeLayout>

@@ -5,6 +5,12 @@
     android:id="@+id/app_nav_graph"
     app:startDestination="@id/splashScreenFragment">
 
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment">
+        <argument app:argType="string" android:name="profileId"/>
+    </action>
+
     <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.example.project_phairu.Fragments.SplashScreenFragment"
@@ -67,7 +73,9 @@
             app:destination="@id/notificationsFragment" />
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment">
+            <argument app:argType="string" android:name="profileId"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -92,18 +100,35 @@
         android:id="@+id/notificationsFragment"
         android:name="com.example.project_phairu.Fragments.NotificationsFragment"
         android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_notificationsFragment_to_profileFragment"
+            app:destination="@id/profileFragment">
+        <argument app:argType="string" android:name="profileId"/>
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.project_phairu.Fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
+        <argument
+            android:name="profileId"
+            app:argType="string" />
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_profileFragment_to_self"
+            app:destination="@id/profileFragment">
+            <argument app:argType="string" android:name="profileId"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -126,4 +151,10 @@
         android:name="com.example.project_phairu.Fragments.CreateFragment"
         android:label="fragment_create"
         tools:layout="@layout/fragment_create" />
+    <activity
+        android:id="@+id/bookmarksActivity"
+        android:name="com.example.project_phairu.BookmarksActivity"
+        android:label="activity_bookmarks"
+        tools:layout="@layout/activity_bookmarks">
+    </activity>
 </navigation>

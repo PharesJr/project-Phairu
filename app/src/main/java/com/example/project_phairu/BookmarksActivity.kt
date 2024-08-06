@@ -2,8 +2,11 @@ package com.example.project_phairu
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.PostAdapter
 import com.example.project_phairu.Model.BookmarkModel
@@ -24,6 +27,12 @@ class BookmarksActivity : AppCompatActivity() {
     //firebase
     private lateinit var firebaseUser: FirebaseUser
 
+    //profileId
+    private var profileId: String? = null
+
+    // Instantiate the navController
+    private lateinit var navController: NavController
+
     //Bookmarks list and postAdapter
     var bookmarkedPostsList: List<PostsModel> = emptyList()
     private lateinit var postAdapter: PostAdapter
@@ -36,9 +45,11 @@ class BookmarksActivity : AppCompatActivity() {
         binding = ActivityBookmarksBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         // Initialize FirebaseUser
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
+
+        //profileId
+        profileId = intent.getStringExtra("profileId")
 
         //Instantiate the user saved Posts Recyclerview
         val bookmarksRecyclerView = binding.userSavedPostsRecyclerview
@@ -48,9 +59,11 @@ class BookmarksActivity : AppCompatActivity() {
         bookmarksRecyclerView.layoutManager = bookmarksLinearLayoutManager
         bookmarksRecyclerView.setHasFixedSize(true)
 
+
         // Initialize the postList and postAdapter
         bookmarkedPostsList = mutableListOf()
-        postAdapter = PostAdapter(this, bookmarkedPostsList as MutableList<PostsModel>)
+        postAdapter = PostAdapter(this, bookmarkedPostsList as MutableList<PostsModel>, "bookmarks"
+        )
         bookmarksRecyclerView.adapter = postAdapter
 
         // get the bookmarked Posts
@@ -100,6 +113,15 @@ class BookmarksActivity : AppCompatActivity() {
                                     (bookmarkedPostsList as MutableList<PostsModel>).addAll(bookmarkedPosts.map { it.first })
                                     Log.d("BookmarksActivity", "Bookmarked posts: $bookmarkedPostsList")
                                     postAdapter.notifyDataSetChanged()
+
+                                    // Show ScrollView and hide ProgressBar
+                                    binding.bookmarksScrollview.visibility = View.VISIBLE
+                                    binding.bookmarksPageLoader.visibility = View.GONE
+                                } else {
+                                    // Show ScrollView and hide ProgressBar (even if no bookmarks)
+                                    postAdapter.notifyDataSetChanged()
+                                    binding.bookmarksScrollview.visibility = View.VISIBLE
+                                    binding.bookmarksPageLoader.visibility = View.GONE
                                 }
                             }
 

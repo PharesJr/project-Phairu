@@ -19,7 +19,7 @@
                 android:id="@+id/timelineProgressBar"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:indeterminateTint="@color/blue"
                 android:layout_centerInParent="true"/>
         <RelativeLayout
@@ -64,12 +64,13 @@
 
 
             <ScrollView
-                android:id="@+id/scrollView3"
+                android:id="@+id/homePageScrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/appbar"
                 android:layout_above="@id/nav_bar"
-                android:scrollbars="none">
+                android:scrollbars="none"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

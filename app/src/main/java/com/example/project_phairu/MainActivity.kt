@@ -28,6 +28,15 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
+        // Handle navigation if profileId is present in the intent
+        val profileId = intent.getStringExtra("profileId")
+        if (profileId != null) {
+            val bundle = Bundle().apply {
+                putString("profileId", profileId)
+            }
+            navController.navigate(R.id.profileFragment, bundle)
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

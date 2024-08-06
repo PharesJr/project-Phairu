@@ -8,9 +8,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.CommentsAdapter
+import com.example.project_phairu.Model.BookmarkModel
 import com.example.project_phairu.Model.CommentsModel
+import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.databinding.ActivityCommentsBinding
@@ -37,6 +41,9 @@ class CommentsActivity : AppCompatActivity() {
 
     //firebaseUser
     private lateinit var firebaseUser: FirebaseUser
+
+    //Nav Controller
+    private lateinit var navController: NavController
 
     //users Comments and commentsAdapter
     var commentsList: MutableList<CommentsModel>? = null
@@ -88,6 +95,9 @@ class CommentsActivity : AppCompatActivity() {
         //read comments
         readComments()
 
+        //check bookmark status
+        checkBookmarkStatus(postId.toString(), binding.postSaveCommentBtn)
+
 
         // Check if liked.... and set likes count
         val likeBtn = binding.postImageLikeBtn
@@ -115,26 +125,45 @@ class CommentsActivity : AppCompatActivity() {
                         Toast.makeText(this, "Error unliking post: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             } else {
-                if (firebaseUser != null) {
-                    likesRef.child(firebaseUser.uid).setValue(true)
-                        .addOnSuccessListener {
-                            likeBtn.setImageResource(R.drawable.heart_red)
-                            likeBtn.tag = "Liked"
-                            updateLikeButton(likeBtn, true)
-                            updateLikesCount(postId.toString(), binding.likesCount)
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(this, "Error liking post: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
-                }
+                likesRef.child(firebaseUser.uid).setValue(true)
+                    .addOnSuccessListener {
+                        likeBtn.setImageResource(R.drawable.heart_red)
+                        likeBtn.tag = "Liked"
+                        updateLikeButton(likeBtn, true)
+                        updateLikesCount(postId.toString(), binding.likesCount)
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Error liking post: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
+
+        // Bookmark button functionality
+        binding.postSaveCommentBtn.setOnClickListener {
+            if (binding.postSaveCommentBtn.tag == "Save") {
+
+                val bookmark = BookmarkModel(System.currentTimeMillis().toString(), true)
+
+                FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser.uid).child(
+                    postId!!
+                ).setValue(bookmark)
+                Toast.makeText(this, "Post saved.", Toast.LENGTH_SHORT).show()
+            } else{
+                FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser.uid).child(
+                    postId!!
+                ).removeValue()
+                Toast.makeText(this, "Post removed from bookmarks.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         //Post Comment Button
         binding.postComment.setOnClickListener {
             addComment()
             Log.d("CommentsActivity", "Comment added successfully")
         }
+
+
 
         //back Icon
         binding.cancelComment.setOnClickListener {
@@ -272,6 +301,7 @@ class CommentsActivity : AppCompatActivity() {
                 commentsRef.child(commentId).setValue(comment)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Comment added successfully", Toast.LENGTH_SHORT).show()
+                        addNotification()
                         binding.addComment.text.clear()
                     }
                     .addOnFailureListener { e ->
@@ -391,6 +421,29 @@ class CommentsActivity : AppCompatActivity() {
         })
     }
 
+    //get bookmarks status
+    private fun checkBookmarkStatus(postId: String, bookmarkButton: ImageView) {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        val bookmarksRef = FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser?.uid.toString())
+
+        bookmarksRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child(postId).exists()) {
+                    bookmarkButton.setImageResource(R.drawable.bookmark_blue)
+                    bookmarkButton.tag = "Saved"
+                } else {
+                    bookmarkButton.setImageResource(R.drawable.bookmark_light)
+                    bookmarkButton.tag = "Save"
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("PostAdapter", "Error checking bookmark status: ${error.message}")
+            }
+        })
+
+    }
+
     // Helper function to calculate and format relative time
     fun getRelativeTime(postTimestamp: String?): String {
         if (postTimestamp == null) return ""
@@ -404,6 +457,27 @@ class CommentsActivity : AppCompatActivity() {
             timeDiff < 3600000 -> "${timeDiff / 60000} min ago"
             timeDiff < 86400000 -> "${timeDiff / 3600000} hr ago"
             else -> "${timeDiff / 86400000} days ago"
+        }
+    }
+
+    //Add Notifications
+    private fun addNotification() {
+        val notificationsRef = FirebaseDatabase.getInstance().reference.child("Notifications").child(senderId.toString())
+        // Get the comment text
+        val commentText = binding.addComment.text.toString().trim()
+
+        // Check if the comment text is not empty
+        if (commentText.isNotBlank()) {
+            val firebaseUser = FirebaseAuth.getInstance().currentUser
+            val notification = NotificationsModel(
+                userId = firebaseUser?.uid,
+                postId = postId,
+                notificationType = "comment",
+                notificationMessage = commentText,
+                notificationTimestamp = System.currentTimeMillis().toString()
+            )
+
+            notificationsRef.push().setValue(notification)
         }
     }
 
