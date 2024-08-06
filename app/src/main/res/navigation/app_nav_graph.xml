@@ -76,6 +76,9 @@
             app:destination="@id/profileFragment">
             <argument app:argType="string" android:name="profileId"/>
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -129,6 +132,18 @@
             app:destination="@id/profileFragment">
             <argument app:argType="string" android:name="profileId"/>
         </action>
+        <action
+            android:id="@+id/action_profileFragment_to_bookmarksFragment"
+            app:destination="@id/bookmarksFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_showUsersListFragment"
+            app:destination="@id/showUsersListFragment">
+            <argument app:argType="string" android:name="id"/>
+            <argument app:argType="string" android:name="title"/>
+        </action>
+        <action
+            android:id="@+id/action_profileFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -151,10 +166,34 @@
         android:name="com.example.project_phairu.Fragments.CreateFragment"
         android:label="fragment_create"
         tools:layout="@layout/fragment_create" />
-    <activity
-        android:id="@+id/bookmarksActivity"
-        android:name="com.example.project_phairu.BookmarksActivity"
-        android:label="activity_bookmarks"
-        tools:layout="@layout/activity_bookmarks">
-    </activity>
+    <fragment
+        android:id="@+id/bookmarksFragment"
+        android:name="com.example.project_phairu.Fragments.bookmarksFragment"
+        android:label="fragment_bookmarks"
+        tools:layout="@layout/fragment_bookmarks" >
+        <action
+            android:id="@+id/action_bookmarksFragment_to_profileFragment"
+            app:destination="@id/profileFragment">
+        <argument app:argType="string" android:name="profileId"/>
+        </action>
+        <action
+            android:id="@+id/action_bookmarksFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showUsersListFragment"
+        android:name="com.example.project_phairu.Fragments.showUsersListFragment"
+        android:label="fragment_show_users_list"
+        tools:layout="@layout/fragment_show_users_list" >
+        <action
+            android:id="@+id/action_showUsersListFragment_to_profileFragment"
+            app:destination="@id/profileFragment">
+            <argument app:argType="string" android:name="profileId"/>
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.example.project_phairu.Fragments.commentsFragment"
+        android:label="fragment_comments"
+        tools:layout="@layout/fragment_comments" />
 </navigation>

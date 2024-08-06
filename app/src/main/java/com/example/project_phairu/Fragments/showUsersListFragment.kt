@@ -1,17 +1,18 @@
-package com.example.project_phairu
+package com.example.project_phairu.Fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.UserAdapter
 import com.example.project_phairu.Model.UserModel
-import com.example.project_phairu.databinding.ActivityShowUsersBinding
+import com.example.project_phairu.R
+import com.example.project_phairu.databinding.FragmentShowUsersListBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -19,49 +20,60 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class ShowUsersActivity : AppCompatActivity() {
+class showUsersListFragment : Fragment() {
 
     //binding
-    private lateinit var binding: ActivityShowUsersBinding
+    private lateinit var binding: FragmentShowUsersListBinding
 
     //Firebase
     private lateinit var firebaseUser: FirebaseUser
 
-    var id : String = ""
-    var title : String = ""
+    //Nav Controller
+    private lateinit var navController: NavController
 
+    var id : String? = null
+    var title : String? = null
+
+    // Adapter
     var userAdapter: UserAdapter? = null
     var userList: MutableList<UserModel>? = null
     var idList: List<String>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding = FragmentShowUsersListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        // Initialize binding
-        binding = ActivityShowUsersBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Initialize Firebase
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
-        val intent = intent
-        id = intent.getStringExtra("id").toString()
-        title = intent.getStringExtra("title").toString()
+        val intent = requireActivity().intent
+        id = arguments?.getString("id")
+        title = arguments?.getString("title")
 
-        val toolbar : Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.title = title
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        // Initialize the navController
+        navController = findNavController()
+
+        val toolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        toolbar.title = title
+        toolbar.setNavigationIcon(R.drawable.back_icon_32)
         toolbar.setNavigationOnClickListener {
-            finish()
+            //Navigate back
+            navController.popBackStack()
         }
 
         //set up RecyclerVIew
         binding.usersRecyclerView.setHasFixedSize(true)
-        binding.usersRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.usersRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         userList = ArrayList()
-        userAdapter = UserAdapter(this, userList as ArrayList<UserModel>, false)
+        userAdapter = UserAdapter(requireContext(), userList as ArrayList<UserModel>, title.toString(), true)
         binding.usersRecyclerView.adapter = userAdapter
 
         idList = ArrayList()
@@ -77,9 +89,9 @@ class ShowUsersActivity : AppCompatActivity() {
     }
 
     private fun getLikes() {
-        val likesRef = FirebaseDatabase.getInstance().reference.child("Likes").child(id)
+        val likesRef = id?.let { FirebaseDatabase.getInstance().reference.child("Likes").child(it) }
 
-        likesRef.addValueEventListener(object : ValueEventListener {
+        likesRef?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     (idList as ArrayList<String>).clear()
@@ -99,12 +111,14 @@ class ShowUsersActivity : AppCompatActivity() {
     }
 
     private fun getFollowing() {
-        val followingCountRef = FirebaseDatabase.getInstance().reference
-            .child("Follow").child(id)
-            .child("Following")
+        val followingCountRef = id?.let {
+            FirebaseDatabase.getInstance().reference
+                .child("Follow").child(it)
+                .child("Following")
+        }
 
 
-        followingCountRef.addValueEventListener(object : ValueEventListener {
+        followingCountRef?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     (idList as ArrayList<String>).clear()
@@ -117,18 +131,20 @@ class ShowUsersActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("ProfileFragment", "Error fetching data: ${error.message}")
-//                Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
+                //                Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
     private fun getFollowers() {
-        val followersCountRef = FirebaseDatabase.getInstance().reference
-            .child("Follow").child(id)
-            .child("Followers")
+        val followersCountRef = id?.let {
+            FirebaseDatabase.getInstance().reference
+                .child("Follow").child(it)
+                .child("Followers")
+        }
 
 
-        followersCountRef.addValueEventListener(object : ValueEventListener {
+        followersCountRef?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     (idList as ArrayList<String>).clear()
@@ -141,7 +157,7 @@ class ShowUsersActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("ProfileFragment", "Error fetching data: ${error.message}")
-//                Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
+                //                Toast.makeText(context, "Error loading profile data", Toast.LENGTH_SHORT).show()
             }
         })
     }

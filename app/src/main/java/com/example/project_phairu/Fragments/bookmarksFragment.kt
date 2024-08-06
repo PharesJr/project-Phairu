@@ -1,17 +1,18 @@
-package com.example.project_phairu
+package com.example.project_phairu.Fragments
 
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.PostAdapter
 import com.example.project_phairu.Model.BookmarkModel
 import com.example.project_phairu.Model.PostsModel
-import com.example.project_phairu.databinding.ActivityBookmarksBinding
+import com.example.project_phairu.databinding.FragmentBookmarksBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -19,10 +20,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class BookmarksActivity : AppCompatActivity() {
+class bookmarksFragment : Fragment() {
 
     //binding
-    private lateinit var binding: ActivityBookmarksBinding
+    private lateinit var binding: FragmentBookmarksBinding
 
     //firebase
     private lateinit var firebaseUser: FirebaseUser
@@ -37,23 +38,29 @@ class BookmarksActivity : AppCompatActivity() {
     var bookmarkedPostsList: List<PostsModel> = emptyList()
     private lateinit var postAdapter: PostAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = FragmentBookmarksBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        // Initialize binding
-        binding = ActivityBookmarksBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // Initialize FirebaseUser
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
         //profileId
-        profileId = intent.getStringExtra("profileId")
+        profileId = arguments?.getString("profileId")
+
+        // Initialize the navController
+        navController = findNavController()
 
         //Instantiate the user saved Posts Recyclerview
         val bookmarksRecyclerView = binding.userSavedPostsRecyclerview
-        val bookmarksLinearLayoutManager = LinearLayoutManager(this)
+        val bookmarksLinearLayoutManager = LinearLayoutManager(requireContext())
         bookmarksLinearLayoutManager.reverseLayout = true
         bookmarksLinearLayoutManager.stackFromEnd = true
         bookmarksRecyclerView.layoutManager = bookmarksLinearLayoutManager
@@ -62,8 +69,7 @@ class BookmarksActivity : AppCompatActivity() {
 
         // Initialize the postList and postAdapter
         bookmarkedPostsList = mutableListOf()
-        postAdapter = PostAdapter(this, bookmarkedPostsList as MutableList<PostsModel>, "bookmarks"
-        )
+        postAdapter = PostAdapter(requireContext(), bookmarkedPostsList as MutableList<PostsModel>, "bookmarks")
         bookmarksRecyclerView.adapter = postAdapter
 
         // get the bookmarked Posts
@@ -71,9 +77,9 @@ class BookmarksActivity : AppCompatActivity() {
 
         // backBtn
         binding.backBtn.setOnClickListener {
-            finish()
+          //Navigate to the backStack
+            navController.popBackStack()
         }
-
     }
 
     private fun myBookmarks() {
@@ -111,7 +117,7 @@ class BookmarksActivity : AppCompatActivity() {
                                     bookmarkedPosts.sortByDescending { it.second }
                                     (bookmarkedPostsList as MutableList<PostsModel>).clear()
                                     (bookmarkedPostsList as MutableList<PostsModel>).addAll(bookmarkedPosts.map { it.first })
-                                    Log.d("BookmarksActivity", "Bookmarked posts: $bookmarkedPostsList")
+                                    Log.d("BookmarksFragment", "Bookmarked posts: $bookmarkedPostsList")
                                     postAdapter.notifyDataSetChanged()
 
                                     // Show ScrollView and hide ProgressBar
@@ -126,7 +132,7 @@ class BookmarksActivity : AppCompatActivity() {
                             }
 
                             override fun onCancelled(error: DatabaseError) {
-                                Log.e("BookmarksActivity", "Error fetching post data: ${error.message}")
+                                Log.e("BookmarksFragment", "Error fetching post data: ${error.message}")
                             }
                         })
                     }
@@ -136,8 +142,9 @@ class BookmarksActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("BookmarksActivity", "Error fetching bookmarks: ${error.message}")
+                Log.e("BookmarksFragment", "Error fetching bookmarks: ${error.message}")
             }
         })
     }
+
 }

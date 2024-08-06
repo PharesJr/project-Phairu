@@ -1,15 +1,15 @@
-package com.example.project_phairu
+package com.example.project_phairu.Fragments
 
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.CommentsAdapter
 import com.example.project_phairu.Model.BookmarkModel
@@ -17,7 +17,8 @@ import com.example.project_phairu.Model.CommentsModel
 import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
-import com.example.project_phairu.databinding.ActivityCommentsBinding
+import com.example.project_phairu.R
+import com.example.project_phairu.databinding.FragmentCommentsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -29,10 +30,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class CommentsActivity : AppCompatActivity() {
+class commentsFragment : Fragment() {
 
     //binding
-    private lateinit var binding: ActivityCommentsBinding
+    private lateinit var binding: FragmentCommentsBinding
 
     //postId
     private var postId: String? = null
@@ -49,28 +50,33 @@ class CommentsActivity : AppCompatActivity() {
     var commentsList: MutableList<CommentsModel>? = null
     private lateinit var commentsAdapter: CommentsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding = FragmentCommentsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        postId = intent.getStringExtra("postId")
-        senderId = intent.getStringExtra("senderId")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //postId
+        postId = arguments?.getString("postId")
+        //senderId
+        senderId = arguments?.getString("senderId")
 
         Log.d("CommentsActivity", "Received postId: $postId")
         if (postId == null) {
             Log.d("CommentsActivity", "Null check failed: postId is null")
-           Toast.makeText(this, "Error: Post is missing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Error: Post is missing", Toast.LENGTH_SHORT).show()
             return
         }
 
-
-        // Initialize binding
-        binding = ActivityCommentsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         //Instantiate the Recyclerview
         val recyclerView = binding.commentsRecyclerView
-        val linearLayoutManager = LinearLayoutManager(this)
+        val linearLayoutManager = LinearLayoutManager(requireContext())
         linearLayoutManager.reverseLayout = true
         linearLayoutManager.stackFromEnd = true
         recyclerView.layoutManager = linearLayoutManager
@@ -78,7 +84,7 @@ class CommentsActivity : AppCompatActivity() {
 
         // Initialize the commentsList and CommentsAdapter
         commentsList = mutableListOf()
-        commentsAdapter = CommentsAdapter(this, commentsList as MutableList<CommentsModel>)
+        commentsAdapter = CommentsAdapter(requireContext(), commentsList as MutableList<CommentsModel>)
         recyclerView.adapter = commentsAdapter
 
 
@@ -122,7 +128,7 @@ class CommentsActivity : AppCompatActivity() {
                         updateLikesCount(postId.toString(), binding.likesCount)
                     }
                     .addOnFailureListener { e ->
-                        Toast.makeText(this, "Error unliking post: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Error unliking post: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             } else {
                 likesRef.child(firebaseUser.uid).setValue(true)
@@ -133,7 +139,7 @@ class CommentsActivity : AppCompatActivity() {
                         updateLikesCount(postId.toString(), binding.likesCount)
                     }
                     .addOnFailureListener { e ->
-                        Toast.makeText(this, "Error liking post: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Error liking post: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             }
         }
@@ -147,12 +153,12 @@ class CommentsActivity : AppCompatActivity() {
                 FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser.uid).child(
                     postId!!
                 ).setValue(bookmark)
-                Toast.makeText(this, "Post saved.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Post saved.", Toast.LENGTH_SHORT).show()
             } else{
                 FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser.uid).child(
                     postId!!
                 ).removeValue()
-                Toast.makeText(this, "Post removed from bookmarks.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Post removed from bookmarks.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -167,7 +173,8 @@ class CommentsActivity : AppCompatActivity() {
 
         //back Icon
         binding.cancelComment.setOnClickListener {
-            finish()
+           //Navigate to back stack
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
     }
@@ -190,7 +197,7 @@ class CommentsActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("CommentsActivity", "Error fetching data: ${error.message}")
-                Toast.makeText(this@CommentsActivity, "Error fetching data: ${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error fetching data: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -234,14 +241,14 @@ class CommentsActivity : AppCompatActivity() {
 
                     //get the Post time and date and state the passed time
                     val relativeTime = getRelativeTime(post?.postId)
-                  binding.postTime.text = relativeTime
+                    binding.postTime.text = relativeTime
 
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("CommentsActivity", "Error fetching data: ${error.message}")
-                Toast.makeText(this@CommentsActivity, "Error fetching data: ${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error fetching data: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -249,7 +256,7 @@ class CommentsActivity : AppCompatActivity() {
     private fun getPostSenderDetails (senderId: String?) {
         val postSenderRef = FirebaseDatabase.getInstance().reference.child("Users").child(senderId.toString())
 
-        postSenderRef.addValueEventListener(object: ValueEventListener{
+        postSenderRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val user = snapshot.getValue(UserModel::class.java)
@@ -265,7 +272,7 @@ class CommentsActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("CommentsActivity", "Error fetching data: ${error.message}")
-                Toast.makeText(this@CommentsActivity, "Error fetching data: ${error.message}", Toast.LENGTH_SHORT).show()
+               Toast.makeText(requireContext(), "Error fetching data: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -273,7 +280,7 @@ class CommentsActivity : AppCompatActivity() {
     private fun addComment() {
 
         if (postId == null) {
-            Toast.makeText(this, "Error: Post is missing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Error: Post is missing", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -300,23 +307,23 @@ class CommentsActivity : AppCompatActivity() {
             if (commentId != null) {
                 commentsRef.child(commentId).setValue(comment)
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Comment added successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Comment added successfully", Toast.LENGTH_SHORT).show()
                         addNotification()
                         binding.addComment.text.clear()
                     }
                     .addOnFailureListener { e ->
-                        Toast.makeText(this, "Error adding comment: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Error adding comment: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             }
         } else {
-            Toast.makeText(this, "Please enter a comment", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter a comment", Toast.LENGTH_SHORT).show()
         }
 
     }
 
     private fun readComments() {
         val commentsRef = FirebaseDatabase.getInstance().reference.child("Comments").child(postId.toString())
-        commentsRef.addValueEventListener(object : ValueEventListener{
+        commentsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     (commentsList as MutableList<CommentsModel>).clear()
@@ -328,12 +335,12 @@ class CommentsActivity : AppCompatActivity() {
                     }
                     commentsAdapter.notifyDataSetChanged()
                 } else {
-                    Toast.makeText(this@CommentsActivity, "No comments found", Toast.LENGTH_SHORT).show()
+                   Toast.makeText(requireContext(), "No comments found", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+              Log.e("CommentsActivity", "Error fetching data: ${error.message}")
             }
         })
     }
@@ -381,7 +388,7 @@ class CommentsActivity : AppCompatActivity() {
     }
 
     private fun commentsCount(postId: String, commentsCount: TextView) {
-        val commentsRef = FirebaseDatabase.getInstance().reference.child("Comments").child(postId!!)
+        val commentsRef = FirebaseDatabase.getInstance().reference.child("Comments").child(postId)
 
         commentsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -426,7 +433,7 @@ class CommentsActivity : AppCompatActivity() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val bookmarksRef = FirebaseDatabase.getInstance().reference.child("Bookmarks").child(firebaseUser?.uid.toString())
 
-        bookmarksRef.addValueEventListener(object: ValueEventListener{
+        bookmarksRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.child(postId).exists()) {
                     bookmarkButton.setImageResource(R.drawable.bookmark_blue)
@@ -480,5 +487,4 @@ class CommentsActivity : AppCompatActivity() {
             notificationsRef.push().setValue(notification)
         }
     }
-
 }

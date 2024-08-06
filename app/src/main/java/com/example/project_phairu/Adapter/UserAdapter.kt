@@ -1,6 +1,7 @@
 package com.example.project_phairu.Adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.Fragments.ExploreFragmentDirections
+import com.example.project_phairu.Fragments.showUsersListFragmentDirections
 import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
@@ -25,6 +27,7 @@ import java.util.Locale
 
 class UserAdapter (private var context: Context,
                    private var users: MutableList<UserModel>,
+                   private val source: String,
     private var fragment: Boolean = false) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     // Initialize FirebaseUser (get specific user ID)
@@ -63,11 +66,20 @@ class UserAdapter (private var context: Context,
         holder.itemView.setOnClickListener {
             val navController = Navigation.findNavController(holder.itemView)
             val profileId = user.id
+
             if (profileId != null) {
-                val action = ExploreFragmentDirections.actionExploreFragmentToProfileFragment(
-                    profileId
-                )
-                navController.navigate(action)
+                if (source == "search") {
+                    val action = ExploreFragmentDirections.actionExploreFragmentToProfileFragment(profileId)
+                    navController.navigate(action)
+                } else if (source == "following") {
+                    val action = showUsersListFragmentDirections.actionShowUsersListFragmentToProfileFragment(profileId)
+                    navController.navigate(action)
+                } else if (source == "followers") {
+                   val action = showUsersListFragmentDirections.actionShowUsersListFragmentToProfileFragment(profileId)
+                    navController.navigate(action)
+                } else{
+                    Log.e("UserAdapter", "Source, cannot navigate to profile")
+                }
             } else {
                 // Handle the case where user.id is null (e.g., show an error)
                 Log.e("UserAdapter", "User ID is null, cannot navigate to profile")

@@ -15,7 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_phairu.CommentsActivity
 import com.example.project_phairu.Fragments.ExploreFragmentDirections
 import com.example.project_phairu.Fragments.HomeFragment
 import com.example.project_phairu.Model.BookmarkModel
@@ -35,7 +34,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Locale
 
 class PostAdapter (private var context: Context,
-                   private var posts: MutableList<PostsModel>, private val source: String) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+                   private var posts: MutableList<PostsModel>,
+                   private val source: String) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Initialize views
@@ -126,7 +126,7 @@ class PostAdapter (private var context: Context,
                     }
                 } else if (source == "bookmarks") {
                     if (profileId != currentUserId) {
-                        navController.navigate(R.id.action_global_profileFragment, bundle)
+                        navController.navigate(R.id.action_bookmarksFragment_to_profileFragment, bundle)
                     }else {
                         Toast.makeText(context, "This is your own profile", Toast.LENGTH_SHORT).show()
                     }
@@ -195,19 +195,30 @@ class PostAdapter (private var context: Context,
 
         // Comments button functionality
         holder.commentBtn.setOnClickListener {
-            val intent = Intent(context, CommentsActivity::class.java)
-            Log.d("PostAdapter", "postId before putExtra: $postId")
-            intent.putExtra("postId", postId)
-            intent.putExtra("senderId", post.senderId)
-            context.startActivity(intent)
+            val bundle = Bundle()
+            bundle.putString("postId", postId)
+            bundle.putString("senderId", post.senderId)
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_homeFragment_to_commentsFragment, bundle)
         }
 
         //OnClick Listener when a user Clicks on a post
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, CommentsActivity::class.java)
-            intent.putExtra("postId", postId)
-            intent.putExtra("senderId", post.senderId)
-            context.startActivity(intent)
+            if (source == "home") {
+                val bundle = Bundle()
+                bundle.putString("postId", postId)
+                bundle.putString("senderId", post.senderId)
+                Navigation.findNavController(holder.itemView).navigate(R.id.action_homeFragment_to_commentsFragment, bundle)
+            } else if (source == "profile") {
+                val bundle = Bundle()
+                bundle.putString("postId", postId)
+                bundle.putString("senderId", post.senderId)
+                Navigation.findNavController(holder.itemView).navigate(R.id.action_profileFragment_to_commentsFragment, bundle)
+            } else if (source == "bookmarks") {
+                val bundle = Bundle()
+                bundle.putString("postId", postId)
+                bundle.putString("senderId", post.senderId)
+                Navigation.findNavController(holder.itemView).navigate(R.id.action_bookmarksFragment_to_commentsFragment, bundle)
+            }
         }
 
         // Bookmark button functionality

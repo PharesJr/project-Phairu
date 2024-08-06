@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_phairu.CommentsActivity
 import com.example.project_phairu.Fragments.NotificationsFragmentDirections
 import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.UserModel

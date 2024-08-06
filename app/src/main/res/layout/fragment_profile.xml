@@ -91,7 +91,7 @@
                                         android:layout_weight="1"
                                         android:fontFamily="sans-serif"
                                         android:text="followers"
-                                        android:textColor="@color/textColorPurple"
+                                        android:textColor="@color/hintText2"
                                         android:textSize="16sp" />
                                 </LinearLayout>
 
@@ -122,7 +122,7 @@
                                         android:layout_weight="1"
                                         android:fontFamily="sans-serif"
                                         android:text="following"
-                                        android:textColor="@color/textColorPurple"
+                                        android:textColor="@color/hintText2"
                                         android:textSize="16sp" />
                                 </LinearLayout>
 
@@ -182,7 +182,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-black"
-                                    android:textColor="@color/textColorPurple"
+                                    android:textColor="@color/hintText2"
                                     android:textSize="18sp"
                                     tools:text="Phares Irungu" />
                                 <ImageView
@@ -208,7 +208,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:fontFamily="sans-serif"
-                            android:textColor="@color/hintText2"
+                            android:textColor="@color/hintText"
                             android:textSize="14sp"
                             tools:text="phairu" />
 
@@ -217,8 +217,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"
-                            android:textColor="@color/textColorPurple"
-                            android:textSize="16sp"
+                            android:textColor="@color/hintText2"
+                            android:textSize="15sp"
                             android:layout_marginTop="10dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginBottom="10dp"

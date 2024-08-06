@@ -5,13 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowUsersActivity"
+    tools:context=".Fragments.showUsersListFragment"
     android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:titleTextColor="@color/hintText2"
         android:background="@color/topAppBarColor">
 
     </androidx.appcompat.widget.Toolbar>

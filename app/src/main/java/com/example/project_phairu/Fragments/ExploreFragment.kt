@@ -50,7 +50,7 @@ class ExploreFragment : Fragment() {
         recyclerView?.layoutManager = LinearLayoutManager(context)
 
         users = ArrayList()
-        userAdapter = requireContext().let { UserAdapter(it, users!! as ArrayList<UserModel>, true) }
+        userAdapter = requireContext().let { UserAdapter(it, users!! as ArrayList<UserModel>, "search", true) }
         recyclerView?.adapter = userAdapter
 
         binding.searchUsers.addTextChangedListener(object : TextWatcher {

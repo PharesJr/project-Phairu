@@ -17,13 +17,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.PostAdapter
-import com.example.project_phairu.BookmarksActivity
 import com.example.project_phairu.DataStore.UserSessionDataStore
 import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
-import com.example.project_phairu.ShowUsersActivity
 import com.example.project_phairu.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -144,19 +142,20 @@ class ProfileFragment : Fragment() {
 
         //find the following Layout
         binding.followingLayout.setOnClickListener{
-            val intent = Intent(requireContext(), ShowUsersActivity::class.java)
-            intent.putExtra("id", profileId)
-            intent.putExtra("title", "following")
+            val bundle = Bundle()
+            bundle.putString("id", profileId)
+            bundle.putString("title", "following")
+            navController.navigate(R.id.action_profileFragment_to_showUsersListFragment, bundle)
             Log.d("ProfileFragment", "Starting ShowUsersActivity with title: following and id: $profileId")
-            startActivity(intent)
         }
 
         //find the followers Layout
         binding.followersLayout.setOnClickListener{
-            val intent = Intent(requireContext(), ShowUsersActivity::class.java)
-            intent.putExtra("id", profileId)
-            intent.putExtra("title", "followers")
-            startActivity(intent)
+            val bundle = Bundle()
+            bundle.putString("id", profileId)
+            bundle.putString("title", "followers")
+            navController.navigate(R.id.action_profileFragment_to_showUsersListFragment, bundle)
+            Log.d("ProfileFragment", "Starting ShowUsersActivity with title: followers and id: $profileId")
         }
 
         //find the EditProfile button
@@ -210,8 +209,8 @@ class ProfileFragment : Fragment() {
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.bookmarks -> {
-                        val intent = Intent(requireContext(), BookmarksActivity::class.java)
-                        startActivity(intent)
+                        //Navigate to bookmarksFragment
+                        navController.navigate(R.id.action_profileFragment_to_bookmarksFragment)
                         true
                     }
                     R.id.logout -> {
