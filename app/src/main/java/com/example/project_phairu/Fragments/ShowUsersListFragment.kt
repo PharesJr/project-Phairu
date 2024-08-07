@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class showUsersListFragment : Fragment() {
+class ShowUsersListFragment : Fragment() {
 
     //binding
     private lateinit var binding: FragmentShowUsersListBinding

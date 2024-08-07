@@ -2,6 +2,7 @@ package com.example.project_phairu.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -67,16 +68,16 @@ class NotificationsAdapter (private var context: Context, private var notificati
         holder.itemView.setOnClickListener {
             if (notification.notificationType == "like") {
                 //navigate to the post
-                val intent = Intent(context, CommentsActivity::class.java)
-                intent.putExtra("postId", notification.postId)
-                intent.putExtra("senderId", userId)
-                context.startActivity(intent)
+                val bundle = Bundle()
+                bundle.putString("postId", notification.postId)
+                bundle.putString("senderId", notification.userId)
+                Navigation.findNavController(holder.itemView).navigate(R.id.action_notificationsFragment_to_commentsFragment, bundle)
             } else if (notification.notificationType == "comment") {
                 //navigate to the post
-                val intent = Intent(context, CommentsActivity::class.java)
-                intent.putExtra("postId", notification.postId)
-                intent.putExtra("senderId", userId)
-                context.startActivity(intent)
+                val bundle = Bundle()
+                bundle.putString("postId", notification.postId)
+                bundle.putString("senderId", notification.userId)
+                Navigation.findNavController(holder.itemView).navigate(R.id.action_notificationsFragment_to_commentsFragment, bundle)
             } else if (notification.notificationType == "follow") {
                 // Navigate to the profile page of the user who started following using NavController
                 val navController = Navigation.findNavController(holder.itemView)

@@ -3,6 +3,7 @@ package com.example.project_phairu.Fragments
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,8 +23,11 @@ import com.example.project_phairu.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.launch
 
 
@@ -149,22 +153,45 @@ class LoginFragment : Fragment() {
                 val userId = user?.uid
 
                 if (userId != null) {
-                    lifecycleScope.launch {
-                        userSessionDataStore.storeUserSession(true, userId)
-                    }
+                    // Check user type in the database
+                    val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(userId)
+                    userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
+                                val userType = snapshot.child("type").getValue(String::class.java)
+                                if (userType == "admin") {
+                                    // Navigate to adminFragment
+                                    findNavController().navigate(R.id.action_loginFragment_to_adminFragment)
+                                    Toast.makeText(requireContext(), "Welcome Admin", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    // Navigate to homeFragment
+                                    lifecycleScope.launch {
+                                        userSessionDataStore.storeUserSession(true, userId)
+                                    }
+                                    Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
+                                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.e("LoginFragment", "Database Error: ${error.message}")
+                        }
+                    })
                 }
-
-                Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment) // Assuming you have this action defined
-
             } else {
-                val exception = task.exception
-                if (exception is FirebaseAuthInvalidUserException) {
-                    Toast.makeText(requireContext(), "Invalid Email", Toast.LENGTH_SHORT).show()
-                } else if (exception is FirebaseAuthInvalidCredentialsException) {
-                    Toast.makeText(requireContext(), "Invalid Password", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Login Failed: ${exception?.message}", Toast.LENGTH_SHORT).show()
+                when (val exception = task.exception) {
+                    is FirebaseAuthInvalidUserException -> {
+                        Toast.makeText(requireContext(), "Invalid Email", Toast.LENGTH_SHORT).show()
+                    }
+
+                    is FirebaseAuthInvalidCredentialsException -> {
+                        Toast.makeText(requireContext(), "Invalid Password", Toast.LENGTH_SHORT).show()
+                    }
+
+                    else -> {
+                        Toast.makeText(requireContext(), "Login Failed: ${exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

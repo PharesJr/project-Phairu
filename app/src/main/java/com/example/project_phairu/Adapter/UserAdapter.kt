@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.Fragments.ExploreFragmentDirections
-import com.example.project_phairu.Fragments.showUsersListFragmentDirections
+import com.example.project_phairu.Fragments.ShowUsersListFragmentDirections
 import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.UserModel
 import com.example.project_phairu.R
@@ -72,10 +72,10 @@ class UserAdapter (private var context: Context,
                     val action = ExploreFragmentDirections.actionExploreFragmentToProfileFragment(profileId)
                     navController.navigate(action)
                 } else if (source == "following") {
-                    val action = showUsersListFragmentDirections.actionShowUsersListFragmentToProfileFragment(profileId)
+                    val action = ShowUsersListFragmentDirections.actionShowUsersListFragmentToProfileFragment(profileId)
                     navController.navigate(action)
                 } else if (source == "followers") {
-                   val action = showUsersListFragmentDirections.actionShowUsersListFragmentToProfileFragment(profileId)
+                   val action = ShowUsersListFragmentDirections.actionShowUsersListFragmentToProfileFragment(profileId)
                     navController.navigate(action)
                 } else{
                     Log.e("UserAdapter", "Source, cannot navigate to profile")

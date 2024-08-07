@@ -40,6 +40,11 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_loginFragment_to_adminFragment"
+            app:destination="@id/adminFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -108,6 +113,12 @@
             android:id="@+id/action_notificationsFragment_to_profileFragment"
             app:destination="@id/profileFragment">
         <argument app:argType="string" android:name="profileId"/>
+        </action>
+        <action
+            android:id="@+id/action_notificationsFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment">
+            <argument app:argType="string" android:name="postId"/>
+            <argument app:argType="string" android:name="senderId"/>
         </action>
     </fragment>
     <fragment
@@ -182,7 +193,7 @@
     </fragment>
     <fragment
         android:id="@+id/showUsersListFragment"
-        android:name="com.example.project_phairu.Fragments.showUsersListFragment"
+        android:name="com.example.project_phairu.Fragments.ShowUsersListFragment"
         android:label="fragment_show_users_list"
         tools:layout="@layout/fragment_show_users_list" >
         <action
@@ -193,7 +204,21 @@
     </fragment>
     <fragment
         android:id="@+id/commentsFragment"
-        android:name="com.example.project_phairu.Fragments.commentsFragment"
+        android:name="com.example.project_phairu.Fragments.CommentsFragment"
         android:label="fragment_comments"
         tools:layout="@layout/fragment_comments" />
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.example.project_phairu.Fragments.AdminFragment"
+        android:label="fragment_admin"
+        tools:layout="@layout/fragment_admin" >
+        <action
+            android:id="@+id/action_adminFragment_to_eventsUploadFragment"
+            app:destination="@id/eventsUploadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventsUploadFragment"
+        android:name="com.example.project_phairu.Fragments.EventsUploadFragment"
+        android:label="fragment_events_upload"
+        tools:layout="@layout/fragment_events_upload" />
 </navigation>

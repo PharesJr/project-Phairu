@@ -31,6 +31,7 @@ picasso = "2.8"
 firebaseStorageKtx = "21.0.0"
 ucrop = "2.2.8-native"
 vannitechAndroidImageCropper = "4.5.0"
+material3Android = "1.2.1"
 
 [libraries]
 android-image-cropper = { module = "com.theartofdev.edmodo:android-image-cropper", version.ref = "androidImageCropper" }
@@ -65,6 +66,7 @@ picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
 ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 vannitech-android-image-cropper = { module = "com.vannitech:android-image-cropper", version.ref = "vannitechAndroidImageCropper" }
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

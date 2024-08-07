@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -82,40 +83,52 @@ class NotificationsFragment : Fragment() {
     private fun readNotifications() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        val notificationsRef =
-            firebaseUser?.let {
-                FirebaseDatabase.getInstance().reference.child("Notifications").child(
-                    it.uid)
-            }
+        val notificationsRef = FirebaseDatabase.getInstance().reference.child("Notifications").child(firebaseUser?.uid.toString())
 
-        notificationsRef?.addValueEventListener(object: ValueEventListener {
+
+        notificationsRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     notificationsList?.clear()
+
+                    var notificationCount = snapshot.childrenCount.toInt()
                     for (snap in snapshot.children) {
 
                         val notification = snap.getValue(NotificationsModel::class.java)
 
                         if (notification != null) {
                             // Check if NOT current user
-                            if (notification.userId != firebaseUser.uid) {
-                                (notificationsList as ArrayList<NotificationsModel>).add(
-                                    notification
-                                )
+                            if (firebaseUser != null) {
+                                if (notification.userId != firebaseUser.uid) {
+                                    (notificationsList as ArrayList<NotificationsModel>).add(notification)
+                                    Log.d("NotificationsFragment", "Notification added: $notification")
+                                }
                             }
+                        }
+                        // Decrement counter and check if all notifications are loaded
+                        notificationCount--
+
+                        if (notificationCount == 0) {
+                            notificationsAdapter?.notifyDataSetChanged()
+                            // Hide ProgressBar and show ScrollView
+                            binding.notificationsPageLoader.visibility = View.GONE
+                            binding.notificationsScrollview.visibility = View.VISIBLE
                         }
 
                     }
-                    notificationsAdapter?.notifyDataSetChanged()
-
-                    // Hide ProgressBar and show ScrollView
+                } else {
+                    // No notifications found
                     binding.notificationsPageLoader.visibility = View.GONE
                     binding.notificationsScrollview.visibility = View.VISIBLE
+                    Toast.makeText(requireContext(), "No notifications found", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-               Log.e("NotificationsFragment", "Error fetching data: ${error.message}")
+                Log.e("NotificationsFragment", "Error fetching data: ${error.message}")
+                binding.notificationsPageLoader.visibility = View.GONE
+                binding.notificationsScrollview.visibility = View.VISIBLE
+                Toast.makeText(requireContext(), "Error fetching notifications", Toast.LENGTH_SHORT).show()
             }
         })
     }

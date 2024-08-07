@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.EventsUploadFragment"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/top_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/background">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/gradient"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/backIcon"
+                android:layout_width="60dp"
+                android:layout_height="55dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/backIconImage"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="24dp"
+                    android:src="@drawable/windows_back"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Upload Event"
+                android:textColor="@color/hintText2"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/backIcon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/uploadEventBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="sans-serif-black"
+                android:text="upload"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:textColor="@color/blue"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ProgressBar
+        android:id="@+id/editProfilePageLoader"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:visibility="visible"
+        android:indeterminateTint="@color/blue"
+        android:layout_centerInParent="true"/>
+
+    <ScrollView
+        android:id="@+id/editProfileScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_appbar"
+        android:scrollbars="none"
+        android:visibility="visible">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/eventPoster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/profile_placeholder"
+                android:maxHeight="400dp"
+                app:shapeAppearanceOverlay="@style/roundedimageview"
+                android:visibility="visible"/>
+            <ImageView
+                android:id="@+id/imagePicker"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/windows_camera_white"
+                android:layout_centerHorizontal="true"
+                android:layout_alignTop="@id/eventPoster"
+                android:layout_marginTop="170dp"
+                android:visibility="visible"/>
+            <LinearLayout
+                android:id="@+id/detailLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/loginscontainer"
+                android:layout_below="@+id/eventPoster">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event Title"
+                    android:fontFamily="sans-serif"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
+                <EditText
+                    android:id="@+id/eventTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/inputbackground"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="Event Title"
+                    android:inputType="text"
+                    android:maxLength="35"
+                    android:padding="10dp"
+                    android:textColor="@color/hintText2"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/hintText"
+                    android:textSize="16sp"
+                    android:textCursorDrawable="@null"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event Location"
+                    android:fontFamily="sans-serif"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
+                <EditText
+                    android:id="@+id/eventLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/inputbackground"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="Event Location"
+                    android:inputType="text"
+                    android:maxLength="35"
+                    android:padding="10dp"
+                    android:textColor="@color/hintText2"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/hintText"
+                    android:textSize="16sp"
+                    android:textCursorDrawable="@null"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event Date"
+                    android:fontFamily="sans-serif"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
+                <EditText
+                    android:id="@+id/eventDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/inputbackground"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="Enter Event Date"
+                    android:inputType="date"
+                    android:maxLength="35"
+                    android:padding="10dp"
+                    android:textColor="@color/hintText2"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/hintText"
+                    android:textSize="16sp"
+                    android:textCursorDrawable="@null"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event Start Time"
+                    android:fontFamily="sans-serif"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
+                <EditText
+                    android:id="@+id/eventStartTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/inputbackground"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="Event Start Time"
+                    android:inputType="time"
+                    android:maxLength="35"
+                    android:padding="10dp"
+                    android:textColor="@color/hintText2"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/hintText"
+                    android:textSize="16sp"
+                    android:textCursorDrawable="@null"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event End Time"
+                    android:fontFamily="sans-serif"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
+                <EditText
+                    android:id="@+id/eventEndTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/inputbackground"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="Event End Time"
+                    android:inputType="time"
+                    android:maxLength="35"
+                    android:padding="10dp"
+                    android:textColor="@color/hintText2"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/hintText"
+                    android:textSize="16sp"
+                    android:textCursorDrawable="@null"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event Description"
+                    android:fontFamily="@font/mada"
+                    android:textSize="16sp"
+                    android:textColor="@color/hintText"/>
+                <EditText
+                    android:id="@+id/eventDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/inputbackground"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="Event description"
+                    android:inputType="textMultiLine"
+                    android:maxLength="350"
+                    android:maxLines="6"
+                    android:padding="10dp"
+                    android:textColor="@color/hintText2"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/hintText"
+                    android:textSize="16sp"
+                    android:textCursorDrawable="@null"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/detailLayer"/>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
+
+
+
+    <!--    <ScrollView-->
+    <!--        android:id="@+id/scrollView2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/top_appbar">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content">-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/profilePic"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="400dp"-->
+    <!--                    android:alpha="0.4"-->
+    <!--                    android:scaleType="centerCrop"-->
+    <!--                    android:src="@drawable/profile2"-->
+    <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                    app:layout_constraintStart_toStartOf="parent"-->
+    <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/imageView4"-->
+    <!--                    android:layout_width="60dp"-->
+    <!--                    android:layout_height="60dp"-->
+    <!--                    android:src="@drawable/windows_camera_white"-->
+    <!--                    app:layout_constraintBottom_toBottomOf="@+id/profilePic"-->
+    <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                    app:layout_constraintStart_toStartOf="parent"-->
+    <!--                    app:layout_constraintTop_toTopOf="@+id/profilePic" />-->
+
+
+    <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--            <eightbitlab.com.blurview.BlurView-->
+    <!--                android:id="@+id/blurView"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="24dp"-->
+    <!--                android:layout_marginTop="-40dp"-->
+    <!--                android:layout_marginEnd="24dp"-->
+    <!--                android:background="@drawable/loginscontainer"-->
+    <!--                app:blurOverlayColor="#90000000">-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:id="@+id/detailLayer"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="vertical"-->
+    <!--                    android:padding="16dp">-->
+
+
+    <!--                    <EditText-->
+    <!--                        android:id="@+id/editName"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="45dp"-->
+    <!--                        android:layout_marginTop="5dp"-->
+    <!--                        android:layout_marginBottom="15dp"-->
+    <!--                        android:background="@drawable/inputbackground"-->
+    <!--                        android:drawablePadding="20dp"-->
+    <!--                        android:fontFamily="@font/mada"-->
+    <!--                        android:hint="Full Name"-->
+    <!--                        android:inputType="text"-->
+    <!--                        android:maxLength="35"-->
+    <!--                        android:padding="10dp"-->
+    <!--                        android:textColor="@color/black"-->
+    <!--                        android:textColorHighlight="@color/cardview_dark_background"-->
+    <!--                        android:textColorHint="#41494f"-->
+    <!--                        android:textSize="18sp"-->
+    <!--                        android:textCursorDrawable="@null"/>-->
+
+
+    <!--                    <EditText-->
+    <!--                        android:id="@+id/uName"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="45dp"-->
+    <!--                        android:layout_marginTop="5dp"-->
+    <!--                        android:layout_marginBottom="15dp"-->
+    <!--                        android:background="@drawable/inputbackground"-->
+    <!--                        android:drawablePadding="20dp"-->
+    <!--                        android:fontFamily="@font/mada"-->
+    <!--                        android:hint="Username"-->
+    <!--                        android:inputType="text"-->
+    <!--                        android:maxLength="35"-->
+    <!--                        android:padding="10dp"-->
+    <!--                        android:textColor="@color/black"-->
+    <!--                        android:textColorHighlight="@color/cardview_dark_background"-->
+    <!--                        android:textColorHint="#41494f"-->
+    <!--                        android:textSize="18sp"-->
+    <!--                        android:textCursorDrawable="@null"/>-->
+
+    <!--                    <EditText-->
+    <!--                        android:id="@+id/editBio"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginTop="5dp"-->
+    <!--                        android:layout_marginBottom="10dp"-->
+    <!--                        android:background="@drawable/inputbackground"-->
+    <!--                        android:drawablePadding="20dp"-->
+    <!--                        android:fontFamily="@font/mada"-->
+    <!--                        android:hint="Bio"-->
+    <!--                        android:inputType="text"-->
+    <!--                        android:maxLength="100"-->
+    <!--                        android:maxLines="2"-->
+    <!--                        android:padding="10dp"-->
+    <!--                        android:textColor="@color/black"-->
+    <!--                        android:textColorHighlight="@color/cardview_dark_background"-->
+    <!--                        android:textColorHint="#41494f"-->
+    <!--                        android:textSize="18sp"-->
+    <!--                        android:textCursorDrawable="@null"/>-->
+
+
+    <!--                </LinearLayout>-->
+
+    <!--            </eightbitlab.com.blurview.BlurView>-->
+
+    <!--        </LinearLayout>-->
+    <!--    </ScrollView>-->
+
+
