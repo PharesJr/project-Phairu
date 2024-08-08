@@ -260,7 +260,11 @@ class CommentsFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val user = snapshot.getValue(UserModel::class.java)
-                    binding.postProfileName.text = user?.firstname + " " + user?.lastname
+
+                    // Capitalize first and last names
+                    val capitalizedFirstName = user?.firstname?.capitalize() ?: ""
+                    val capitalizedLastName = user?.lastname?.capitalize() ?: ""
+                    binding.postProfileName.text = "$capitalizedFirstName $capitalizedLastName"
                     binding.postProfileUsername.text = "@" + user?.username
 
                     // Get current user Profile Picture

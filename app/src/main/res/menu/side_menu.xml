@@ -10,4 +10,8 @@
         <item android:id="@+id/eventsFragment"
             android:title="Events"
             android:icon="@drawable/windows_events"/>
+
+        <item android:id="@+id/eventsCreationFragment"
+            android:title="Create Event"
+            android:icon="@drawable/windows_events"/>
 </menu>

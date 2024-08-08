@@ -1,6 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background">
+
+            <RelativeLayout
+                android:id="@+id/eventDate"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:background="@drawable/container_drawer"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/eventDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15th"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/eventMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JAN"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-black"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/eventsPoster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:maxHeight="450dp"
+            android:backgroundTint="@color/background2"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            app:shapeAppearanceOverlay="@style/roundedimageview"
+            android:visibility="visible"
+            android:layout_below="@id/eventDate"/>
+
+        <TextView
+            android:id="@+id/eventTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="The Street Fair 2028"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-black"
+            android:layout_below="@+id/eventsPoster"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:id="@+id/eventLocationTimeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/eventTitle"
+            android:layout_marginStart="10dp">
+           <ImageView
+               android:layout_width="14dp"
+               android:layout_height="14dp"
+               android:src="@drawable/location"
+               android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/eventLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Uhuru Gardens"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="5dp"/>
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/clock"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"/>
+            <TextView
+                android:id="@+id/eventStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="8am"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/eventEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="4pm"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="5dp"/>
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/money"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"/>
+            <TextView
+                android:id="@+id/eventCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="free"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/viewEventDetailsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventLocationTimeLayout"
+            android:background="@drawable/buttonbackground2"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:textAllCaps="false"
+            android:textColor="@color/hintText2"
+            android:text="View Event Details"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"/>
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

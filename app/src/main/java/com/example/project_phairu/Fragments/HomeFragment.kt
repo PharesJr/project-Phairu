@@ -69,8 +69,7 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         //Instantiate the RecyclerView
-       var recyclerView: RecyclerView? = null
-        recyclerView = view?.findViewById(R.id.timelineRecyclerView)
+        val recyclerView: RecyclerView? = view?.findViewById(R.id.timelineRecyclerView)
         val linearLayoutManager = LinearLayoutManager(requireContext())
         linearLayoutManager.reverseLayout = true
         linearLayoutManager.stackFromEnd = true
@@ -129,6 +128,14 @@ class HomeFragment : Fragment() {
         drawerLayout = requireActivity().findViewById(R.id.drawer_layout)
         navigationView = requireActivity().findViewById(R.id.navigation_view)
 
+        //set the menu item "create Event" to gone
+        val menu = navigationView.menu
+        val createEventItem = menu.findItem(R.id.eventsCreationFragment)
+        createEventItem.isVisible = false
+
+        // Check user role and set menu visibility
+        checkUserRole()
+
         // Initialize userSessionDataStore
         userSessionDataStore = UserSessionDataStore(requireContext())
 
@@ -148,6 +155,11 @@ class HomeFragment : Fragment() {
                 R.id.eventsFragment -> {
                     // Navigate to Events page
                     findNavController().navigate(R.id.action_homeFragment_to_eventsFragment)
+                    true
+                }
+                R.id.eventsCreationFragment -> {
+                    // Navigate to Events Creation page
+                    findNavController().navigate(R.id.action_homeFragment_to_eventsUploadFragment)
                     true
                 }
                 else -> false
@@ -221,6 +233,31 @@ class HomeFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun checkUserRole() {
+        // get userId
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(userId.toString())
+
+        userRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val userType = snapshot.child("type").getValue(String::class.java)
+                    if (userType == "admin") {
+                        // Show the createEvent menu item
+                        val menu = navigationView.menu
+                        val createEventItem = menu.findItem(R.id.eventsCreationFragment)
+                        createEventItem.isVisible = true
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeFragment", "Error checking user role: ${error.message}")
+            }
+        })
     }
 
 }

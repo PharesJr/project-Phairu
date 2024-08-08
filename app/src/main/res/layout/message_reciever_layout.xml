@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background">
+        <TextView
+            android:id="@+id/receiverText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:maxWidth="150dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/reciever_message_layout"
+            android:padding="10dp"
+            tools:text="Phares Irungu"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/hintText2"/>
+
+        <TextView
+            android:id="@+id/receiverTextTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/receiverText"
+            tools:text="9:38pm"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/hintText2"/>
+
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

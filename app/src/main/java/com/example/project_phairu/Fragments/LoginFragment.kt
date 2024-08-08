@@ -161,7 +161,7 @@ class LoginFragment : Fragment() {
                                 val userType = snapshot.child("type").getValue(String::class.java)
                                 if (userType == "admin") {
                                     // Navigate to adminFragment
-                                    findNavController().navigate(R.id.action_loginFragment_to_adminFragment)
+                                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                                     Toast.makeText(requireContext(), "Welcome Admin", Toast.LENGTH_SHORT).show()
                                 } else {
                                     // Navigate to homeFragment

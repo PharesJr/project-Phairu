@@ -82,7 +82,6 @@
                     android:scaleType="fitCenter"
                     android:layout_margin="20dp"
                     android:maxHeight="500dp"
-                    android:src="@drawable/websites"
                     app:shapeAppearanceOverlay="@style/roundedimageview"
                     android:visibility="gone"/>
 

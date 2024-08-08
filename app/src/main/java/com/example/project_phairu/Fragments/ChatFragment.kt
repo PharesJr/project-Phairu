@@ -43,5 +43,11 @@ class ChatFragment : Fragment() {
         // Set up the BottomNavigationView with the NavController
         bottomNavigationView.setupWithNavController(navController)
 
+        // navigate to a new chat
+        binding.newChat.setOnClickListener {
+            navController.navigate(R.id.action_chatFragment_to_newChatFragment)
+        }
+
+
     }
 }

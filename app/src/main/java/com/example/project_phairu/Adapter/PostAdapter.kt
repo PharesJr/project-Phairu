@@ -15,8 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_phairu.Fragments.ExploreFragmentDirections
-import com.example.project_phairu.Fragments.HomeFragment
 import com.example.project_phairu.Model.BookmarkModel
 import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.PostsModel
@@ -89,7 +87,7 @@ class PostAdapter (private var context: Context,
         // Image visibility
         if (post.postPicture != null) {
             holder.imageHolder.visibility = View.VISIBLE
-            Picasso.get().load(post.postPicture).into(holder.postImage)
+            Picasso.get().load(post.postPicture).placeholder(R.drawable.image_holder).into(holder.postImage)
         } else {
             holder.imageHolder.visibility = View.GONE
         }

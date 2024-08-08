@@ -113,6 +113,11 @@ class EventsUploadFragment : Fragment() {
         binding.uploadEventBtn.setOnClickListener {
             uploadEvent()
         }
+
+        //backIcon
+        binding.backIcon.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
     // Upload an Image to Firebase Storage

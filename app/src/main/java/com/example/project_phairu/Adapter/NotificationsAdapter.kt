@@ -45,6 +45,7 @@ class NotificationsAdapter (private var context: Context, private var notificati
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        // bind data to views
         val notification = notifications[position]
         val userId = notification.userId
 

@@ -19,7 +19,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp">
+            android:layout_height="50dp"
+            android:background="@color/background">
             <ImageView
                 android:id="@+id/backBtn"
                 android:layout_width="45dp"
@@ -48,7 +49,7 @@
                 android:layout_height="1dp"
                 android:background="@drawable/gradient"
                 android:layout_marginTop="2dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
