@@ -14,4 +14,7 @@
         <item android:id="@+id/eventsCreationFragment"
             android:title="Create Event"
             android:icon="@drawable/windows_events"/>
+        <item android:id="@+id/flaggedPostsFragment"
+            android:title="Flagged Content"
+            android:icon="@drawable/windows_events"/>
 </menu>

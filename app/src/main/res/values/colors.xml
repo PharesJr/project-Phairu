@@ -5,6 +5,7 @@
     <color name="main_background">#19191b</color>
     <color name="pink">#e45eb0</color>
     <color name="blue">#2979FF</color>
+    <color name="variantblue">#303F9F</color>
     <color name="backgroundother">#2A2A2A</color>
     <color name="textColor">#E6F5FA</color>
     <color name="grey">#DCD0BE</color>

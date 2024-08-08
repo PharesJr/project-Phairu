@@ -130,8 +130,14 @@ class HomeFragment : Fragment() {
 
         //set the menu item "create Event" to gone
         val menu = navigationView.menu
+
+        // Hide the createEvent menu item if userRole != "admin"
         val createEventItem = menu.findItem(R.id.eventsCreationFragment)
         createEventItem.isVisible = false
+
+        // Hide the flaggedPosts menu item if userRole != "moderator"
+        val flaggedPostsItem = menu.findItem(R.id.flaggedPostsFragment)
+        flaggedPostsItem.isVisible = false
 
         // Check user role and set menu visibility
         checkUserRole()
@@ -161,7 +167,11 @@ class HomeFragment : Fragment() {
                     // Navigate to Events Creation page
                     findNavController().navigate(R.id.action_homeFragment_to_eventsUploadFragment)
                     true
-                }
+                } R.id.flaggedPostsFragment -> {
+                // Navigate to Flagged Posts page
+                findNavController().navigate(R.id.action_homeFragment_to_flaggedPostsFragment)
+                true
+            }
                 else -> false
             }
             // Close drawer after item click
@@ -250,6 +260,10 @@ class HomeFragment : Fragment() {
                         val menu = navigationView.menu
                         val createEventItem = menu.findItem(R.id.eventsCreationFragment)
                         createEventItem.isVisible = true
+                    } else if (userType == "moderator") {
+                        val menu = navigationView.menu
+                        val flaggedPostsItem = menu.findItem(R.id.flaggedPostsFragment)
+                        flaggedPostsItem.isVisible = true
                     }
                 }
             }

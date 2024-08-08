@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dialogForgot"
+    android:id="@+id/dialogDeletePost"
     android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -63,9 +63,8 @@
             android:layout_marginTop="24dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:text="Are you sure you want to logout?"
+            android:text="Are you sure you want to Delete this post?"
             android:textSize="16sp"
-            android:textColor="@color/hintText2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -102,14 +101,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnLogout"
+                    android:id="@+id/btnDelete"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
                     android:layout_marginStart="60dp"
                     android:layout_marginEnd="60dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Logout"
+                    android:fontFamily="@font/mada"
+                    android:text="Delete"
                     android:background="@drawable/danger_button_background"
                     android:textAllCaps="false"
                     android:textColor="@color/hintText2"

@@ -7,15 +7,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.Model.BookmarkModel
+import com.example.project_phairu.Model.FlaggedContentModel
 import com.example.project_phairu.Model.NotificationsModel
 import com.example.project_phairu.Model.PostsModel
 import com.example.project_phairu.Model.UserModel
@@ -53,10 +58,8 @@ class PostAdapter (private var context: Context,
         var bookmarkLayout: LinearLayout = itemView.findViewById(R.id.bookmarkLayout)
         var bookmarkIcon: ImageView = itemView.findViewById(R.id.bookmarkIcon)
         var isLiked: Boolean = false
-
-
-
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.posts_layout, parent, false)
         return ViewHolder(view)
@@ -76,6 +79,12 @@ class PostAdapter (private var context: Context,
 
         //get the postId
         val postId = post.postId.toString()
+
+        // Initialize the popup menu
+        val popupMenu = PopupMenu(context, holder.postmenu)
+        // Inflate the menu
+        popupMenu.inflate(R.menu.post_options_menu)
+
 
         // get the user data for the current post(profilePic, name, username)
         userInfo(holder.profilePic, holder.profileName, holder.profileUsername, post.senderId)
@@ -102,6 +111,7 @@ class PostAdapter (private var context: Context,
 
         // userProfile pic navigation
         holder.profilePic.setOnClickListener {
+
             val profileId = post.senderId
             // Get current user ID
             val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
@@ -128,7 +138,14 @@ class PostAdapter (private var context: Context,
                     }else {
                         Toast.makeText(context, "This is your own profile", Toast.LENGTH_SHORT).show()
                     }
+                } else if (source == "flagged") {
+//                    if (profileId != currentUserId) {
+////                        navController.navigate(R.id.action_bookmarksFragment_to_profileFragment, bundle)
+//                    }else {
+//                        Toast.makeText(context, "This is your own profile", Toast.LENGTH_SHORT).show()
+//                    }
                 }
+
             }
         }
 
@@ -162,16 +179,68 @@ class PostAdapter (private var context: Context,
 
         // post menu button functionality
         holder.postmenu.setOnClickListener {
-            val popupMenu = PopupMenu(context, holder.postmenu)
-            popupMenu.inflate(R.menu.post_options_menu)
+            // Initially set the delete post item to not be visible
+            val deletePostItem = popupMenu.menu.findItem(R.id.deletePost)
+            deletePostItem.isVisible = false
+
+            // Only show delete option if the post was created by the current user or if a user is a Moderator
+            checkUserRole(popupMenu, post.senderId)
+
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.flag -> {
                         // Handle flag action
+                        //initialize a dialog builder
+                        val builder = AlertDialog.Builder(context)
+                        val view = LayoutInflater.from(context).inflate(R.layout.dialog_flag_content, null)
+
+                        builder.setView(view)
+                        val dialog = builder.create()
+                        dialog.show()
+
+                        view.findViewById<ImageView>(R.id.cancelFlagButton).setOnClickListener {
+                            dialog.dismiss()
+                        }
+
+                        view.findViewById<Button>(R.id.btnSubmit).setOnClickListener {
+                            val reasonText = view.findViewById<EditText>(R.id.flaggedText).text.toString().trim()
+                            if (reasonText.isEmpty()) {
+                                // Show an error message or prevent submission
+                                Toast.makeText(context, "Please provide a reason for flagging.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                // Proceed with flagging the post
+                                flagPost(postId, reasonText)// Pass the reasonText to flagPost
+                                dialog.dismiss()
+                            }
+                        }
+
+
+
+
                         true
                     }
                     R.id.deletePost -> {
-                        // Handle delete action
+
+                        //initialize a dialog builder
+                        val builder = AlertDialog.Builder(context)
+                        val view = LayoutInflater.from(context).inflate(R.layout.dialog_delete_post, null)
+
+                        builder.setView(view)
+                        val dialog = builder.create()
+                        dialog.show()
+
+                        view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+                            dialog.dismiss()
+                        }
+
+                        view.findViewById<Button>(R.id.btnDelete).setOnClickListener {
+                            //Handle delete action
+                        deletePost(postId, holder.adapterPosition)
+                            // Show Toast message
+                            Toast.makeText(context, "Post deleted successfully", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        }
+//
                         true
                     }
                     else -> false
@@ -216,6 +285,10 @@ class PostAdapter (private var context: Context,
                 bundle.putString("postId", postId)
                 bundle.putString("senderId", post.senderId)
                 Navigation.findNavController(holder.itemView).navigate(R.id.action_bookmarksFragment_to_commentsFragment, bundle)
+            } else if (source == "flagged") {
+                val bundle = Bundle()
+                bundle.putString("postId", postId)
+                Navigation.findNavController(holder.itemView).navigate(R.id.action_flaggedPostsFragment_to_flaggedPostItemFragment, bundle)
             }
         }
 
@@ -385,6 +458,66 @@ class PostAdapter (private var context: Context,
 
     }
 
+    //Delete a post
+    private fun deletePost(postId: String, position: Int) {
+        val postsRef = FirebaseDatabase.getInstance().reference.child("Posts").child(postId)
+
+        // Remove the post from Firebase
+        postsRef.removeValue().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Post successfully deleted from Firebase
+                posts.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, posts.size)
+                Toast.makeText(context, "Post deleted successfully", Toast.LENGTH_SHORT).show()
+            }  else {
+                // Failed to delete the post
+                val errorMessage = when (val exception = task.exception) {
+                    is DatabaseError -> {
+                        when (exception.code) {
+                            DatabaseError.PERMISSION_DENIED -> "You don't have permission to delete this post."
+                            DatabaseError.NETWORK_ERROR -> "Network error occurred. Please check your connection."
+                            else -> "Failed to delete post: ${exception.message}"
+                        }
+                    }
+                    else -> "Failed to delete post: ${exception?.message}"
+                }
+                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun flagPost(postId: String,  reasonText: String) {
+
+        val flagRef = FirebaseDatabase.getInstance().reference.child("FlaggedContent").child(postId)
+
+        // Generate a unique flaggedId
+        val flaggedId = flagRef.push().key
+
+        if (reasonText.isNotBlank()) {
+            val firebaseUser = FirebaseAuth.getInstance().currentUser
+            val flag = FlaggedContentModel(
+                postId = postId,
+                senderId = firebaseUser?.uid,
+                flaggedReason = reasonText,
+                flaggedTimestamp = System.currentTimeMillis().toString()
+            )
+
+            if (flaggedId != null) {
+                flagRef.child(flaggedId).setValue(flag).addOnSuccessListener {
+                    Toast.makeText(context, "Post flagged successfully", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener { e ->
+                    Toast.makeText(context, "Error flagging post: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            Toast.makeText(context, "Please provide a reason for flagging.", Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
+
+
     //Add Notifications
     private fun addNotification(userId: String?, postId: String?) {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -400,6 +533,56 @@ class PostAdapter (private var context: Context,
         )
 
         notificationsRef.push().setValue(notification)
+    }
+
+    //Add Notifications
+    private fun addFlaggedNotification(userId: String?, postId: String?) {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val notificationsRef = FirebaseDatabase.getInstance().reference.child("Notifications").child(userId.toString())
+
+        val notification = NotificationsModel(
+            userId = firebaseUser!!.uid,
+            postId = postId,
+            notificationType = "flagged",
+            notificationMessage = "Your Post has been Flagged",
+            notificationTimestamp = System.currentTimeMillis().toString()
+        )
+
+        notificationsRef.push().setValue(notification)
+    }
+
+    //Check user Role
+    private fun checkUserRole(popupMenu: PopupMenu, senderId: String?) {
+        // get userId
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(userId.toString())
+
+        userRef.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val userType = snapshot.child("type").getValue(String::class.java)
+                    if (userType == "moderator") {
+                        // Show the delete Post menu item
+                        val deletePostItem = popupMenu.menu.findItem(R.id.deletePost)
+                        deletePostItem.isVisible = true
+                    } else if (userType == "user" && senderId == userId) {
+                        // Show the delete Post menu item
+                        val deletePostItem = popupMenu.menu.findItem(R.id.deletePost)
+                        deletePostItem.isVisible = true
+                    } else if (userType == "admin" && senderId == userId) {
+                        // Show the delete Post menu item
+                        val deletePostItem = popupMenu.menu.findItem(R.id.deletePost)
+                        deletePostItem.isVisible = true
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("PostAdapter", "Error checking user role: ${error.message}")
+            }
+        })
     }
 
 }

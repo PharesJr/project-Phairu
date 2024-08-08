@@ -58,6 +58,8 @@ class NotificationsAdapter (private var context: Context, private var notificati
            holder.Notificationtext.text = "commented on your post"
        } else if (notification.notificationType == "follow") {
            holder.Notificationtext.text = "started following you"
+       } else if (notification.notificationType == "flagged") {
+           holder.Notificationtext.text = "your post has been flagged!"
        } else{
            holder.Notificationtext.text = notification.notificationMessage
        }

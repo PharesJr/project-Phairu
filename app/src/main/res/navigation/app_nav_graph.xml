@@ -82,8 +82,10 @@
         <action
             android:id="@+id/action_homeFragment_to_eventsUploadFragment"
             app:destination="@id/eventsUploadFragment">
-            <argument app:argType="string" android:name="eventId"/>
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_flaggedPostsFragment"
+            app:destination="@id/flaggedPostsFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -236,4 +238,20 @@
             android:id="@+id/action_chatScreenFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/flaggedPostsFragment"
+        android:name="com.example.project_phairu.Fragments.FlaggedPostsFragment"
+        android:label="fragment_flagged_posts"
+        tools:layout="@layout/fragment_flagged_posts" >
+        <action
+            android:id="@+id/action_flaggedPostsFragment_to_flaggedPostItemFragment"
+            app:destination="@id/flaggedPostItemFragment">
+            <argument app:argType="string" android:name="postId"/>
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/flaggedPostItemFragment"
+        android:name="com.example.project_phairu.Fragments.FlaggedPostItemFragment"
+        android:label="fragment_flagged_post_item"
+        tools:layout="@layout/fragment_flagged_post_item" />
 </navigation>

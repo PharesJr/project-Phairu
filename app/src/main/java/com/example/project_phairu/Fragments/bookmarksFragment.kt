@@ -67,7 +67,7 @@ class bookmarksFragment : Fragment() {
         bookmarksRecyclerView.setHasFixedSize(true)
 
 
-        // Initialize the postList and postAdapter
+        // Initialize the bookmarkedPostsList and postAdapter
         bookmarkedPostsList = mutableListOf()
         postAdapter = PostAdapter(requireContext(), bookmarkedPostsList as MutableList<PostsModel>, "bookmarks")
         bookmarksRecyclerView.adapter = postAdapter
