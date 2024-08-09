@@ -125,7 +125,7 @@ class FlaggedPostsFragment : Fragment() {
                         (flaggedPostsList as MutableList<PostsModel>).clear()
                         (flaggedPostsList as MutableList<PostsModel>).addAll(flaggedPosts.map { it.first })
                         Log.d("FlaggedPostsFragment", "Flagged posts: $flaggedPostsList")
-                        postAdapter.notifyDataSetChanged() // Call notifyDataSetChanged only once
+                        postAdapter.notifyDataSetChanged()
                     }
                 } else {
                     postAdapter.notifyDataSetChanged()

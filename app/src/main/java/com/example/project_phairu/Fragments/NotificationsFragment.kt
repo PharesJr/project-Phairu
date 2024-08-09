@@ -91,9 +91,7 @@ class NotificationsFragment : Fragment() {
                 if (snapshot.exists()) {
                     notificationsList?.clear()
 
-                    var notificationCount = snapshot.childrenCount.toInt()
                     for (snap in snapshot.children) {
-
                         val notification = snap.getValue(NotificationsModel::class.java)
 
                         if (notification != null) {
@@ -105,17 +103,14 @@ class NotificationsFragment : Fragment() {
                                 }
                             }
                         }
-                        // Decrement counter and check if all notifications are loaded
-                        notificationCount--
-
-                        if (notificationCount == 0) {
-                            notificationsAdapter?.notifyDataSetChanged()
-                            // Hide ProgressBar and show ScrollView
-                            binding.notificationsPageLoader.visibility = View.GONE
-                            binding.notificationsScrollview.visibility = View.VISIBLE
-                        }
-
                     }
+
+                    notificationsAdapter?.notifyDataSetChanged()
+
+                    binding.notificationsPageLoader.visibility = View.GONE
+                    binding.notificationsScrollview.visibility = View.VISIBLE
+
+
                 } else {
                     // No notifications found
                     binding.notificationsPageLoader.visibility = View.GONE

@@ -88,14 +88,14 @@ class newChatFragment : Fragment() {
                 for (userSnapshot in snapshot.children) {
                     val user = userSnapshot.getValue(UserModel::class.java)
 
-                    if (user != null) {
+                    if (user != null && user.id != firebaseUser.uid) {
                         userList?.add(user)
 
                         Log.d("NewChatFragment", "User List: $userList")
-                        // Notify the adapter about data changes
-                        newChatAdapter?.notifyDataSetChanged()
                     }
                 }
+                // Notify the adapter about data changes
+                newChatAdapter?.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {

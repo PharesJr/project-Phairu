@@ -118,16 +118,12 @@ class bookmarksFragment : Fragment() {
                                     (bookmarkedPostsList as MutableList<PostsModel>).clear()
                                     (bookmarkedPostsList as MutableList<PostsModel>).addAll(bookmarkedPosts.map { it.first })
                                     Log.d("BookmarksFragment", "Bookmarked posts: $bookmarkedPostsList")
-                                    postAdapter.notifyDataSetChanged()
 
                                     // Show ScrollView and hide ProgressBar
                                     binding.bookmarksScrollview.visibility = View.VISIBLE
                                     binding.bookmarksPageLoader.visibility = View.GONE
-                                } else {
-                                    // Show ScrollView and hide ProgressBar (even if no bookmarks)
+
                                     postAdapter.notifyDataSetChanged()
-                                    binding.bookmarksScrollview.visibility = View.VISIBLE
-                                    binding.bookmarksPageLoader.visibility = View.GONE
                                 }
                             }
 
@@ -137,6 +133,9 @@ class bookmarksFragment : Fragment() {
                         })
                     }
                 } else {
+                    // Show ScrollView and hide ProgressBar (even if no bookmarks)
+                    binding.bookmarksScrollview.visibility = View.VISIBLE
+                    binding.bookmarksPageLoader.visibility = View.GONE
                     postAdapter.notifyDataSetChanged()
                 }
             }

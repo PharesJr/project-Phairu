@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project_phairu.Model.MessageModel
 import com.example.project_phairu.R
 import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MessageAdapter (private var context: Context,
                       private var messages: MutableList<MessageModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -16,8 +19,16 @@ class MessageAdapter (private var context: Context,
     private val VIEW_TYPE_SENDER = 1
     private val VIEW_TYPE_RECEIVER = 2
 
-    class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SenderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // Initialize sender views
+        var senderMessageTime: TextView = itemView.findViewById(R.id.senderTextTime)
+        var senderMessage: TextView = itemView.findViewById(R.id.senderText)
+    }
 
+    inner class ReceiverViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // Initialize receiver views
+        var receiverMessage: TextView = itemView.findViewById(R.id.receiverText)
+        var receiverMessageTime: TextView = itemView.findViewById(R.id.receiverTextTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -33,12 +44,14 @@ class MessageAdapter (private var context: Context,
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = messages[position]
 
+        val relativeTime = getActualTime(message.messageTimestamp)
+
         if (holder is SenderViewHolder) {
             holder.senderMessage.text = message.message
-            holder.senderMessageTime.text = message.messageTimestamp
+            holder.senderMessageTime.text = relativeTime
         } else if (holder is ReceiverViewHolder) {
             holder.receiverMessage.text = message.message
-            holder.receiverMessageTime.text = message.messageTimestamp
+            holder.receiverMessageTime.text = relativeTime
         }
     }
 
@@ -57,18 +70,15 @@ class MessageAdapter (private var context: Context,
         }
     }
 
+    // Helper function to get the time a message was sent
+    fun getActualTime(messageTimestamp: String?): String {
+        if (messageTimestamp == null) return ""
 
-    inner class SenderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Initialize sender views
-        var senderMessageTime: TextView = itemView.findViewById(R.id.senderTextTime)
-        var senderMessage: TextView = itemView.findViewById(R.id.senderText)
+        val messageTime =messageTimestamp.toLongOrNull() ?: return ""
+        val date = Date(messageTime)
+        // Format: 9:38 PM
+        val format = SimpleDateFormat("h:mm a", Locale.getDefault())
+        return format.format(date)
     }
-
-    inner class ReceiverViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Initialize receiver views
-        var receiverMessage: TextView = itemView.findViewById(R.id.receiverText)
-        var receiverMessageTime: TextView = itemView.findViewById(R.id.receiverTextTime)
-    }
-
 
 }

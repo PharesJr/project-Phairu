@@ -25,8 +25,7 @@ import com.google.firebase.database.ValueEventListener
 class ExploreFragment : Fragment() {
 
     //binding
-    private var _binding: FragmentExploreBinding? = null
-    private val binding get() = _binding!!
+ private lateinit var binding: FragmentExploreBinding
 
     //instantiate adapter objects
     private var recyclerView: RecyclerView? = null
@@ -40,9 +39,9 @@ class ExploreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentExploreBinding.inflate(inflater, container, false)
+        binding = FragmentExploreBinding.inflate(inflater, container, false)
 
         //recyclerview
         recyclerView = binding.exploreRecyclerview
@@ -230,11 +229,4 @@ class ExploreFragment : Fragment() {
 
         })
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null // Avoid memory leaks
-    }
-
-
 }

@@ -95,6 +95,11 @@
         <action
             android:id="@+id/action_chatFragment_to_newChatFragment"
             app:destination="@id/newChatFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_chatScreenFragment"
+            app:destination="@id/chatScreenFragment">
+            <argument app:argType="string" android:name="userId"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/eventsFragment"

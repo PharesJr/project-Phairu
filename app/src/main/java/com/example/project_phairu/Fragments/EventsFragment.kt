@@ -90,9 +90,9 @@ class EventsFragment : Fragment() {
 
 
                     Log.d("EventsFragment", "Events List: $eventsList")
-                    // Notify the adapter about data changes
-                    eventsAdapter.notifyDataSetChanged()
                 }
+                // Notify the adapter about data changes
+                eventsAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {

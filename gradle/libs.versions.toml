@@ -1,6 +1,6 @@
 [versions]
 activityKtx = "1.9.1"
-agp = "8.5.0"
+agp = "8.5.2"
 androidImageCropper = "2.8.6"
 androidImageCropperVersion = "4.3.0"
 blurview = "version-2.0.3"

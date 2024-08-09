@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_phairu.Adapter.CommentsAdapter
 import com.example.project_phairu.Adapter.MessageAdapter
@@ -52,15 +53,13 @@ class ChatScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //get userId
+        //get userId or receiver
         userId = arguments?.getString("userId")
         Log.d("ChatScreenFragment", "Received userId: $userId")
 
         //Instantiate the Recyclerview
         val recyclerView = binding.userChatsRecyclerView
         val linearLayoutManager = LinearLayoutManager(requireContext())
-        linearLayoutManager.reverseLayout = true
-        linearLayoutManager.stackFromEnd = true
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.setHasFixedSize(true)
 
@@ -69,19 +68,24 @@ class ChatScreenFragment : Fragment() {
         messageAdapter = MessageAdapter(requireContext(), messagesList as MutableList<MessageModel>)
         recyclerView.adapter = messageAdapter
 
-        //get user info
-        getUserInfo(userId)
-
         //init navController
         navController = findNavController()
 
+        //get user info
+        getUserInfo(userId)
+
+        val currentUser = FirebaseAuth.getInstance().currentUser?.uid
+
+        // Fetch existing messages
+        getOrCreateConversationId(currentUser ?: "", userId!!) { conversationId ->
+            getMessages(conversationId)
+        }
 
         //send message
         binding.sendMessage.setOnClickListener{
             val messageText = binding.messageText.text.toString()
             if (messageText.isNotBlank()) {
-                val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return@setOnClickListener
-                getOrCreateConversationId(currentUserId, userId!!, messageText)
+                sendMessage(messageText)
                 binding.messageText.text.clear()
                 Log.d("ChatScreenFragment", "Message sent: $messageText")
             }
@@ -119,32 +123,28 @@ class ChatScreenFragment : Fragment() {
         })
     }
 
-    private fun sendMessage(chatMessage: String, conversationId: String) {
-
-        // Get current userID
+    private fun sendMessage(chatMessage: String) {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        getOrCreateConversationId(currentUserId, userId!!) { conversationId ->
+            val messageId = FirebaseDatabase.getInstance().reference.child("Messages").push().key
+            val message = MessageModel(
+                messageId = messageId!!,
+                conversationId = conversationId,
+                senderId = currentUserId,
+                receiverId = userId,
+                message = chatMessage,
+                messageTimestamp = System.currentTimeMillis().toString(),
+            )
 
-        // 2. Create a new message
-        val messageId = FirebaseDatabase.getInstance().reference.child("Messages").push().key
-        val message = MessageModel(
-            messageId = messageId!!,
-            conversationId = conversationId,
-            senderId = currentUserId,
-            receiverId = userId,
-            message = chatMessage,
-            messageDate = System.currentTimeMillis().toString(),
-        )
-
-        // 3. Send the message
-        FirebaseDatabase.getInstance().reference.child("Messages").child(messageId).setValue(message)
+            FirebaseDatabase.getInstance().reference.child("Messages").child(messageId).setValue(message)
+        }
     }
 
-    private fun getOrCreateConversationId(userId1: String, userId2: String, messageText: String) {
-        val database = FirebaseDatabase.getInstance()
 
-        // Query conversations where either user is a participant
+    private fun getOrCreateConversationId(userId1: String, userId2: String, callback: (String) -> Unit) {
+        val database = FirebaseDatabase.getInstance()
         val query = database.reference.child("Conversations")
-            .orderByChild("participants/$userId1").equalTo(true) // Check if userId1 is a participant
+            .orderByChild("participants/$userId1").equalTo(true)
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -152,52 +152,54 @@ class ChatScreenFragment : Fragment() {
                 for (conversationSnapshot in snapshot.children) {
                     val participantsMap = conversationSnapshot.child("participants").value as? Map<String, Boolean>
                     if (participantsMap != null && participantsMap.containsKey(userId2)) {
-                        // Found the conversation
                         conversationId = conversationSnapshot.key
                         break
                     }
                 }
 
                 if (conversationId != null) {
-                    // Conversation exists, use the conversationId
-                    sendMessage(messageText, conversationId)
-                    getMessages(conversationId)
+                    callback(conversationId)
                 } else {
-                    // Conversation doesn't exist, create a new one
                     val newConversationId = database.reference.child("Conversations").push().key
                     val conversationData = mapOf("participants" to mapOf(userId1 to true, userId2 to true))
                     database.reference.child("Conversations").child(newConversationId!!).setValue(conversationData)
                         .addOnSuccessListener {
-                            // Use the newConversationId to send the message
-                            sendMessage(messageText, newConversationId)
-                            getMessages(newConversationId)
-
+                            callback(newConversationId)
                         }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle error
                 Log.e("ChatScreenFragment", "Error getting or creating conversation: ${error.message}")
             }
         })
     }
 
+
     private fun getMessages(conversationId: String) {
-        val messagesRef = FirebaseDatabase.getInstance().reference.child("Messages").orderByChild("conversationId").equalTo(conversationId)
+        val messagesRef = FirebaseDatabase.getInstance().reference.child("Messages")
+            .orderByChild("conversationId").equalTo(conversationId)
 
         messagesRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    (messagesList as MutableList<MessageModel>).clear()
+                    val tempMessagesList = mutableListOf<MessageModel>()
                     for (messageSnapshot in snapshot.children) {
                         val message = messageSnapshot.getValue(MessageModel::class.java)
                         if (message != null) {
-                            (messagesList as MutableList<MessageModel>).add(message)
+                            tempMessagesList.add(message)
                             Log.d("ChatScreenFragment", "Message received: ${message.message}")
                         }
-                        messageAdapter.notifyDataSetChanged()
                     }
+                    // Sort the tempMessagesList based on messageDate
+                    tempMessagesList.sortBy { it.messageTimestamp?.toLong() }
+                    // Clear and add all sorted messages to the original messagesList
+                    (messagesList as MutableList<MessageModel>).clear()
+                    (messagesList as MutableList<MessageModel>).addAll(tempMessagesList)
+                    messageAdapter.notifyDataSetChanged()
+
+                    // Scroll to the bottom
+                    binding.userChatsRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
                 } else {
                     Log.d("ChatScreenFragment", "No messages found")
                 }

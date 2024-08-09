@@ -216,26 +216,20 @@ class HomeFragment : Fragment() {
         postsRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 postList.clear()
-                var postsLoaded= 0
-
                 for (snapshot in dataSnapshot.children) {
                     val post = snapshot.getValue(PostsModel::class.java)
 
                     for (id in followingUsersList as ArrayList<String>) {
                         if (post?.senderId?.equals(id) == true) {
                             postList.add(post)
-
-                            postsLoaded++
-
-                            if (postsLoaded == postList.size) {
-                                postAdapter.notifyDataSetChanged()
-                                // Hide ProgressBar and show ScrollView
-                                binding.timelineProgressBar.visibility = View.GONE
-                                binding.homePageScrollview.visibility = View.VISIBLE
-                            }
                         }
                     }
                 }
+
+                postAdapter.notifyDataSetChanged()
+
+                binding.timelineProgressBar.visibility = View.GONE
+                binding.homePageScrollview.visibility = View.VISIBLE
             }
 
             override fun onCancelled(error: DatabaseError) {

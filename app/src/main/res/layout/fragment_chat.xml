@@ -72,41 +72,42 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <EditText
+        android:id="@+id/searchUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/top_appbar"
+        android:background="@drawable/loginscontainer"
+        android:drawableStart="@drawable/search_icon_18"
+        android:drawablePadding="10dp"
+        android:maxLines="1"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/hintText2"
+        android:textColorHint="@color/hintText"
+        android:hint="Search"/>
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="391dp"
         android:layout_height="789dp"
-        android:layout_below="@id/top_appbar"
+        android:layout_below="@id/searchUsers"
         android:layout_marginTop="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="20dp">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Chat"
-                android:textSize="18sp"
-                android:textColor="@color/textColor"
-                android:layout_marginStart="10dp"
-                android:textStyle="bold"/>
-
+            android:layout_margin="5dp">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/posts_recyclerview"
+                android:id="@+id/conversations_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/posts_recyclerview"
-                android:layout_gravity="center"/>
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"/>
         </LinearLayout>
     </ScrollView>
 
