@@ -25,4 +25,4 @@ The app provides a modern user experience with real-time chat, profile managemen
 
 1. **Clone this repository:**
    ```bash
-   git clone https://github.com/your-username/social-media-app.git
+   [git clone https://github.com/your-username/social-media-app.git](https://github.com/PharesJr/project-Phairu.git)
